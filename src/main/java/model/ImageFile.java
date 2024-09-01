@@ -86,31 +86,55 @@ public class ImageFile {
         return object.toString();
     }
 
-    /**********
-     * Class accessors and mutators
-     * currently, all class variables have get & set methods.
-     ***********/
-
+    /**
+     * Returns the file object associated with this ImageFile. The file object is primarily used when needing to work
+     * with / know the file path leading to this ImageFile on the user's system.
+     * @return This ImageFile's associated File object.
+     */
     public File getFile() {
         return file;
     }
 
+    /**
+     * Replaces the file object associated with this ImageFile. The file object is primarily used when needing to work
+     * with / know the file path leading to this ImageFile on the user's system.
+     * @param file The File object to replace the one associated with this ImageFile.
+     */
     public void setFile(File file) {
         this.file = file;
     }
 
+    /**
+     * Returns the set of all FileTags associated to this ImageFile. FileTags are used to categorize/organize files.
+     * @return The set of all FileTags associated to this ImageFile.
+     */
     public SortedSet<FileTag> getFileTags() {
         return fileTags;
     }
 
+    /**
+     * Replaces the set of FileTags that should be paired to this ImageFile. The FileTags in the given set should
+     * all be known by the ApplicationState. //todo: validate that they are known by ApplicationState
+     * @param fileTags The set of FileTags to replace the current set associated to this ImageFile.
+     */
     public void setFileTags(SortedSet<FileTag> fileTags) {
         this.fileTags = fileTags;
     }
 
+    /**
+     * Returns the ImageStatistics object containing statistical data collected about this Image.
+     * @return the ImageStatistics object containing statistical data collected about this Image.
+     */
     public ImageStatistics getStatistics() {
         return statistics;
     }
 
+    /**
+     * Replaces the ImageStatistics object that tracks all calculated statistical data about this Image.
+     * This method should only be used if all statistical data needs to be replaced. Individual statistics can be updated
+     * by getting the existing ImageStatistics object.
+     * @param statistics The new set of statistics to apply to this ImageFile.
+     */
     public void setStatistics(ImageStatistics statistics) {
         this.statistics = statistics;
     }

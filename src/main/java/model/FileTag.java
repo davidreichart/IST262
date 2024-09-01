@@ -22,11 +22,6 @@ public class FileTag implements Comparable<FileTag> {
         return this.getName().compareTo(o.getName());
     }
 
-    /**********
-     * Class accessors and mutators
-     * currently, all class variables have get & set methods.
-     ***********/
-
     /**
      * Returns the name of this file tag.
      * @returnthe name of this file tag.

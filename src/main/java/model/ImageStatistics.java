@@ -47,11 +47,6 @@ public class ImageStatistics {
         return object.toString();
     }
 
-    /**********
-     * Class accessors and mutators
-     * currently, all class variables have get & set methods.
-     ***********/
-
     /**
      * Returns the ({@code int}) height of this image. Height represents the vertical resolution of a given image.
      * @return The height of this image.
