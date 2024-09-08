@@ -8,17 +8,17 @@ import java.awt.*;
  * object representing a file on the user's computer. <br>
  * A file cannot have duplicate tags. A tag is considered a duplicate if they have the same name.
  */
-public class FileTag implements Comparable<FileTag> {
+public class FileTag_Old implements Comparable<FileTag_Old> {
     private String name;
     private Color color;
 
-    public FileTag(String name, Color color) {
+    public FileTag_Old(String name, Color color) {
         this.name = name;
         this.color = color;
     }
 
     @Override
-    public int compareTo(FileTag o) {
+    public int compareTo(FileTag_Old o) {
         return this.getName().compareTo(o.getName());
     }
 

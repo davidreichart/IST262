@@ -15,7 +15,7 @@ import java.util.Set;
 //todo: this should probably be a singleton
 public final class ApplicationState implements Serializable {
     private List<ImageFile> knownFiles;
-    private Set<FileTag> definedTags;
+    private Set<FileTag_Old> definedTags;
     private List<GUIStyleTemplate> definedGUIStyles;
     private GUIStyleTemplate activeStyleTemplate;
 
@@ -58,7 +58,7 @@ public final class ApplicationState implements Serializable {
      * application.
      * @return A set containing all stored file tags.
      */
-    public Set<FileTag> getDefinedTags() {
+    public Set<FileTag_Old> getDefinedTags() {
         return definedTags;
     }
 
@@ -67,7 +67,7 @@ public final class ApplicationState implements Serializable {
      * in the provided set.
      * @param definedTags The new set of FileTags to replace the current set known by the application.
      */
-    public void setDefinedTags(Set<FileTag> definedTags) {
+    public void setDefinedTags(Set<FileTag_Old> definedTags) {
         this.definedTags = definedTags;
     }
 

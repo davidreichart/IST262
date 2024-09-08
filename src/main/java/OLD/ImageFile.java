@@ -16,7 +16,7 @@ import java.util.TreeSet;
  */
 public class ImageFile {
     private File file;
-    private SortedSet<FileTag> fileTags; // we use a set to prevent duplicates
+    private SortedSet<FileTag_Old> fileTagOlds; // we use a set to prevent duplicates
     private ImageStatistics statistics;
 
     /**
@@ -32,7 +32,7 @@ public class ImageFile {
             System.out.print("Enter a file path: ");
         }
         this.file = new File(filePath);
-        this.fileTags = new TreeSet<FileTag>();
+        this.fileTagOlds = new TreeSet<FileTag_Old>();
         this.statistics = new ImageStatistics();
     }
 
@@ -69,7 +69,7 @@ public class ImageFile {
 
     public void addNewTag(String tagName, Color tagColor) {
         //todo: a hashSet & properly made hashCode could allow for quick lookup of if a tag with tagName is in the set
-        this.fileTags.add(new FileTag(tagName, tagColor));
+        this.fileTagOlds.add(new FileTag_Old(tagName, tagColor));
     }
 
     /**
@@ -108,17 +108,17 @@ public class ImageFile {
      * Returns the set of all FileTags associated to this ImageFile. FileTags are used to categorize/organize files.
      * @return The set of all FileTags associated to this ImageFile.
      */
-    public SortedSet<FileTag> getFileTags() {
-        return fileTags;
+    public SortedSet<FileTag_Old> getFileTags() {
+        return fileTagOlds;
     }
 
     /**
      * Replaces the set of FileTags that should be paired to this ImageFile. The FileTags in the given set should
      * all be known by the ApplicationState. //todo: validate that they are known by ApplicationState
-     * @param fileTags The set of FileTags to replace the current set associated to this ImageFile.
+     * @param fileTagOlds The set of FileTags to replace the current set associated to this ImageFile.
      */
-    public void setFileTags(SortedSet<FileTag> fileTags) {
-        this.fileTags = fileTags;
+    public void setFileTags(SortedSet<FileTag_Old> fileTagOlds) {
+        this.fileTagOlds = fileTagOlds;
     }
 
     /**
