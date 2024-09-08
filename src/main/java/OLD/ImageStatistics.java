@@ -1,4 +1,4 @@
-package model;
+package OLD;
 
 /**
  * The ImageStatistics class is intended to be paired with an {@code ImageFile} object. It is a data structure that holds
