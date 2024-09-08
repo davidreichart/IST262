@@ -21,4 +21,16 @@ public class ImageStatistics {
 
         return objectInfo.toString();
     }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getTotalPixels() {
+        return totalPixels;
+    }
 }

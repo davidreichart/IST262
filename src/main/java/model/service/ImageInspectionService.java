@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class ImageInspectionService {
@@ -12,6 +14,26 @@ public class ImageInspectionService {
 
     public ImageInspectionService(File fileToParse) {
         this.fileToInspect = fileToParse;
+    }
+
+    public boolean isValidFilePath(String inputFilePath) {
+        try {
+            Paths.get(inputFilePath);
+        } catch (InvalidPathException invalidPathException) {
+            System.out.println("The provided file path does not lead to a valid file on the system.");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isImageFile(File file) {
+        try {
+            ImageIO.read(file);
+        } catch (IOException ioException) {
+            System.out.println("The provided file is not an image file.");
+            return false;
+        }
+        return true;
     }
 
     private BufferedImage parseImageFromFile() {
@@ -28,6 +50,7 @@ public class ImageInspectionService {
             return image;
         }
     }
+
     public String getFileExtension() {
         String fileName = this.fileToInspect.getName();
         int extensionDotIndex = fileName.lastIndexOf(".");
