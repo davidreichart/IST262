@@ -1,2 +1,4 @@
-package model;public class ImageFileFactoryTest {
+package model.creation;
+
+public class ImageFileFactoryTest {
 }

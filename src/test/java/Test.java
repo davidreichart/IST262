@@ -1,2 +1,2 @@
-package model;public class Test {
+public class Test {
 }

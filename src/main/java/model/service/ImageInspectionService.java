@@ -36,7 +36,7 @@ public class ImageInspectionService {
         return true;
     }
 
-    private BufferedImage parseImageFromFile() {
+    public BufferedImage parseImageFromFile() {
         BufferedImage image = null;
         try {
             image = ImageIO.read(this.fileToInspect);

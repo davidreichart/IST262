@@ -1,2 +1,4 @@
-package model;public class ImageStatisticsTest {
+package model.file;
+
+public class ImageStatisticsTest {
 }

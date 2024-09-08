@@ -1,2 +1,4 @@
-package model;public class ImageStatisticsFactoryTest {
+package model.creation;
+
+public class ImageStatisticsFactoryTest {
 }
