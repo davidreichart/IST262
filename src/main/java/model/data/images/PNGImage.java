@@ -1,17 +1,18 @@
-package model.files;
+package model.data.images;
 
 import model.creation.ImageStatisticsFactory;
+import model.data.FileTag;
+import model.data.ImageStatistics;
 
-import java.awt.*;
 import java.io.File;
 
-public class JPEGImage extends AbstractImageFile {
+public class PNGImage extends ImageFile {
 
     private File file;
     private ImageStatistics imageStatistics;
     private FileTag fileTag;
 
-    public JPEGImage(File file) {
+    public PNGImage(File file) {
         this.file = file;
         this.imageStatistics = ImageStatisticsFactory.generateStatistics(this);
     }
@@ -19,7 +20,7 @@ public class JPEGImage extends AbstractImageFile {
     @Override
     public String toString() {
         StringBuilder objectInfo = new StringBuilder();
-        objectInfo.append("JPEG Image:\n")
+        objectInfo.append("PNG Image:\n")
                 .append("    File Name: ").append(this.file).append("\n")
                 .append(this.imageStatistics.toString());
 

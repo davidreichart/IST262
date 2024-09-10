@@ -1,15 +1,17 @@
-package model.files;
+package model.data.images;
+
+import model.data.FileTag;
+import model.data.ImageStatistics;
 
 import java.awt.*;
 import java.io.File;
 
-abstract class AbstractImageFile implements IImageFile {
+public abstract class ImageFile {
 
     private File file;
     private ImageStatistics imageStatistics;
     private FileTag fileTag;
 
-    @Override
     public void addFileTag(FileTag fileTag) {
         if (this.fileTag == null) {
             throw new UnsupportedOperationException("This file already has a tag.");
@@ -20,7 +22,6 @@ abstract class AbstractImageFile implements IImageFile {
         }
     }
 
-    @Override
     public void removeFileTag(String tagToRemove) {
         if (this.fileTag == null) {
             throw new IllegalArgumentException("There is no tag to remove.");
@@ -31,12 +32,10 @@ abstract class AbstractImageFile implements IImageFile {
         }
     }
 
-    @Override
     public File getFile() {
         return this.file;
     }
 
-    @Override
     public ImageStatistics getImageStatistics() {
         return this.imageStatistics;
     }

@@ -1,5 +1,5 @@
 import model.creation.ImageFileFactory;
-import model.files.IImageFile;
+import model.data.images.ImageFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class Main {
         System.out.print("Enter a file path to an image: ");
         String filePath = consoleScanner.next();
 
-        IImageFile imageFile = null;
+        ImageFile imageFile = null;
         try {
             imageFile = ImageFileFactory.createImageFile(new File(filePath));
         } catch (IOException ioException) {

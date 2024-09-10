@@ -1,4 +1,4 @@
-package model.files;
+package model.data;
 
 public class ImageStatistics {
 
