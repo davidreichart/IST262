@@ -1,7 +1,6 @@
 package model.data.images;
 
 import model.data.FileTag;
-import model.data.ImageStatistics;
 
 import java.awt.*;
 import java.io.File;
@@ -9,8 +8,13 @@ import java.io.File;
 public abstract class ImageFile {
 
     private File file;
-    private ImageStatistics imageStatistics;
+    private Image image;
     private FileTag fileTag;
+
+    ImageFile (File file, Image image) {
+        this.file = file;
+        this.image = image;
+    }
 
     public void addFileTag(FileTag fileTag) {
         if (this.fileTag == null) {
@@ -34,9 +38,5 @@ public abstract class ImageFile {
 
     public File getFile() {
         return this.file;
-    }
-
-    public ImageStatistics getImageStatistics() {
-        return this.imageStatistics;
     }
 }

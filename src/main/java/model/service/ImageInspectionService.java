@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class ImageInspectionService {
 
-    Image imageToInspect;
+    private Image imageToInspect;
 
     public ImageInspectionService(Image imageToInspect) {
         this.imageToInspect = imageToInspect;

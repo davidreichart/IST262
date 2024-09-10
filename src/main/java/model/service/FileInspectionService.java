@@ -5,16 +5,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class FileInspectionService {
+
     private File fileToInspect;
 
     public FileInspectionService(File fileToInspect) {
         this.fileToInspect = fileToInspect;
     }
 
-    public String getFileType(File fileToInspect) {
+    public String getFileType() {
         String fileType = "";
         try {
-            fileType = Files.probeContentType(fileToInspect.toPath());
+            fileType = Files.probeContentType(this.fileToInspect.toPath());
         } catch (IOException ioException) {
             System.out.println(ioException);
         }
@@ -22,8 +23,8 @@ public class FileInspectionService {
         return fileType;
     }
 
-    public String getFileExtension(File fileToInspect) {
-        String fileName = fileToInspect.getName();
+    public String getFileExtension() {
+        String fileName = this.fileToInspect.getName();
         int extensionDotIndex = fileName.lastIndexOf(".");
         return fileName.substring(extensionDotIndex + 1);
     }
