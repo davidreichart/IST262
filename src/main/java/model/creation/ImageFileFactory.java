@@ -3,27 +3,32 @@ package model.creation;
 import model.data.images.ImageFile;
 import model.data.images.JPEGImage;
 import model.data.images.PNGImage;
-import model.service.ImageInspectionService;
+import model.service.FileInspectionService;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 public class ImageFileFactory {
 
-    private ImageInspectionService inspectionService;
-
     public static ImageFile createImageFile(File file) throws IOException {
-        ImageInspectionService inspectionService = new ImageInspectionService(file);
-        String fileExtension = inspectionService.getFileExtension();
+        FileInspectionService fileInspectionService = new FileInspectionService(file);
 
-        return switch (fileExtension) {
-            case "png" -> new PNGImage(file);
-            case "jpeg" -> new JPEGImage(file);
-            default -> throw new IOException("The provided file is not a known image format.");
+        return switch (fileInspectionService.getFileExtension()) {
+            case "png":
+                yield createPNGImage(file);
+            case "jpeg":
+                yield createJPEGImage(file);
+            default:
+                throw new IOException("The provided file is not a known image format.");
         };
     }
 
-    private void applyStatisticsToNewFile(ImageFile imageFile) {
+    public static PNGImage createPNGImage(File file) {
+        return new PNGImage(file);
+    }
 
+    public static JPEGImage createJPEGImage(File file) {
+        return new JPEGImage(file);
     }
 }

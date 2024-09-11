@@ -1,5 +1,6 @@
 package model.data.images;
 
+import model.data.FileMetadata;
 import model.data.FileTag;
 
 import java.awt.*;
@@ -10,9 +11,10 @@ public class PNGImage extends ImageFile {
     private File file;
     private Image image;
     private FileTag fileTag;
+    private FileMetadata metadata;
 
-    public PNGImage(File file, Image image) {
-        super(file, image);
+    public PNGImage(File file) {
+        super(file);
     }
 
     @Override

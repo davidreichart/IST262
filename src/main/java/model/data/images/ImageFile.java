@@ -1,5 +1,6 @@
 package model.data.images;
 
+import model.data.FileMetadata;
 import model.data.FileTag;
 
 import java.awt.*;
@@ -10,10 +11,10 @@ public abstract class ImageFile {
     private File file;
     private Image image;
     private FileTag fileTag;
+    private FileMetadata metadata;
 
-    ImageFile (File file, Image image) {
+    ImageFile (File file) {
         this.file = file;
-        this.image = image;
     }
 
     public void addFileTag(FileTag fileTag) {
