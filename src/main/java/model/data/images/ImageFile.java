@@ -13,8 +13,15 @@ public abstract class ImageFile {
     private FileTag fileTag;
     private FileMetadata metadata;
 
-    ImageFile (File file) {
+    public ImageFile (File file) {
         this.file = file;
+    }
+
+    public ImageFile (File file, Image image, FileTag fileTag, FileMetadata metadata) {
+        this.file = file;
+        this.image = image;
+        this.fileTag = fileTag;
+        this.metadata = metadata;
     }
 
     public void addFileTag(FileTag fileTag) {

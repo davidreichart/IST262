@@ -17,6 +17,10 @@ public class PNGImage extends ImageFile {
         super(file);
     }
 
+    public PNGImage(File file, Image image, FileTag fileTag, FileMetadata metadata) {
+        super(file, image, fileTag, metadata);
+    }
+
     @Override
     public String toString() {
         StringBuilder objectInfo = new StringBuilder();

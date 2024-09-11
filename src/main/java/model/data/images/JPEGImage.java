@@ -17,6 +17,10 @@ public class JPEGImage extends ImageFile {
         super(file);
     }
 
+    public JPEGImage(File file, Image image, FileTag fileTag, FileMetadata metadata) {
+        super(file, image, fileTag, metadata);
+    }
+
     @Override
     public String toString() {
         StringBuilder objectInfo = new StringBuilder();
