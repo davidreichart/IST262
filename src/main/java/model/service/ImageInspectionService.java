@@ -15,4 +15,12 @@ public class ImageInspectionService {
         int width = imageToInspect.getWidth(null);
         return new Dimension(width, height);
     }
+
+    public Image getImageToInspect() {
+        return imageToInspect;
+    }
+
+    public void setImageToInspect(Image imageToInspect) {
+        this.imageToInspect = imageToInspect;
+    }
 }

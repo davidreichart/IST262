@@ -25,4 +25,44 @@ public class PNGImage extends ImageFile {
 
         return objectInfo.toString();
     }
+
+    @Override
+    public File getFile() {
+        return file;
+    }
+
+    @Override
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    @Override
+    public Image getImage() {
+        return image;
+    }
+
+    @Override
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    @Override
+    public FileTag getFileTag() {
+        return fileTag;
+    }
+
+    @Override
+    public void setFileTag(FileTag fileTag) {
+        this.fileTag = fileTag;
+    }
+
+    @Override
+    public FileMetadata getMetadata() {
+        return metadata;
+    }
+
+    @Override
+    public void setMetadata(FileMetadata metadata) {
+        this.metadata = metadata;
+    }
 }

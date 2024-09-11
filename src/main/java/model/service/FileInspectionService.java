@@ -6,6 +6,14 @@ import java.nio.file.Files;
 
 public class FileInspectionService {
 
+    public File getFileToInspect() {
+        return fileToInspect;
+    }
+
+    public void setFileToInspect(File fileToInspect) {
+        this.fileToInspect = fileToInspect;
+    }
+
     private File fileToInspect;
 
     public FileInspectionService(File fileToInspect) {

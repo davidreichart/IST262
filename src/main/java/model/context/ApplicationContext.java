@@ -19,4 +19,28 @@ public class ApplicationContext {
         this.knownDirectories = knownDirectories;
         this.knownImageFiles = knownImageFiles;
     }
+
+    public Set<FileTag> getDefinedTags() {
+        return definedTags;
+    }
+
+    public void setDefinedTags(Set<FileTag> definedTags) {
+        this.definedTags = definedTags;
+    }
+
+    public List<String> getKnownDirectories() {
+        return knownDirectories;
+    }
+
+    public void setKnownDirectories(List<String> knownDirectories) {
+        this.knownDirectories = knownDirectories;
+    }
+
+    public List<ImageFile> getKnownImageFiles() {
+        return knownImageFiles;
+    }
+
+    public void setKnownImageFiles(List<ImageFile> knownImageFiles) {
+        this.knownImageFiles = knownImageFiles;
+    }
 }

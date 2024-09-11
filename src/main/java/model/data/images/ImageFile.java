@@ -40,4 +40,32 @@ public abstract class ImageFile {
     public File getFile() {
         return this.file;
     }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public FileTag getFileTag() {
+        return fileTag;
+    }
+
+    public void setFileTag(FileTag fileTag) {
+        this.fileTag = fileTag;
+    }
+
+    public FileMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(FileMetadata metadata) {
+        this.metadata = metadata;
+    }
 }

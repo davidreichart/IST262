@@ -12,4 +12,19 @@ public class FileMetadata {
         this.pixelCount = pixelCount;
     }
 
+    public Dimension getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(Dimension resolution) {
+        this.resolution = resolution;
+    }
+
+    public int getPixelCount() {
+        return pixelCount;
+    }
+
+    public void setPixelCount(int pixelCount) {
+        this.pixelCount = pixelCount;
+    }
 }
