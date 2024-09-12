@@ -14,8 +14,6 @@
 - Image should probably be used, and then instantiated as BufferedImage?
 - Kind of like List -> LinkedList / Set -> HashSet
 - [StackOverflow thread talking about Image abstract class vs Buffered Image concrete class](https://stackoverflow.com/questions/3944825/difference-between-the-image-and-bufferedimage-in-java)<br>
-<br>
-- Im not storing Image objects in each ImageFile object as that might be too space-resource intensive? Instead their just called upon by their File path
 
 <hr>
 
