@@ -13,7 +13,7 @@ import java.io.IOException;
  * An ImageFileFactory is used to instantiate new ImageFile objects in their correct subclass form.
  * A File object is provided and then assessed to return the appropriate object based upon the codex (extension) of the image.
  */
-public class ImageFileFactory {
+public final class ImageFileFactory {
 
     /**
      * Intakes a File object and produces an ImageFile of the appropriate subtype based upon the file's extension.
@@ -34,6 +34,17 @@ public class ImageFileFactory {
             default:
                 throw new IOException("The provided file is not a known image format.");
         };
+    }
+
+    /**
+     * Returns the memory address of this ImageFileFactory.
+     * This class is currently static and holds no state.
+     * There is no need to instantiate it to make use of it.
+     * @return the memory address of this ImageFileFactory
+     */
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     /**

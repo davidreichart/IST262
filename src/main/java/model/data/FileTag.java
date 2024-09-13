@@ -23,6 +23,17 @@ public class FileTag {
     }
 
     /**
+     * Returns a string detailing all information defining this file tag.
+     * @return a string detailing all information defining this file tag.
+     */
+    @Override
+    public String toString() {
+        return "FILE TAG: \n" +
+                "    Tag name: " + this.name + "\n" +
+                "    Color: " + this.color.toString();
+    }
+
+    /**
      * Returns the name of this FileTag.
      * The name is the primary data point used for any filtering/sorting operations that are influenced/driven by file tags.
      * @return The name of this FileTag.

@@ -39,56 +39,14 @@ public class JPEGImage extends ImageFile {
     }
 
     /**
-     * Returns a string representation of this JPEGImage object.
-     * The string includes all metadata known about this image.
-     * @return A string representing the full context of this JPEGImage.
+     * Returns a string containing all known information about this JPEGImage, including all of its metadata.
+     * @return A string of all known information on this JPEGImage.
      */
     @Override
     public String toString() {
-        StringBuilder objectInfo = new StringBuilder();
-        objectInfo.append("JPEG Image:\n")
-                .append("    File Name: ").append(this.file).append("\n");
-
-        return objectInfo.toString();
-    }
-
-    @Override
-    public File getFile() {
-        return file;
-    }
-
-    @Override
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
-    }
-
-    @Override
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    @Override
-    public FileTag getFileTag() {
-        return fileTag;
-    }
-
-    @Override
-    public void setFileTag(FileTag fileTag) {
-        this.fileTag = fileTag;
-    }
-
-    @Override
-    public FileMetadata getMetadata() {
-        return metadata;
-    }
-
-    @Override
-    public void setMetadata(FileMetadata metadata) {
-        this.metadata = metadata;
+        return "JPEG Image File Path: " + this.file.getPath() + "\n" +
+                "Image object: " + this.image.toString() + "\n" +
+                "File Tag: " + this.file.getName() + "\n" +
+                "File Metadata: " + this.metadata.toString();
     }
 }

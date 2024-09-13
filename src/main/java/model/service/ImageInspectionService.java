@@ -23,6 +23,16 @@ public class ImageInspectionService {
     }
 
     /**
+     * Returns a string detailing the source of the image currently held by this instance of the ImageInspectionService.
+     * This can be used if it is unclear what image is currently in the service queue.
+     * @return a string detailing the source of the image currently held by this instance of the service.
+     */
+    @Override
+    public String toString() {
+        return "Currently held file: " + this.imageToInspect.getSource().toString();
+    }
+
+    /**
      * Returns a Dimension object representing the resolution (height x width) of the image file held by this ImageInspectionService.
      * @param imageToInspect The currently stored image.
      * @return A Dimension object representing the resolution (height x width) of the image.

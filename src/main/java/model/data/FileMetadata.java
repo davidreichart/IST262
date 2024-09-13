@@ -25,6 +25,18 @@ public class FileMetadata {
     }
 
     /**
+     * Returns a string detailing all possible metadata points held by this instance.
+     * Any unknown values will be printed with zero/null placeholder values.
+     * @return a string detailing all possible metadata points held by this instance.
+     */
+    @Override
+    public String toString() {
+        return "METADATA: \n" +
+                "    Resolution: " + this.resolution.getHeight() + " x " + this.resolution.getWidth() + "\n" +
+                "    Pixel count: " + this.pixelCount + "\n";
+    }
+
+    /**
      * Returns the stored resolution of the image (height x width) as a Dimension object.
      * @return The Dimension representation of the image file's resolution.
      */

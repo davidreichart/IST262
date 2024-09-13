@@ -25,6 +25,16 @@ public class FileInspectionService {
     }
 
     /**
+     * Returns a string of the absolute path leading to the file currently held by this instance of the FileInspectionService.
+     * This can be used if it is unclear what file is currently in the service queue.
+     * @return a string of the absolute path leading to the file currently held by this instance of the service.
+     */
+    @Override
+    public String toString() {
+        return "Currently held file: " + this.fileToInspect.getAbsolutePath();
+    }
+
+    /**
      * Returns a String of the MIME type for the file currently held by this FileInspectionService.
      * For example, when given a .png file, this method provides an "image/jpeg" string.
      * @return a String representing the dot extension for the file currently held by this FileInspectionService.

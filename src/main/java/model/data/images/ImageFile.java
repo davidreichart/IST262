@@ -44,6 +44,18 @@ public abstract class ImageFile {
     }
 
     /**
+     * Returns a string containing all known information about this ImageFile, including all of its metadata.
+     * @return A string of all known information on this ImageFile.
+     */
+    @Override
+    public String toString() {
+        return "Image File Path: " + this.file.getPath() + "\n" +
+                "Image object: " + this.image.toString() + "\n" +
+                "File Tag: " + this.file.getName() + "\n" +
+                "File Metadata: " + this.metadata.toString();
+    }
+
+    /**
      * Applies the passed FileTag to this image file.
      * If this image already has a file tag, an exception will be thrown and the tag will not be replaced.
      * If there is no tag applied, the given tag will be applied.

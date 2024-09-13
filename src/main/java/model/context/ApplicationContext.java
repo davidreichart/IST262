@@ -32,6 +32,20 @@ public class ApplicationContext {
     }
 
     /**
+     * Returns a string displaying all currently stored information comprising the program's context/state.
+     * @return A string detailing all currently stored state variables.
+     */
+    @Override
+    public String toString() {
+        return "All known directories: \n" +
+                this.knownDirectories.toString() + "\n" +
+                "All defined file tags: \n" +
+                this.definedTags.toString() + "\n" +
+                "All known Image File objects: \n" +
+                this.knownImageFiles + "\n";
+    }
+
+    /**
      * Defined tags refer to a set of all tags declared by the user. A set prevents duplicate creation and tag reuse.
      * @return A set of all FileTag objects know by the program.
      */
