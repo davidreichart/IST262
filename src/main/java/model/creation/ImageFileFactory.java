@@ -5,7 +5,6 @@ import model.data.images.JPEGImage;
 import model.data.images.PNGImage;
 import model.service.FileInspectionService;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -37,7 +36,7 @@ public final class ImageFileFactory {
     }
 
     /**
-     * Returns the memory address of this ImageFileFactory.
+     * Returns the hashcode of this ImageFileFactory.
      * This class is currently static and holds no state.
      * There is no need to instantiate it to make use of it.
      * @return the memory address of this ImageFileFactory

@@ -1,12 +1,13 @@
 package model.data;
 
 import java.awt.*;
+import java.util.Comparator;
 
 /**
  * The FileTag class represents a user-definable data point to categorize ImageFile objects with.
  * These tags can be used when performing filtering/sorting operations when displaying files in the program's GUI.
  */
-public class FileTag {
+public class FileTag implements Comparable<FileTag> {
 
     private String name;
     private Color color;
@@ -31,6 +32,19 @@ public class FileTag {
         return "FILE TAG: \n" +
                 "    Tag name: " + this.name + "\n" +
                 "    Color: " + this.color.toString();
+    }
+
+    /**
+     * Compares two FileTags by their name. FileTag order is determined by tag name, sorted lexicographically.
+     * @param o The FileTag to compare against this FileTag.
+     * @return <br>
+     * A positive number if o1's tag name comes before o2's tag name lexicographically. <br>
+     * 0 if o1 and o2 have the same tag name. <br>
+     * A negative number if o1's tag name comes after o2's tag name lexicographically.
+     */
+    @Override
+    public int compareTo(FileTag o) {
+        return this.getName().compareTo(o.getName());
     }
 
     /**

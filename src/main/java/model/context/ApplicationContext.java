@@ -3,10 +3,7 @@ package model.context;
 import model.data.FileTag;
 import model.data.images.ImageFile;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The ApplicationContext class centralizes all persistent data.
@@ -14,9 +11,9 @@ import java.util.Set;
  */
 public class ApplicationContext {
 
-    Set<FileTag> definedTags;
-    List<String> knownDirectories;
-    List<ImageFile> knownImageFiles;
+    TreeSet<FileTag> definedTags;
+    ArrayList<String> knownDirectories;
+    ArrayList<ImageFile> knownImageFiles;
 
     /**
      * Instantiates a new instance of the ApplicationContext to store persistent data.
@@ -25,7 +22,7 @@ public class ApplicationContext {
      * @param knownDirectories A list of Strings representing file directories to be scanned by the program for image files.
      * @param knownImageFiles A list of ImageFile objects holding individual metadata on any previously seen files by the program.
      */
-    public ApplicationContext(HashSet<FileTag> definedTags, ArrayList<String> knownDirectories, ArrayList<ImageFile> knownImageFiles) {
+    public ApplicationContext(TreeSet<FileTag> definedTags, ArrayList<String> knownDirectories, ArrayList<ImageFile> knownImageFiles) {
         this.definedTags = definedTags;
         this.knownDirectories = knownDirectories;
         this.knownImageFiles = knownImageFiles;
@@ -37,19 +34,31 @@ public class ApplicationContext {
      */
     @Override
     public String toString() {
-        return "All known directories: \n" +
-                this.knownDirectories.toString() + "\n" +
-                "All defined file tags: \n" +
-                this.definedTags.toString() + "\n" +
-                "All known Image File objects: \n" +
-                this.knownImageFiles + "\n";
+        StringBuilder object = new StringBuilder();
+        object.append("All known directories: \n");
+        for (String directory : this.knownDirectories) {
+            object.append(directory)
+                    .append("\n");
+        }
+        object.append("All defined file tags: \n");
+        for (FileTag tag : this.definedTags) {
+            object.append(tag.getName())
+                    .append("\n");
+        }
+        object.append("All known Image File objects by name & path: \n");
+        for (ImageFile imageFile : knownImageFiles) {
+            object.append(imageFile.getFile().getName()).append(" @ ")
+                    .append(imageFile.getFile().getPath())
+                    .append("\n");
+        }
+        return object.toString();
     }
 
     /**
      * Defined tags refer to a set of all tags declared by the user. A set prevents duplicate creation and tag reuse.
      * @return A set of all FileTag objects know by the program.
      */
-    public Set<FileTag> getDefinedTags() {
+    public TreeSet<FileTag> getDefinedTags() {
         return definedTags;
     }
 
@@ -58,7 +67,7 @@ public class ApplicationContext {
      * This method erases the existing set and replaces it with the supplied set.
      * @param definedTags The set of FileTag objects to replace the existing set.
      */
-    public void setDefinedTags(Set<FileTag> definedTags) {
+    public void setDefinedTags(TreeSet<FileTag> definedTags) {
         this.definedTags = definedTags;
     }
 
@@ -68,7 +77,7 @@ public class ApplicationContext {
      * This list controls what directories are relevant as instructed by the user.
      * @return A list of Strings containing all relevant file recordists on the user's computer to be watched for images.
      */
-    public List<String> getKnownDirectories() {
+    public ArrayList<String> getKnownDirectories() {
         return knownDirectories;
     }
 
@@ -79,7 +88,7 @@ public class ApplicationContext {
      * This method erases the existing list and replaces it with the supplied list.
      * @param knownDirectories The list of Strings of directory paths to replace the existing list.
      */
-    public void setKnownDirectories(List<String> knownDirectories) {
+    public void setKnownDirectories(ArrayList<String> knownDirectories) {
         this.knownDirectories = knownDirectories;
     }
 
@@ -88,7 +97,7 @@ public class ApplicationContext {
      * These objects represent metadata on previously scanned image files.
      * @return A list of all ImageFile objects currently catalogued.
      */
-    public List<ImageFile> getKnownImageFiles() {
+    public ArrayList<ImageFile> getKnownImageFiles() {
         return knownImageFiles;
     }
 
@@ -98,7 +107,7 @@ public class ApplicationContext {
      * This method erases the existing list of ImageFiles and replaces it with the provided list.
      * @param knownImageFiles The new list of ImageFiles to be saved.
      */
-    public void setKnownImageFiles(List<ImageFile> knownImageFiles) {
+    public void setKnownImageFiles(ArrayList<ImageFile> knownImageFiles) {
         this.knownImageFiles = knownImageFiles;
     }
 }
