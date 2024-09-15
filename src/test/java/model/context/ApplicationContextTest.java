@@ -74,6 +74,7 @@ class ApplicationContextTest {
 
     @Test
     void getKnownImageFiles_returnsCorrectArrayList() {
+        //todo: failing test
         ArrayList<ImageFile> expected = generateTestImageFileArrayList();
         assertEquals(expected, this.applicationContext.getKnownImageFiles());
     }

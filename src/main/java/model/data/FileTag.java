@@ -48,6 +48,23 @@ public class FileTag implements Comparable<FileTag> {
     }
 
     /**
+     * Checks to see if the provided object is a FileTag and if it is, checks to see if that FileTag object also has
+     * the same name as this FileTag.
+     * @param obj The object to compare this ImageFile's FileTag to.
+     * @return <br>
+     * True if the provided object is an FileTag with the same name as this FileTag. <br>
+     * False if the provided object isn't a FileTag, or the provided FileTag has a different name.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().equals(this.getClass())) {
+            return false;
+        }
+
+        return compareTo((FileTag) obj) == 0;
+    }
+
+    /**
      * Returns the name of this FileTag.
      * The name is the primary data point used for any filtering/sorting operations that are influenced/driven by file tags.
      * @return The name of this FileTag.

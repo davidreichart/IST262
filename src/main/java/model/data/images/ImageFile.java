@@ -77,12 +77,12 @@ public abstract class ImageFile {
      * If the string given does not match the tag for this image, an execution is thrown and the tag is not updated.
      * If there is no tag applied to this image file, an exception is thrown and no action is taken.
      * A tag "null" will be applied in its place, this tag is ignored by the GUI.
-     * //todo: the "null" tag strategy should probably be replaced. This should happen when multiple tags per image is supported
      * @param tagToRemove A string equal to the name of the FileTag to be removed from this image file.
      * @throws IllegalArgumentException If this image file has no tag OR <br>
      * this image file does not have a tag by the given {@code tagToRemove} name.
      */
     public void removeFileTag(String tagToRemove) throws IllegalArgumentException {
+        //todo: the "null" tag strategy should probably be replaced. This should happen when multiple tags per image is supported
         if (this.fileTag == null) {
             throw new IllegalArgumentException("There is no tag to remove.");
         } else if (!this.fileTag.getName().equals(tagToRemove)) {

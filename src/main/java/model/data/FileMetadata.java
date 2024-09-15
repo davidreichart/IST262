@@ -36,6 +36,14 @@ public class FileMetadata {
                 "    Pixel count: " + this.pixelCount + "\n";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().equals(FileMetadata.class)) {
+            return false;
+        }
+        return this.resolution.equals(((FileMetadata) obj).getResolution());
+    }
+
     /**
      * Returns the stored resolution of the image (height x width) as a Dimension object.
      * @return The Dimension representation of the image file's resolution.
