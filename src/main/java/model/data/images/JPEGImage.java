@@ -36,6 +36,10 @@ public class JPEGImage extends ImageFile {
      */
     public JPEGImage(File file, Image image, FileTag fileTag, FileMetadata metadata) {
         super(file, image, fileTag, metadata);
+        this.file = file;
+        this.image = image;
+        this.fileTag = fileTag;
+        this.metadata = metadata;
     }
 
     /**
