@@ -35,7 +35,7 @@ public class ImageInspectionService {
      */
     @Override
     public String toString() {
-        return "Currently held file: " + this.imageToInspect.getSource().toString();
+        return "Currently held image: " + this.imageToInspect.getSource().toString();
     }
 
     /**
@@ -106,10 +106,9 @@ public class ImageInspectionService {
 
     /**
      * Returns a Dimension object representing the resolution (height x width) of the image file held by this ImageInspectionService.
-     * @param imageToInspect The currently stored image.
      * @return A Dimension object representing the resolution (height x width) of the image.
      */
-    public Dimension getResolution(Image imageToInspect) {
+    public Dimension getResolution() {
         int height = imageToInspect.getHeight(null);
         int width = imageToInspect.getWidth(null);
         return new Dimension(width, height);
