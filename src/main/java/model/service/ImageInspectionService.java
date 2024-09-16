@@ -35,7 +35,11 @@ public class ImageInspectionService {
      */
     @Override
     public String toString() {
-        return "Currently held image: " + this.imageToInspect.getSource().toString();
+        if (this.imageToInspect == null) {
+            return "There is no image currently held by this ImageInspectionService.";
+        } else {
+            return "Currently held image dimensions: " + this.imageToInspect.getHeight(null) + " x " + this.imageToInspect.getWidth(null);
+        }
     }
 
     /**
@@ -49,8 +53,6 @@ public class ImageInspectionService {
      * False if ANY above mentioned conditions are not met.
      */
     public boolean isSameImage(Object obj) {
-        //todo: this feels real bloated, too many responsibilities, could use this functionality elsewhere in the service
-
         // provided object must be of type Image
         if (!obj.getClass().equals(this.imageToInspect.getClass())) {
             return false;
@@ -88,10 +90,8 @@ public class ImageInspectionService {
      */
     public HashMap<Color, Integer> getExactColorDistribution() {
         HashMap<Color, Integer> colorDistributionMap = new HashMap<>();
-        BufferedImage bufferedImage = new BufferedImage(
-                this.imageToInspect.getWidth(null),
-                this.imageToInspect.getHeight(null),
-                BufferedImage.TYPE_INT_RGB);
+        BufferedImage bufferedImage = convertImageToBufferedImage();
+
         // iterating through every pixel in the image
         for (int y = 0; y < bufferedImage.getHeight(); y++) {
             for (int x = 0; x < bufferedImage.getWidth(); x++) {
@@ -135,24 +135,30 @@ public class ImageInspectionService {
 
     /**
      * Converts the Image object held by this ImageInspectionService from an Image object to a BufferedImage object.
+     * The converted BufferedImage will have the given Image object already drawn into it.
      * @return A BufferedImage of the Image object held by this ImageInspectionService.
      */
-    private BufferedImage convertImageToBufferedImage() {
-        return new BufferedImage(
+    public BufferedImage convertImageToBufferedImage() {
+        BufferedImage bufferedImage = new BufferedImage(
                 this.imageToInspect.getWidth(null),
                 this.imageToInspect.getHeight(null),
                 BufferedImage.TYPE_INT_RGB);
+        bufferedImage.getGraphics().drawImage(this.imageToInspect, 0, 0, null);
+        return bufferedImage;
     }
 
     /**
      * Converts the given Image object into a BufferedImage object.
+     * The converted BufferedImage will have the given Image object already drawn into it.
      * @param imageToConvert The Image to convert to a BufferedImage.
      * @return A BufferedImage correspondent to the given Image.
      */
-    private BufferedImage convertImageToBufferedImage(Image imageToConvert) {
-        return new BufferedImage(
+    public BufferedImage convertImageToBufferedImage(Image imageToConvert) {
+        BufferedImage bufferedImage = new BufferedImage(
                 imageToConvert.getWidth(null),
                 imageToConvert.getHeight(null),
                 BufferedImage.TYPE_INT_RGB);
+        bufferedImage.getGraphics().drawImage(imageToConvert, 0, 0, null);
+        return bufferedImage;
     }
 }
