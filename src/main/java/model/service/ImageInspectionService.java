@@ -38,7 +38,7 @@ public class ImageInspectionService {
         if (this.imageToInspect == null) {
             return "There is no image currently held by this ImageInspectionService.";
         } else {
-            return "Currently held image dimensions: " + this.imageToInspect.getHeight(null) + " x " + this.imageToInspect.getWidth(null);
+            return "Currently held image dimensions: " + this.imageToInspect.getWidth(null) + " x " + this.imageToInspect.getHeight(null);
         }
     }
 

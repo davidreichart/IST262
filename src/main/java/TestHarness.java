@@ -11,6 +11,6 @@ import java.io.IOException;
 public class TestHarness {
     public TestHarness() {
         TestHarness_JPEGImage testHarnessJpegImage = new TestHarness_JPEGImage();
-        TestHarness_FileInspectionService testHarnessFileInspectionService = new TestHarness_FileInspectionService();
+        TestHarness_ImageInspectionService testHarnessImageInspectionService = new TestHarness_ImageInspectionService();
     }
 }
