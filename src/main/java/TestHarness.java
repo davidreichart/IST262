@@ -14,6 +14,10 @@ public class TestHarness {
         testJPEGImage();
     }
 
+    /*******
+     * Tests for class: FileInspectionService
+     *******/
+
     public void testFileInspectionService() {
         File testPngFile = new File("src/test/resources/bluePNG.png");
         File testJpegFile = new File("src/test/resources/greenJPEG.jpeg");
@@ -62,6 +66,10 @@ public class TestHarness {
                 "    actual: " + fileInspectionService.getFileToInspect().getPath();
         return testResult;
     }
+
+    /*******
+     * Tests for class: FileInspectionService
+     *******/
 
     public void testJPEGImage() {
         File testFile = new File("src/test/resources/greenJPEG.jpeg");

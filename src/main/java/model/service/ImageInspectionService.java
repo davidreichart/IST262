@@ -107,6 +107,40 @@ public class ImageInspectionService {
     }
 
     /**
+     * Returns a hash map containing the pixel count of each dominant color within an image.
+     * The possible color values are: Color.RED, Color.GREEN, Color.BLUE.
+     * Dominant color is determined on what possible color the pixel is closets to.
+     * @return A hash map containing the pixel count of each dominant color within an image.
+     */
+    public HashMap<Color, Integer> getRoughColorDistribution() {
+        HashMap<Color, Integer> colorDistributionMap = new HashMap<>();
+        colorDistributionMap.put(Color.RED, 0);
+        colorDistributionMap.put(Color.GREEN, 0);
+        colorDistributionMap.put(Color.BLUE, 0);
+        BufferedImage bufferedImage = convertImageToBufferedImage();
+
+        for (int y = 0; y < bufferedImage.getHeight(); y++) {
+            for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                Color currentPixelColor = new Color(bufferedImage.getRGB(x, y));
+                int redValue = currentPixelColor.getRed();
+                int blueValue = currentPixelColor.getBlue();
+                int greenValue = currentPixelColor.getGreen();
+                if (redValue > blueValue && redValue > greenValue) {
+                    // red is dominant
+                    colorDistributionMap.merge(Color.RED, 1, Integer::sum);
+                } else if (blueValue > greenValue) {
+                    // blue is dominant
+                    colorDistributionMap.merge(Color.BLUE, 1, Integer::sum);
+                } else {
+                    // green is dominant
+                    colorDistributionMap.merge(Color.GREEN, 1, Integer::sum);
+                }
+            }
+        }
+        return colorDistributionMap;
+    }
+
+    /**
      * Returns a Dimension object representing the resolution (height x width) of the image file held by this ImageInspectionService.
      * @return A Dimension object representing the resolution (height x width) of the image.
      */

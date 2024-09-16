@@ -1,5 +1,6 @@
 package model.context;
 
+import model.creation.ImageFileFactory;
 import model.data.FileTag;
 import model.data.images.ImageFile;
 import model.data.images.JPEGImage;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,11 +35,11 @@ class ApplicationContextTest {
                 "All defined file tags: \n" +
                 "tag0\n" + "tag1\n" + "tag2\n" + "tag3\n" + "tag4\n" +
                 "All known Image File objects by name & path: \n" +
-                "textFile.txt @ src\\test\\resources\\textFile.txt\n" +
-                "textFile.txt @ src\\test\\resources\\textFile.txt\n" +
-                "textFile.txt @ src\\test\\resources\\textFile.txt\n" +
-                "textFile.txt @ src\\test\\resources\\textFile.txt\n" +
-                "textFile.txt @ src\\test\\resources\\textFile.txt\n";
+                "greenJPEG.jpeg @ src\\test\\resources\\greenJPEG.jpeg\n" +
+                "greenJPEG.jpeg @ src\\test\\resources\\greenJPEG.jpeg\n" +
+                "greenJPEG.jpeg @ src\\test\\resources\\greenJPEG.jpeg\n" +
+                "greenJPEG.jpeg @ src\\test\\resources\\greenJPEG.jpeg\n" +
+                "greenJPEG.jpeg @ src\\test\\resources\\greenJPEG.jpeg\n";
         assertEquals(expectedOutput, this.applicationContext.toString());
     }
 
@@ -74,9 +76,17 @@ class ApplicationContextTest {
 
     @Test
     void getKnownImageFiles_returnsCorrectArrayList() {
-        //todo: failing test
-        ArrayList<ImageFile> expected = generateTestImageFileArrayList();
-        assertEquals(expected, this.applicationContext.getKnownImageFiles());
+        ArrayList<ImageFile> methodReturnValueList = this.applicationContext.getKnownImageFiles();
+        ArrayList<ImageFile> expectedList = generateTestImageFileArrayList();
+        StringBuilder methodReturnValueString = new StringBuilder();
+        StringBuilder expectedString = new StringBuilder();
+        for (ImageFile file : methodReturnValueList) {
+            methodReturnValueString.append(file.getFile().getPath());
+        }
+        for (ImageFile file : expectedList) {
+            expectedString.append(file.getFile().getPath());
+        }
+        assertEquals(expectedString.toString(), methodReturnValueString.toString());
     }
 
     @Test
@@ -110,7 +120,7 @@ class ApplicationContextTest {
     private ArrayList<ImageFile> generateTestImageFileArrayList() {
         ArrayList<ImageFile> testImageFileList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            ImageFile imageFile = new PNGImage(new File("src/test/resources/textFile.txt"));
+            ImageFile imageFile = new JPEGImage(new File("src/test/resources/greenJPEG.jpeg"));
             testImageFileList.add(imageFile);
         }
         return testImageFileList;

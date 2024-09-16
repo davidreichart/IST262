@@ -2,6 +2,7 @@ package model.data.images;
 
 import model.data.FileMetadata;
 import model.data.FileTag;
+import model.service.FileInspectionService;
 
 import java.awt.*;
 import java.io.File;
