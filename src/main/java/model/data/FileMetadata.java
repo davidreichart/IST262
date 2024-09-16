@@ -32,7 +32,7 @@ public class FileMetadata {
     @Override
     public String toString() {
         return "METADATA: \n" +
-                "    Resolution: " + this.resolution.getHeight() + " x " + this.resolution.getWidth() + "\n" +
+                "    Resolution: " + (int) this.resolution.getHeight() + " x " + (int) this.resolution.getWidth() + "\n" +
                 "    Pixel count: " + this.pixelCount + "\n";
     }
 

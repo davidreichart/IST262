@@ -20,6 +20,10 @@ class FileMetadataTest {
 
     @Test
     void testToString() {
+        String expected = "METADATA: \n" +
+                "    Resolution: 500 x 300\n" +
+                "    Pixel count: " + 500 * 300 + "\n";
+        assertEquals(expected, this.testFileMetadata.toString());
     }
 
     @Test
