@@ -57,14 +57,8 @@ public class ImageInspectionService {
         }
 
         // need to cast Image -> BufferedImage to inspect objects further
-        BufferedImage serviceImage = new BufferedImage(
-                this.imageToInspect.getWidth(null),
-                this.imageToInspect.getHeight(null),
-                BufferedImage.TYPE_INT_ARGB);
-        BufferedImage objImage = new BufferedImage(
-                ((Image) obj).getWidth(null),
-                ((Image) obj).getHeight(null),
-                BufferedImage.TYPE_INT_ARGB);
+        BufferedImage serviceImage = convertImageToBufferedImage();
+        BufferedImage objImage = convertImageToBufferedImage((Image) obj);
 
         // two different sized images can't be the same
         if (serviceImage.getHeight() != objImage.getHeight() || serviceImage.getWidth() != objImage.getWidth()) {
@@ -73,24 +67,8 @@ public class ImageInspectionService {
 
         // If two images have the same quantity of pixels by color, we assume they are the same.
         // Note that this doesn't currently track for x-y positions of said pixels.
-        HashMap<Color, Integer> serviceImageColorMap = new HashMap<>();
-        HashMap<Color, Integer> objImageColorMap = new HashMap<>();
-        for (int y = 0; y < serviceImage.getHeight(); y++) {
-            for (int x = 0; x < serviceImage.getWidth(); x++) {
-                Color serviceImagePixelColor = new Color(serviceImage.getRGB(x, y));
-                Color objImagePixelColor = new Color(objImage.getRGB(x, y));
-                if (!serviceImageColorMap.containsKey(serviceImagePixelColor)) {
-                    serviceImageColorMap.put(serviceImagePixelColor, 1);
-                } else {
-                    serviceImageColorMap.merge(serviceImagePixelColor, 1, Integer::sum);
-                }
-                if (!objImageColorMap.containsKey(objImagePixelColor)) {
-                    objImageColorMap.put(objImagePixelColor, 1);
-                } else {
-                    objImageColorMap.merge(objImagePixelColor, 1, Integer::sum);
-                }
-            }
-        }
+        HashMap<Color, Integer> serviceImageColorMap = getExactColorDistribution();
+        HashMap<Color, Integer> objImageColorMap = getExactColorDistribution();
 
         for (Map.Entry<Color, Integer> serviceColorMapEntry : serviceImageColorMap.entrySet()) {
             Color currentColor = serviceColorMapEntry.getKey();
@@ -102,6 +80,30 @@ public class ImageInspectionService {
         }
         // will be reached if all required conditions are met
         return true;
+    }
+
+    /**
+     * Returns a hash map containing the number of pixels and their corresponding colors found within an image.
+     * @return A hash map with key = color and value = number of pixels of that color found within an image.
+     */
+    public HashMap<Color, Integer> getExactColorDistribution() {
+        HashMap<Color, Integer> colorDistributionMap = new HashMap<>();
+        BufferedImage bufferedImage = new BufferedImage(
+                this.imageToInspect.getWidth(null),
+                this.imageToInspect.getHeight(null),
+                BufferedImage.TYPE_INT_RGB);
+        // iterating through every pixel in the image
+        for (int y = 0; y < bufferedImage.getHeight(); y++) {
+            for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                Color currentPixelColor = new Color(bufferedImage.getRGB(x, y));
+                if (!colorDistributionMap.containsKey(currentPixelColor)) {
+                    colorDistributionMap.put(currentPixelColor, 1);
+                } else {
+                    colorDistributionMap.merge(currentPixelColor, 1, Integer::sum);
+                }
+            }
+        }
+        return colorDistributionMap;
     }
 
     /**
@@ -129,5 +131,28 @@ public class ImageInspectionService {
      */
     public void setImageToInspect(Image imageToInspect) {
         this.imageToInspect = imageToInspect;
+    }
+
+    /**
+     * Converts the Image object held by this ImageInspectionService from an Image object to a BufferedImage object.
+     * @return A BufferedImage of the Image object held by this ImageInspectionService.
+     */
+    private BufferedImage convertImageToBufferedImage() {
+        return new BufferedImage(
+                this.imageToInspect.getWidth(null),
+                this.imageToInspect.getHeight(null),
+                BufferedImage.TYPE_INT_RGB);
+    }
+
+    /**
+     * Converts the given Image object into a BufferedImage object.
+     * @param imageToConvert The Image to convert to a BufferedImage.
+     * @return A BufferedImage correspondent to the given Image.
+     */
+    private BufferedImage convertImageToBufferedImage(Image imageToConvert) {
+        return new BufferedImage(
+                imageToConvert.getWidth(null),
+                imageToConvert.getHeight(null),
+                BufferedImage.TYPE_INT_RGB);
     }
 }
