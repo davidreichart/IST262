@@ -1,4 +1,4 @@
-import model.util.ImageInspectionService;
+import model.ImageInspectionService;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

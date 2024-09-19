@@ -1,5 +1,6 @@
 package model.util;
 
+import model.FileInspectionService;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

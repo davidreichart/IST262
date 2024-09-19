@@ -1,7 +1,7 @@
 package model.context;
 
 import model.data.FileTag;
-import model.data.images.ImageFile;
+import model.ImageFile;
 
 import java.util.*;
 

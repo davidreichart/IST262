@@ -16,11 +16,21 @@ public class FileMetadata {
     }
 
     private FileMetadata(Builder builder) {
-        this.absolutePath = builder.absolutePath;
-        this.contentType = builder.contentType;
-        this.byteCount = builder.byteCount;
-        this.fileName = builder.fileName;
-        this.fileExtension = builder.fileExtension;
+        if (builder.absolutePath != null) {
+            this.absolutePath = builder.absolutePath;
+        }
+        if (builder.contentType != null) {
+            this.contentType = builder.contentType;
+        }
+        if (builder.byteCount > 0) {
+            this.byteCount = builder.byteCount;
+        }
+        if (builder.fileName != null) {
+            this.fileName = builder.fileName;
+        }
+        if (builder.fileExtension != null) {
+            this.fileExtension = builder.fileExtension;
+        }
     }
 
     public static Builder builder() {
@@ -62,5 +72,16 @@ public class FileMetadata {
         public FileMetadata build() {
             return new FileMetadata(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "    FileMetadata {\n" +
+                "       Absolute path: " + this.absolutePath + "\n" +
+                "       Content type: " + this.contentType + "\n" +
+                "       File size (bytes): " + this.byteCount + "\n" +
+                "       File name: " + this.fileName + "\n" +
+                "       File extension: " + this.fileExtension + "\n" +
+                "   }\n";
     }
 }

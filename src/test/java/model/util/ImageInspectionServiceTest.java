@@ -1,5 +1,6 @@
 package model.util;
 
+import model.ImageInspectionService;
 import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;

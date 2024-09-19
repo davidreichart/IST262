@@ -1,7 +1,6 @@
 package model.data;
 
 import java.awt.*;
-import java.util.Comparator;
 
 /**
  * The FileTag class represents a user-definable data point to categorize ImageFile objects with.

@@ -19,10 +19,18 @@ public class ImageMetadata {
     }
 
     private ImageMetadata(Builder builder) {
-        this.resolution = builder.resolution;
-        this.pixelCount = builder.pixelCount;
-        this.roughColorDistribution = builder.roughColorDistribution;
-        this.exactColorDistribution = builder.exactColorDistribution;
+        if (builder.resolution != null) {
+            this.resolution = builder.resolution;
+        }
+        if (builder.pixelCount > 0) {
+            this.pixelCount = builder.pixelCount;
+        }
+        if (builder.roughColorDistribution != null) {
+            this.roughColorDistribution = builder.roughColorDistribution;
+        }
+        if (builder.exactColorDistribution != null) {
+            this.exactColorDistribution = builder.exactColorDistribution;
+        }
     }
 
     public static Builder builder() {
@@ -60,19 +68,13 @@ public class ImageMetadata {
         }
     }
 
-    public Dimension getResolution() {
-        return resolution;
-    }
-
-    public int getPixelCount() {
-        return pixelCount;
-    }
-
-    public TreeMap<Color, Integer> getRoughColorDistribution() {
-        return roughColorDistribution;
-    }
-
-    public TreeMap<Color, Integer> getExactColorDistribution() {
-        return exactColorDistribution;
+    @Override
+    public String toString() {
+        return "    ImageMetadata {\n" +
+                "       Resolution:" + this.resolution.toString() + "\n" +
+                "       Pixel count:" + this.pixelCount + "\n" +
+                "       Rough colormap size: " + this.roughColorDistribution.size() + "\n" +
+                "       Exact colormap size: " + this.exactColorDistribution.size() + "\n" +
+                "   }\n";
     }
 }

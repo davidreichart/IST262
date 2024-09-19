@@ -1,16 +1,13 @@
 package model.context;
 
-import model.creation.ImageFileFactory;
 import model.data.FileTag;
-import model.data.images.ImageFile;
-import model.data.images.JPEGImage;
-import model.data.images.PNGImage;
+import model.ImageFile;
+import model.JPEGImage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;

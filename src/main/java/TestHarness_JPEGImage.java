@@ -1,5 +1,5 @@
-import model.creation.ImageFileFactory;
-import model.data.images.JPEGImage;
+import model.ImageFileFactory;
+import model.JPEGImage;
 
 import java.io.File;
 import java.io.IOException;

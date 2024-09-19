@@ -1,6 +1,6 @@
 public class TestHarness {
     public TestHarness() {
-        TestHarness_JPEGImage testHarnessJpegImage = new TestHarness_JPEGImage();
-        TestHarness_ImageInspectionService testHarnessImageInspectionService = new TestHarness_ImageInspectionService();
+        TestHarness_FileInspector testHarnessFileInspector = new TestHarness_FileInspector();
+        TestHarness_FileMetadata testHarnessFileMetadata = new TestHarness_FileMetadata();
     }
 }

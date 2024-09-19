@@ -1,8 +1,9 @@
 package model.data.images;
 
-import model.data.OldFileMetadata;
+import model.OldFileMetadata;
+import model.PNGImage;
 import model.data.FileTag;
-import model.util.ImageInspectionService;
+import model.ImageInspectionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

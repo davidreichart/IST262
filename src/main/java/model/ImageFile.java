@@ -1,6 +1,6 @@
-package model.data.images;
+package model;
 
-import model.data.OldFileMetadata;
+import model.OldFileMetadata;
 import model.data.FileTag;
 
 import java.awt.*;

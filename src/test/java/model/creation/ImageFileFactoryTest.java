@@ -1,8 +1,9 @@
 package model.creation;
 
-import model.data.images.ImageFile;
-import model.data.images.JPEGImage;
-import model.data.images.PNGImage;
+import model.ImageFile;
+import model.ImageFileFactory;
+import model.JPEGImage;
+import model.PNGImage;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

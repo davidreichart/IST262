@@ -1,9 +1,9 @@
-package model.creation;
+package model;
 
-import model.data.images.ImageFile;
-import model.data.images.JPEGImage;
-import model.data.images.PNGImage;
-import model.util.FileInspectionService;
+import model.ImageFile;
+import model.JPEGImage;
+import model.PNGImage;
+import model.FileInspectionService;
 
 import java.io.File;
 import java.io.IOException;
