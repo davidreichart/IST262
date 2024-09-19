@@ -1,5 +1,4 @@
-import model.data.images.ImageFile;
-import model.service.ImageInspectionService;
+import model.util.ImageInspectionService;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

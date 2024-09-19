@@ -94,7 +94,7 @@ public class TestHarness_JPEGImage {
 
     private void test_toString() {
         System.out.println(ANSI_PURPLE + "\ntoString method. . ." + ANSI_RESET);
-        System.out.println();
+        System.out.println(this.jpegImage.toString());
     }
 
     private void test_addFileTag() {

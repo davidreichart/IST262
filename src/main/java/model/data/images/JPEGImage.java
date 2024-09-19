@@ -1,6 +1,6 @@
 package model.data.images;
 
-import model.data.FileMetadata;
+import model.data.OldFileMetadata;
 import model.data.FileTag;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ public class JPEGImage extends ImageFile {
     private File file;
     private Image image;
     private FileTag fileTag;
-    private FileMetadata metadata;
+    private OldFileMetadata metadata;
 
     /**
      * Creates a new JPEGImage when only a file path is known.
@@ -34,7 +34,7 @@ public class JPEGImage extends ImageFile {
      * @param fileTag The tag used to categorize this image.
      * @param metadata The collection of metadata further contextualizing this image.
      */
-    public JPEGImage(File file, Image image, FileTag fileTag, FileMetadata metadata) {
+    public JPEGImage(File file, Image image, FileTag fileTag, OldFileMetadata metadata) {
         super(file, image, fileTag, metadata);
         this.file = file;
         this.image = image;

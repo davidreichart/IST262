@@ -1,8 +1,7 @@
 package model.data.images;
 
-import model.data.FileMetadata;
+import model.data.OldFileMetadata;
 import model.data.FileTag;
-import model.service.FileInspectionService;
 
 import java.awt.*;
 import java.io.File;
@@ -17,7 +16,7 @@ public abstract class ImageFile {
     private File file;
     private Image image;
     private FileTag fileTag;
-    private FileMetadata metadata;
+    private OldFileMetadata metadata;
 
     /**
      * Creates a new ImageFile when only a file path is known.
@@ -37,7 +36,7 @@ public abstract class ImageFile {
      * @param fileTag The tag used to categorize this image.
      * @param metadata The collection of metadata further contextualizing this image.
      */
-    public ImageFile (File file, Image image, FileTag fileTag, FileMetadata metadata) {
+    public ImageFile (File file, Image image, FileTag fileTag, OldFileMetadata metadata) {
         this.file = file;
         this.image = image;
         this.fileTag = fileTag;
@@ -148,7 +147,7 @@ public abstract class ImageFile {
      * Returns a FileMetadata object that contains multiple fields of information that further contextualize an ImageFile.
      * @return A FileMetadata object containing full image file context.
      */
-    public FileMetadata getMetadata() {
+    public OldFileMetadata getMetadata() {
         return metadata;
     }
 
@@ -156,7 +155,7 @@ public abstract class ImageFile {
      * Replaces the existing FileMetadata object used to store contextual information about an ImageFile.
      * @param metadata The new FileMetadata object ot overwrite the existing one on this ImageFile.
      */
-    public void setMetadata(FileMetadata metadata) {
+    public void setMetadata(OldFileMetadata metadata) {
         this.metadata = metadata;
     }
 }

@@ -1,4 +1,4 @@
-package model.service;
+package model.util;
 
 import java.io.File;
 import java.io.IOException;

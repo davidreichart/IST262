@@ -1,8 +1,8 @@
 package model.data.images;
 
-import model.data.FileMetadata;
+import model.data.OldFileMetadata;
 import model.data.FileTag;
-import model.service.ImageInspectionService;
+import model.util.ImageInspectionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +27,7 @@ class PNGImageTest {
             System.out.println(ioException.getMessage());
         }
         FileTag fileTag = new FileTag("testTag", new Color(0x000000));
-        FileMetadata metadata = new FileMetadata(new Dimension(100, 200), 100 * 200);
+        OldFileMetadata metadata = new OldFileMetadata(new Dimension(100, 200), 100 * 200);
 
         this.testPNGImage = new PNGImage(file, image, fileTag, metadata);
     }
@@ -97,13 +97,13 @@ class PNGImageTest {
 
     @Test
     void getMetadata_returnsExpectedFileMetadataObject() {
-        FileMetadata expected = new FileMetadata(new Dimension(100, 200), 100 * 200);
+        OldFileMetadata expected = new OldFileMetadata(new Dimension(100, 200), 100 * 200);
         assertEquals(expected, this.testPNGImage.getMetadata());
     }
 
     @Test
     void setMetadata_updatesFileMetadataObject() {
-        FileMetadata differentMetadata = new FileMetadata(new Dimension(400, 50), 400 * 50);
+        OldFileMetadata differentMetadata = new OldFileMetadata(new Dimension(400, 50), 400 * 50);
         this.testPNGImage.setMetadata(differentMetadata);
         assertEquals(differentMetadata, this.testPNGImage.getMetadata());
     }

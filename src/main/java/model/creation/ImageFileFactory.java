@@ -3,7 +3,7 @@ package model.creation;
 import model.data.images.ImageFile;
 import model.data.images.JPEGImage;
 import model.data.images.PNGImage;
-import model.service.FileInspectionService;
+import model.util.FileInspectionService;
 
 import java.io.File;
 import java.io.IOException;
