@@ -68,24 +68,50 @@ public class TestHarness_FileMetadata {
     private void test_builder_buildsGivenAllFieldsManually() {
         System.out.println(this.ANSI_PURPLE + "new FileMetadata builder" + this.ANSI_RESET);
         System.out.println(this.ANSI_PURPLE + "(all fields manually provided)" + this.ANSI_RESET);
+        FileMetadata metadata = FileMetadata.builder()
+                .absolutePath("...Absolute Path")
+                .contentType("...Content type")
+                .byteCount(200)
+                .fileName("...File name")
+                .fileExtension("...File extension")
+                .build();
+        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed. . ." + this.ANSI_RESET);
+        System.out.println(metadata.toString());
     }
 
     private void test_builder_buildsGivenNotAllFieldsManually() {
         System.out.println(this.ANSI_PURPLE + "new FileMetadata builder" + this.ANSI_RESET);
         System.out.println(this.ANSI_PURPLE + "(fields manually provided, some fields skipped)" + this.ANSI_RESET);
+        FileMetadata metadata = FileMetadata.builder()
+                .absolutePath("...Absolute path")
+                .fileExtension("...File extension")
+                .build();
+        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed. . ." + this.ANSI_RESET);
+        System.out.println(metadata.toString());
     }
 
     private void test_builder_buildsGivenAllFieldsFromImageInspector() {
         System.out.println(this.ANSI_PURPLE + "new FileMetadata builder" + this.ANSI_RESET);
         System.out.println(this.ANSI_PURPLE + "(all fields provided by ImageInspector & Files class calls)" + this.ANSI_RESET);
-
+        FileMetadata metadata = FileMetadata.builder()
+                .absolutePath(this.PNG_IMAGE.getAbsolutePath())
+                .contentType(FileInspector.getFileContentType(this.PNG_IMAGE))
+                .byteCount(FileInspector.getFileSizeInBytes(this.PNG_IMAGE))
+                .fileName(this.PNG_IMAGE.getName())
+                .fileExtension(FileInspector.getFileExtension(this.PNG_IMAGE))
+                .build();
+        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed (PNG_IMAGE). . ." + this.ANSI_RESET);
+        System.out.println(metadata.toString());
     }
 
     private void test_builder_buildsGivenNotAllFieldsFromImageInspector() {
         System.out.println(this.ANSI_PURPLE + "new FileMetadata builder" + this.ANSI_RESET);
         System.out.println(this.ANSI_PURPLE + "(fields provided by ImageInspector & Files class calls, some fields skipped)" + this.ANSI_RESET);
-
+        FileMetadata metadata = FileMetadata.builder()
+                .absolutePath(this.PNG_IMAGE.getAbsolutePath())
+                .contentType(FileInspector.getFileContentType(this.PNG_IMAGE))
+                .build();
+        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed (PNG_IMAGE). . ." + this.ANSI_RESET);
+        System.out.println(metadata.toString());
     }
-
-
 }
