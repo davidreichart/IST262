@@ -83,6 +83,23 @@ public class UserFile {
                 .build();
     }
 
+    public void addFileTag(FileTag fileTag) {
+        if (this.fileTags.contains(fileTag.getName())) {
+            throw new UnsupportedOperationException("This file already has a tag by that name applied.");
+        } else {
+            this.fileTags.add(fileTag);
+        }
+    }
+
+    public void removeFileTag(String tagToRemove) {
+        for (FileTag tag : this.fileTags) {
+            if (tag.getName().equals(tagToRemove)) {
+                this.fileTags.remove(tag);
+                break;
+            }
+        }
+    }
+
     public FileMetadata getFileMetadata() throws UnsupportedOperationException {
         if (this.fileMetadata == null) {
             throw new UnsupportedOperationException("This file's metadata is currently null. Run \"generateAllFileMetadata\" to create this object.");

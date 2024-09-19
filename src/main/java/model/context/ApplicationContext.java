@@ -1,8 +1,8 @@
 package model.context;
 
 import model.data.FileTag;
-import model.ImageFile;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -11,47 +11,63 @@ import java.util.*;
  */
 public class ApplicationContext {
 
+    private static ApplicationContext INSTANCE;
     TreeSet<FileTag> definedTags;
     ArrayList<String> knownDirectories;
-    ArrayList<ImageFile> knownImageFiles;
 
     /**
      * Instantiates a new instance of the ApplicationContext to store persistent data.
      * This class centralizes all persistent data (it is essentially the meta-state of the program).
      * @param definedTags A set of all FileTags created by the user.
      * @param knownDirectories A list of Strings representing file directories to be scanned by the program for image files.
-     * @param knownImageFiles A list of ImageFile objects holding individual metadata on any previously seen files by the program.
      */
-    public ApplicationContext(TreeSet<FileTag> definedTags, ArrayList<String> knownDirectories, ArrayList<ImageFile> knownImageFiles) {
+    public ApplicationContext(TreeSet<FileTag> definedTags, ArrayList<String> knownDirectories) {
         this.definedTags = definedTags;
         this.knownDirectories = knownDirectories;
-        this.knownImageFiles = knownImageFiles;
     }
 
-    /**
-     * Returns a string displaying all currently stored information comprising the program's context/state.
-     * @return A string detailing all currently stored state variables.
-     */
-    @Override
-    public String toString() {
-        StringBuilder object = new StringBuilder();
-        object.append("All known directories: \n");
-        for (String directory : this.knownDirectories) {
-            object.append(directory)
-                    .append("\n");
+    public void addNewFileTag(FileTag fileTag) throws IllegalArgumentException {
+        if (!this.definedTags.contains(fileTag)) {
+            this.definedTags.add(fileTag);
+        } else {
+            throw new IllegalArgumentException("The file tag you attempted to add is already defined.");
         }
-        object.append("All defined file tags: \n");
+    }
+
+    public void removeExistingFileTag(String tagName) throws IllegalArgumentException {
+        boolean tagRemoved = false;
         for (FileTag tag : this.definedTags) {
-            object.append(tag.getName())
-                    .append("\n");
+            if (tag.getName().equals(tagName)) {
+                this.definedTags.remove(tag);
+                tagRemoved = true;
+                break;
+            }
         }
-        object.append("All known Image File objects by name & path: \n");
-        for (ImageFile imageFile : knownImageFiles) {
-            object.append(imageFile.getFile().getName()).append(" @ ")
-                    .append(imageFile.getFile().getPath())
-                    .append("\n");
+        if (!tagRemoved) {
+            throw new IllegalArgumentException("There is no known file tag with the name provided. No tag has been removed.");
         }
-        return object.toString();
+    }
+
+    public void addNewDirectory(String directoryPath) throws IllegalArgumentException {
+        if (!this.knownDirectories.contains(directoryPath)) {
+            this.knownDirectories.add(directoryPath);
+        } else {
+            throw new IllegalArgumentException("The directory path you attempted to add already is already stored by the program.")
+        }
+    }
+
+    public void removeExistingDirectory(String directoryPath) throws IllegalArgumentException {
+        boolean directoryRemoved = false;
+        for (String directory :this.knownDirectories) {
+            if (directory.equals(directoryPath)) {
+                this.knownDirectories.remove(directory);
+                directoryRemoved = true;
+                break;
+            }
+        }
+        if (!directoryRemoved) {
+            throw new IllegalArgumentException("There was no stored directory found with the input path.");
+        }
     }
 
     /**
@@ -90,24 +106,5 @@ public class ApplicationContext {
      */
     public void setKnownDirectories(ArrayList<String> knownDirectories) {
         this.knownDirectories = knownDirectories;
-    }
-
-    /**
-     * Known image files refer to a list of ImageFile objects catalogued by the program.
-     * These objects represent metadata on previously scanned image files.
-     * @return A list of all ImageFile objects currently catalogued.
-     */
-    public ArrayList<ImageFile> getKnownImageFiles() {
-        return knownImageFiles;
-    }
-
-    /**
-     * Known image files refer to a list of ImageFile objects catalogued by the program.
-     * These objects represent metadata on previously scanned image files.
-     * This method erases the existing list of ImageFiles and replaces it with the provided list.
-     * @param knownImageFiles The new list of ImageFiles to be saved.
-     */
-    public void setKnownImageFiles(ArrayList<ImageFile> knownImageFiles) {
-        this.knownImageFiles = knownImageFiles;
     }
 }
