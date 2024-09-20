@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.TreeMap;
 
-public class ImageInspector {
+public final class ImageInspector {
 
     private ImageInspector() {}
 

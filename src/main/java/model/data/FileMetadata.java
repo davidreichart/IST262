@@ -22,7 +22,7 @@ public class FileMetadata {
         if (builder.contentType != null) {
             this.contentType = builder.contentType;
         }
-        if (builder.byteCount > 0) {
+        if (builder.byteCount > -1) {
             this.byteCount = builder.byteCount;
         }
         if (builder.fileName != null) {

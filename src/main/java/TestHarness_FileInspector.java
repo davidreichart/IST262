@@ -63,7 +63,7 @@ public class TestHarness_FileInspector {
 
     private void test_getFileContentType_catchesBadFilePath() {
         System.out.println(this.ANSI_CYAN + "FileInspector.getFileContentType" + this.ANSI_RESET);
-        System.out.println(this.ANSI_CYAN + "(given invalid path, should log error)" + this.ANSI_RESET);
+        System.out.println(this.ANSI_CYAN + "(given invalid path, should return an empty string)" + this.ANSI_RESET);
         System.out.println("Given BAD_PATH:         " + FileInspector.getFileContentType(this.BAD_PATH));
 
     }
@@ -79,7 +79,7 @@ public class TestHarness_FileInspector {
 
     private void test_getFileSizeInBytes_returnsZeroGivenBadFilePath() {
         System.out.println(this.ANSI_CYAN + "FileInspector.getFileSizeInBytes" + this.ANSI_RESET);
-        System.out.println(this.ANSI_CYAN + "(given invalid path, should be 0)" + this.ANSI_RESET);
+        System.out.println(this.ANSI_CYAN + "(given invalid path, should be -1)" + this.ANSI_RESET);
         System.out.println("Given BAD_PATH:         " + FileInspector.getFileSizeInBytes(this.BAD_PATH));
     }
 

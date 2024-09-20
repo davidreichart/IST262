@@ -15,11 +15,30 @@ public class UserFile {
     private ImageMetadata imageMetadata;
     private LinkedHashSet<FileTag> fileTags;
 
+    public UserFile(File file, FileMetadata fileMetadata, ImageMetadata imageMetadata, LinkedHashSet<FileTag> fileTags) {
+        this.file = file;
+        this.fileMetadata = fileMetadata;
+        this.imageMetadata = imageMetadata;
+        this.fileTags = fileTags;
+    }
+
     private UserFile(Builder builder) {
         this.file = builder.file;
-        this.fileMetadata = builder.fileMetadata;
-        this.imageMetadata = builder.imageMetadata;
-        this.fileTags = builder.fileTags;
+        if (builder.fileMetadata == null) {
+            generateAllFileMetadata();
+        } else {
+            this.fileMetadata = builder.fileMetadata;
+        }
+        if (builder.imageMetadata == null) {
+            generateAllImageMetadata();
+        } else {
+            this.imageMetadata = builder.imageMetadata;
+        }
+        if (builder.fileTags.isEmpty() || builder.fileTags == null) {
+            this.fileTags = new LinkedHashSet<>();
+        } else {
+            this.fileTags = builder.fileTags;
+        }
     }
 
     public static Builder builder(File file) {
@@ -84,7 +103,7 @@ public class UserFile {
     }
 
     public void addFileTag(FileTag fileTag) {
-        if (this.fileTags.contains(fileTag.getName())) {
+        if (this.fileTags.contains(fileTag)) {
             throw new UnsupportedOperationException("This file already has a tag by that name applied.");
         } else {
             this.fileTags.add(fileTag);

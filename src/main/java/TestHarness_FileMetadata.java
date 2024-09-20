@@ -1,4 +1,5 @@
 import model.data.FileMetadata;
+import model.data.UserFile;
 import model.util.FileInspector;
 
 import java.io.File;
@@ -48,7 +49,7 @@ public class TestHarness_FileMetadata {
                 200,
                 "...File Name",
                 "...File Extension");
-        System.out.println(ANSI_GREEN + "FileMetadata object constructed. . ." + ANSI_RESET);
+        objectConstructionResult(metadata);
         System.out.println(metadata.toString());
     }
 
@@ -61,7 +62,7 @@ public class TestHarness_FileMetadata {
                 FileInspector.getFileSizeInBytes(this.PNG_IMAGE),
                 this.PNG_IMAGE.getName(),
                 FileInspector.getFileExtension(this.PNG_IMAGE));
-        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed (PNG_IMAGE). . ." + this.ANSI_RESET);
+        objectConstructionResult(metadata);
         System.out.println(metadata.toString());
     }
 
@@ -75,7 +76,7 @@ public class TestHarness_FileMetadata {
                 .fileName("...File name")
                 .fileExtension("...File extension")
                 .build();
-        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed. . ." + this.ANSI_RESET);
+        objectConstructionResult(metadata);
         System.out.println(metadata.toString());
     }
 
@@ -86,7 +87,7 @@ public class TestHarness_FileMetadata {
                 .absolutePath("...Absolute path")
                 .fileExtension("...File extension")
                 .build();
-        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed. . ." + this.ANSI_RESET);
+        objectConstructionResult(metadata);
         System.out.println(metadata.toString());
     }
 
@@ -100,7 +101,7 @@ public class TestHarness_FileMetadata {
                 .fileName(this.PNG_IMAGE.getName())
                 .fileExtension(FileInspector.getFileExtension(this.PNG_IMAGE))
                 .build();
-        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed (PNG_IMAGE). . ." + this.ANSI_RESET);
+        objectConstructionResult(metadata);
         System.out.println(metadata.toString());
     }
 
@@ -111,7 +112,15 @@ public class TestHarness_FileMetadata {
                 .absolutePath(this.PNG_IMAGE.getAbsolutePath())
                 .contentType(FileInspector.getFileContentType(this.PNG_IMAGE))
                 .build();
-        System.out.println(this.ANSI_GREEN + "FileMetadata object constructed (PNG_IMAGE). . ." + this.ANSI_RESET);
+        objectConstructionResult(metadata);
         System.out.println(metadata.toString());
+    }
+
+    private void objectConstructionResult(FileMetadata fileMetadata) {
+        if (fileMetadata != null) {
+            System.out.println(this.ANSI_GREEN + "FileMetadata object constructed. . ." + this.ANSI_RESET);
+        } else {
+            System.out.println(this.ANSI_RED + "FileMetadata object failed to construct." + this.ANSI_RESET);
+        }
     }
 }

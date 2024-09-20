@@ -2,18 +2,16 @@ package model.context;
 
 import model.data.FileTag;
 
-import java.io.File;
 import java.util.*;
 
 /**
  * The ApplicationContext class centralizes all persistent data.
  * This class should be referred to at boot/termination of the program.
  */
-public class ApplicationContext {
+public final class ApplicationContext {
 
-    private static ApplicationContext INSTANCE;
-    TreeSet<FileTag> definedTags;
-    ArrayList<String> knownDirectories;
+    private TreeSet<FileTag> definedTags;
+    private ArrayList<String> knownDirectories;
 
     /**
      * Instantiates a new instance of the ApplicationContext to store persistent data.
@@ -25,6 +23,7 @@ public class ApplicationContext {
         this.definedTags = definedTags;
         this.knownDirectories = knownDirectories;
     }
+
 
     public void addNewFileTag(FileTag fileTag) throws IllegalArgumentException {
         if (!this.definedTags.contains(fileTag)) {
@@ -52,7 +51,7 @@ public class ApplicationContext {
         if (!this.knownDirectories.contains(directoryPath)) {
             this.knownDirectories.add(directoryPath);
         } else {
-            throw new IllegalArgumentException("The directory path you attempted to add already is already stored by the program.")
+            throw new IllegalArgumentException("The directory path you attempted to add already is already stored by the program.");
         }
     }
 

@@ -5,24 +5,32 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-public class FileInspector {
+public final class FileInspector {
 
     private FileInspector() {}
 
     public static boolean isImageFile(File file) {
+        if (!file.exists()) {
+            return false;
+        }
+
         String fileContentType = getFileContentType(file);
         String[] imageContentTypes = { "image/png", "image/jpeg" };
         return Arrays.asList(imageContentTypes).contains(fileContentType);
     }
 
     public static String getFileContentType(File file) {
+        if (!file.exists()) {
+            return "";
+        }
+
         String fileContentType = "";
         try {
             fileContentType = Files.probeContentType(file.toPath());
         } catch (IOException ioException) {
             if (!Files.exists(file.toPath())) {
                 System.out.println("The provided path does not lead to a file.");
-                System.out.println("Path given: " + file.toString());
+                System.out.println("Path given: " + file);
             } else {
                 System.out.println(ioException.getMessage());
             }
@@ -31,6 +39,10 @@ public class FileInspector {
     }
 
     public static long getFileSizeInBytes(File file) {
+        if (!file.exists()) {
+            return -1;
+        }
+
         long byteCount = 0;
         try {
             byteCount = Files.size(file.toPath());
@@ -41,7 +53,12 @@ public class FileInspector {
     }
 
     public static String getFileExtension(File file) {
-        String contentType = getFileContentType(file);
-        return contentType.substring(contentType.lastIndexOf("/") + 1);
+        if (!file.exists()) {
+            return "";
+        }
+
+        String contentType = file.getName();
+        int lastDotIndex = contentType.lastIndexOf('.');
+        return contentType.substring(lastDotIndex + 1);
     }
 }
