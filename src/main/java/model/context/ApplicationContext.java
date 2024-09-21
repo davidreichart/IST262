@@ -24,7 +24,12 @@ public final class ApplicationContext {
         this.knownDirectories = knownDirectories;
     }
 
-
+    /**
+     * Adds a new FileTag to the list of possible tags that a user may attach to a file for additional
+     * categorization/filtering/etc.
+     * @param fileTag The FileTag to add to the list of usable tags.
+     * @throws IllegalArgumentException If there is already a FileTag stored equal to the provided tag.
+     */
     public void addNewFileTag(FileTag fileTag) throws IllegalArgumentException {
         if (!this.definedTags.contains(fileTag)) {
             this.definedTags.add(fileTag);
@@ -33,6 +38,11 @@ public final class ApplicationContext {
         }
     }
 
+    /**
+     * Scans the list of known FileTags stored by the program, and removes it from the list if found.
+     * @param tagName The name of the tag to remove.
+     * @throws IllegalArgumentException If there is no known file tag with the provided name.
+     */
     public void removeExistingFileTag(String tagName) throws IllegalArgumentException {
         boolean tagRemoved = false;
         for (FileTag tag : this.definedTags) {
@@ -47,6 +57,11 @@ public final class ApplicationContext {
         }
     }
 
+    /**
+     * Adds the provided directory to the list of tracked directories by the program.
+     * @param directoryPath The directory to begin tracking.
+     * @throws IllegalArgumentException If the input directory is already being tracked.
+     */
     public void addNewDirectory(String directoryPath) throws IllegalArgumentException {
         if (!this.knownDirectories.contains(directoryPath)) {
             this.knownDirectories.add(directoryPath);
@@ -55,6 +70,12 @@ public final class ApplicationContext {
         }
     }
 
+    /**
+     * Scans the list of stored directories and, if a matching one is found, removes it from the list.
+     * After being removed, the program will no longer track the directory.
+     * @param directoryPath The directory to remove from tracking.
+     * @throws IllegalArgumentException If the directory provided is not found within the stored list of tracked directories.
+     */
     public void removeExistingDirectory(String directoryPath) throws IllegalArgumentException {
         boolean directoryRemoved = false;
         for (String directory :this.knownDirectories) {
