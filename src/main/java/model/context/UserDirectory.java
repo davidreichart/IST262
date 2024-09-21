@@ -33,6 +33,22 @@ public class UserDirectory {
     }
 
     /**
+     * Constructs a new UserDirectory object when only the directory path is known.
+     * All other parameters will be automatically generated at construction.
+     * @param directoryPath The path leading to this UserDirectory.
+     */
+    public UserDirectory(File directoryPath) {
+        try {
+            isValidDirectory(directoryPath);
+            this.directoryPath = directoryPath;
+        } catch (IllegalArgumentException illegalArgumentException) {
+            System.out.println(illegalArgumentException.getMessage());
+            this.directoryPath = null;
+        }
+        this.directoryFileCount = countFilesInDirectory();
+    }
+
+    /**
      * Assesses if the provided file leads to a valid directory on the user's system.
      * @param directoryPath A file holding the directory path to check.
      * @return True if the provided file leads to a valid directory.
@@ -57,5 +73,6 @@ public class UserDirectory {
         } catch (IOException ioException) {
             System.out.println(ioException.getMessage());
         }
+        return 0;
     }
 }
