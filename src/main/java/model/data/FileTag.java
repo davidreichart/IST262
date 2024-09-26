@@ -60,7 +60,9 @@ public class FileTag implements Comparable<FileTag> {
             return false;
         }
 
-        return compareTo((FileTag) obj) == 0;
+        // both objects are FileTags, so we can safely cast obj to a FileTag
+        return this.getName().equals(((FileTag) obj).getName()) &&
+                this.getColor().equals(((FileTag) obj).getColor());
     }
 
     /**

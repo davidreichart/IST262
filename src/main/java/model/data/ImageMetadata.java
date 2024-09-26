@@ -138,10 +138,26 @@ public class ImageMetadata {
     @Override
     public String toString() {
         return "    ImageMetadata {\n" +
-                "       Resolution:" + this.resolution.toString() + "\n" +
-                "       Pixel count:" + this.pixelCount + "\n" +
+                "       Resolution: " + this.resolution.toString() + "\n" +
+                "       Pixel count: " + this.pixelCount + "\n" +
                 "       Rough colormap size: " + this.roughColorDistribution.size() + "\n" +
                 "       Exact colormap size: " + this.exactColorDistribution.size() + "\n" +
-                "   }\n";
+                "    }\n";
+    }
+
+    public Dimension getResolution() {
+        return resolution;
+    }
+
+    public int getPixelCount() {
+        return pixelCount;
+    }
+
+    public TreeMap<Color, Integer> getRoughColorDistribution() {
+        return roughColorDistribution;
+    }
+
+    public TreeMap<Color, Integer> getExactColorDistribution() {
+        return exactColorDistribution;
     }
 }
