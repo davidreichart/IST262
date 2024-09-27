@@ -11,8 +11,8 @@ public class ImageMetadataTest {
     public void imageMetadataConstructor() {
         Dimension resolution = new Dimension(1920, 1080);
         int pixelCount = 2073600;
-        TreeMap<Color, Integer> roughColorDistribution = new TreeMap<>();
-        TreeMap<Color, Integer> exactColorDistribution = new TreeMap<>();
+        TreeMap<PixelColor, Integer> roughColorDistribution = new TreeMap<>();
+        TreeMap<PixelColor, Integer> exactColorDistribution = new TreeMap<>();
         ImageMetadata imageMetadata = new ImageMetadata(resolution, pixelCount, roughColorDistribution, exactColorDistribution);
 
         assertEquals(resolution, imageMetadata.getResolution());
@@ -22,12 +22,12 @@ public class ImageMetadataTest {
     }
 
     @Test
-    public void imageMetadataBuilder() {
+    public void imageMetadataBuilder_buildsWithAllFields() {
         // expected values
         Dimension resolution = new Dimension(1920, 1080);
         int pixelCount = (int) (resolution.getWidth() * resolution.getHeight());
-        TreeMap<Color, Integer> roughColorDistribution = new TreeMap<>();
-        TreeMap<Color, Integer> exactColorDistribution = new TreeMap<>();
+        TreeMap<PixelColor, Integer> roughColorDistribution = new TreeMap<>();
+        TreeMap<PixelColor, Integer> exactColorDistribution = new TreeMap<>();
 
         // create ImageMetadata using builder
         ImageMetadata imageMetadata = new ImageMetadata.Builder()
@@ -44,11 +44,33 @@ public class ImageMetadataTest {
     }
 
     @Test
-    public void toStringReturnsResolutionAndPixelCount() {
+    public void imageMetadataBuilder_buildsWithoutStatisticsFields() {
+        // expected values
+        Dimension resolution = new Dimension(1920, 1080);
+        int pixelCount = (int) (resolution.getWidth() * resolution.getHeight());
+
+        // create ImageMetadata using builder
+        ImageMetadata imageMetadata = new ImageMetadata.Builder()
+                .resolution(resolution)
+                .pixelCount(pixelCount)
+                .build();
+
+        // built object should not have these maps
+        TreeMap<PixelColor, Integer> roughColorDistribution = new TreeMap<>();
+        TreeMap<PixelColor, Integer> exactColorDistribution = new TreeMap<>();
+
+        assertEquals(resolution, imageMetadata.getResolution());
+        assertEquals(pixelCount, imageMetadata.getPixelCount());
+        assertNotEquals(roughColorDistribution, imageMetadata.getRoughColorDistribution());
+        assertNotEquals(exactColorDistribution, imageMetadata.getExactColorDistribution());
+    }
+
+    @Test
+    public void toString_ReturnsResolutionAndPixelCount() {
         Dimension resolution = new Dimension(1920, 1080);
         int pixelCount = 2073600;
-        TreeMap<Color, Integer> roughColorDistribution = new TreeMap<>();
-        TreeMap<Color, Integer> exactColorDistribution = new TreeMap<>();
+        TreeMap<PixelColor, Integer> roughColorDistribution = new TreeMap<>();
+        TreeMap<PixelColor, Integer> exactColorDistribution = new TreeMap<>();
         ImageMetadata imageMetadata = new ImageMetadata(resolution, pixelCount, roughColorDistribution, exactColorDistribution);
         String expected = "    ImageMetadata {\n" +
                 "       Resolution: java.awt.Dimension[width=1920,height=1080]\n" +

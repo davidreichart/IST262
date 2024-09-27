@@ -33,7 +33,7 @@ public class FileTagTest {
     }
 
     @Test
-    public void toStringReturnsNameAndColor() {
+    public void toString_ReturnsNameAndColor() {
         FileTag fileTag = new FileTag("Test", Color.GRAY);
         String expected = "FILE TAG: \n" +
                 "    Tag name: Test\n" +
@@ -43,7 +43,7 @@ public class FileTagTest {
     }
 
     @Test
-    public void compareToCorrectlyReturnsComparisonValues() {
+    public void compareTo_CorrectlyReturnsComparisonValues() {
         FileTag fileTag = new FileTag("Test", Color.GRAY);
         FileTag fileTag2 = new FileTag("Test2", Color.GRAY);
         FileTag fileTag3 = new FileTag("Test", Color.GRAY);
@@ -58,7 +58,7 @@ public class FileTagTest {
 
 
     @Test
-    public void equalsIdentifiesEqualAndUnequalFileTags() {
+    public void equals_IdentifiesEqualAndUnequalFileTags() {
         FileTag fileTag = new FileTag("Test", Color.GRAY);
         FileTag fileTag2 = new FileTag("Test", Color.GRAY);
         FileTag fileTag3 = new FileTag("Test2", Color.GRAY);

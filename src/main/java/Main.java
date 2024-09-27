@@ -1,5 +1,8 @@
+import model.data.PixelColor;
+import model.util.ImageInspector;
 import view.BrowserUIFrame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,9 +10,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
+        BufferedImage pngImage = null;
+        try {
+            pngImage = ImageIO.read(new File("src/test/resources/bluePNG.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        TreeMap<PixelColor, Integer> methodReturnPNG = ImageInspector.getRoughColorDistribution(pngImage);
+        PixelColor expectedPNGPixelColor = new PixelColor(Color.BLUE);
+        System.out.println(methodReturnPNG.get(new PixelColor(Color.RED)));
+    }
+
+    public void runUITest() {
         BrowserUIFrame browserUIFrame = new BrowserUIFrame();
 
         browserUIFrame.addComponentListener(new ComponentAdapter() {

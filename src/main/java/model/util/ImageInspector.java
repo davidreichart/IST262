@@ -1,5 +1,7 @@
 package model.util;
 
+import model.data.PixelColor;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.TreeMap;
@@ -20,13 +22,13 @@ public final class ImageInspector {
      * @param image The image to create a color map from.
      * @return A Map of Color keys with Integer values representing the frequency of each color.
      */
-    public static TreeMap<Color, Integer> getExactColorDistribution(BufferedImage image) {
-        TreeMap<Color, Integer> colorDistributionMap = new TreeMap<>();
+    public static TreeMap<PixelColor, Integer> getExactColorDistribution(BufferedImage image) {
+        TreeMap<PixelColor, Integer> colorDistributionMap = new TreeMap<>();
 
         // iterating through every pixel in the image
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
-                Color currentPixelColor = new Color(image.getRGB(x, y));
+                PixelColor currentPixelColor = new PixelColor(new Color(image.getRGB(x, y)));
                 if (!colorDistributionMap.containsKey(currentPixelColor)) {
                     colorDistributionMap.put(currentPixelColor, 1);
                 } else {
@@ -45,11 +47,11 @@ public final class ImageInspector {
      * @param image The image to create a limited color map from.
      * @return A Map of specific Color keys with Integer values representing the frequency of each color.
      */
-    public static TreeMap<Color, Integer> getRoughColorDistribution(BufferedImage image) {
-        TreeMap<Color, Integer> colorDistributionMap = new TreeMap<>();
-        colorDistributionMap.put(Color.RED, 0);
-        colorDistributionMap.put(Color.GREEN, 0);
-        colorDistributionMap.put(Color.BLUE, 0);
+    public static TreeMap<PixelColor, Integer> getRoughColorDistribution(BufferedImage image) {
+        TreeMap<PixelColor, Integer> colorDistributionMap = new TreeMap<>();
+        colorDistributionMap.put(new PixelColor(Color.RED), 0);
+        colorDistributionMap.put(new PixelColor(Color.GREEN), 0);
+        colorDistributionMap.put(new PixelColor(Color.BLUE), 0);
 
         // iterating through every pixel in the image
         for (int y = 0; y < image.getHeight(); y++) {
@@ -60,13 +62,13 @@ public final class ImageInspector {
                 int greenValue = currentPixelColor.getGreen();
                 if (redValue > blueValue && redValue > greenValue) {
                     // red is dominant
-                    colorDistributionMap.merge(Color.RED, 1, Integer::sum);
+                    colorDistributionMap.merge(new PixelColor(Color.RED), 1, Integer::sum);
                 } else if (blueValue > greenValue) {
                     // blue is dominant
-                    colorDistributionMap.merge(Color.BLUE, 1, Integer::sum);
+                    colorDistributionMap.merge(new PixelColor(Color.BLUE), 1, Integer::sum);
                 } else {
                     // green is dominant
-                    colorDistributionMap.merge(Color.GREEN, 1, Integer::sum);
+                    colorDistributionMap.merge(new PixelColor(Color.GREEN), 1, Integer::sum);
                 }
             }
         }

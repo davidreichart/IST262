@@ -11,8 +11,8 @@ public class ImageMetadata {
 
     private Dimension resolution;
     private int pixelCount;
-    private TreeMap<Color, Integer> roughColorDistribution;
-    private TreeMap<Color, Integer> exactColorDistribution;
+    private TreeMap<PixelColor, Integer> roughColorDistribution;
+    private TreeMap<PixelColor, Integer> exactColorDistribution;
 
     /**
      * Constructs a new ImageMetadata object when all possible attributes are known.
@@ -27,8 +27,8 @@ public class ImageMetadata {
      *                               of occurrence for the corresponding Color.
      *                               Each Color key is an exact mapping to an individual pixel.
      */
-    public ImageMetadata (Dimension resolution, int pixelCount, TreeMap<Color, Integer> roughColorDistribution,
-                          TreeMap<Color, Integer> exactColorDistribution) {
+    public ImageMetadata (Dimension resolution, int pixelCount, TreeMap<PixelColor, Integer> roughColorDistribution,
+                          TreeMap<PixelColor, Integer> exactColorDistribution) {
         this.resolution = resolution;
         this.pixelCount = pixelCount;
         this.roughColorDistribution = roughColorDistribution;
@@ -73,8 +73,8 @@ public class ImageMetadata {
     public static class Builder {
         private Dimension resolution;
         private int pixelCount;
-        private TreeMap<Color, Integer> roughColorDistribution;
-        private TreeMap<Color, Integer> exactColorDistribution;
+        private TreeMap<PixelColor, Integer> roughColorDistribution;
+        private TreeMap<PixelColor, Integer> exactColorDistribution;
 
         /**
          * Sets the height x width of this image as a Dimension.
@@ -103,7 +103,7 @@ public class ImageMetadata {
          * @param roughColorDistribution A map of pixel counts by a limited number of possible colors.
          * @return An instance of the ImageMetadata builder.
          */
-        public Builder roughColorDistribution(TreeMap<Color, Integer> roughColorDistribution) {
+        public Builder roughColorDistribution(TreeMap<PixelColor, Integer> roughColorDistribution) {
             this.roughColorDistribution = roughColorDistribution;
             return this;
         }
@@ -116,7 +116,7 @@ public class ImageMetadata {
          * @param exactColorDistribution A map of pixel counts by an unlimited number of possible colors.
          * @return An instance of the ImageMetadata builder.
          */
-        public Builder exactColorDistribution(TreeMap<Color, Integer> exactColorDistribution) {
+        public Builder exactColorDistribution(TreeMap<PixelColor, Integer> exactColorDistribution) {
             this.exactColorDistribution = exactColorDistribution;
             return this;
         }
@@ -153,11 +153,11 @@ public class ImageMetadata {
         return pixelCount;
     }
 
-    public TreeMap<Color, Integer> getRoughColorDistribution() {
+    public TreeMap<PixelColor, Integer> getRoughColorDistribution() {
         return roughColorDistribution;
     }
 
-    public TreeMap<Color, Integer> getExactColorDistribution() {
+    public TreeMap<PixelColor, Integer> getExactColorDistribution() {
         return exactColorDistribution;
     }
 }
