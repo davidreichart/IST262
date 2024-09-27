@@ -16,16 +16,7 @@ import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
-        BufferedImage pngImage = null;
-        try {
-            pngImage = ImageIO.read(new File("src/test/resources/bluePNG.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        TreeMap<PixelColor, Integer> methodReturnPNG = ImageInspector.getRoughColorDistribution(pngImage);
-        PixelColor expectedPNGPixelColor = new PixelColor(Color.BLUE);
-        System.out.println(methodReturnPNG.get(new PixelColor(Color.RED)));
     }
 
     public void runUITest() {

@@ -137,6 +137,26 @@ public class FileMetadata {
         }
     }
 
+    public String getFileName() {
+        return this.fileName;
+    }
+
+    public String getAbsolutePath() {
+        return this.absolutePath;
+    }
+
+    public String getContentType() {
+        return this.contentType;
+    }
+
+    public long getByteCount() {
+        return this.byteCount;
+    }
+
+    public String getFileExtension() {
+        return this.fileExtension;
+    }
+
     /**
      * Presents all currently stored attributes that contextualize the corresponding file for this FileMetadata object.
      * @return A string listing all attributes stored on this FileMetadata object.

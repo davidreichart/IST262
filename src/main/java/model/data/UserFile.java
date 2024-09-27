@@ -43,12 +43,12 @@ public class UserFile {
     private UserFile(Builder builder) {
         this.file = builder.file;
         if (builder.fileMetadata == null) {
-            generateAllFileMetadata();
+            this.fileMetadata = null;
         } else {
             this.fileMetadata = builder.fileMetadata;
         }
         if (builder.imageMetadata == null) {
-            generateAllImageMetadata();
+            this.imageMetadata = null;
         } else {
             this.imageMetadata = builder.imageMetadata;
         }
@@ -232,5 +232,12 @@ public class UserFile {
             throw new UnsupportedOperationException("There are no tags currently associated with this file.");
         }
         return this.fileTags;
+    }
+
+    /**
+     * @return The file object leading to the file on the user's system.
+    */
+    public File getFile() {
+        return file;
     }
 }
