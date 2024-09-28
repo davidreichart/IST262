@@ -30,6 +30,7 @@ public class Main {
             private int delay = 100;
             private Timer delayTimer;
 
+            //todo: trying to make the splits retain their shape as the window is resized, not currently working as desired
             @Override
             public void componentResized(ComponentEvent componentEvent) {
                 if (delayTimer != null && delayTimer.isRunning()) {
