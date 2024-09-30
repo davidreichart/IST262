@@ -2,8 +2,6 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class BrowserUIFrame extends JFrame {
 
@@ -15,28 +13,55 @@ public class BrowserUIFrame extends JFrame {
         this.setTitle("Title");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-
-        JPanel leftPanel = new JPanel();
-        JPanel rightPanel = new JPanel();
-        this.horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        horizontalSplitPane.setLeftComponent(leftPanel);
-        horizontalSplitPane.setRightComponent(rightPanel);
-        horizontalSplitPane.setDividerLocation(100);
-        horizontalSplitPane.setDividerLocation(
-                this.getWidth() - (this.getWidth() / 100) * 80
-        );
-
-        JPanel bottomPanel = new JPanel();
-        this.verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        verticalSplitPane.setTopComponent(horizontalSplitPane);
-        verticalSplitPane.setBottomComponent(bottomPanel);
-        verticalSplitPane.setDividerLocation(
-                this.getHeight() - (this.getHeight() / 100)  * 30
-        );
-
+        this.horizontalSplitPane = createControlsAndMainPanel();
+        this.verticalSplitPane = createDataPanel();
         this.add(verticalSplitPane);
-
         this.setVisible(true);
+    }
+
+    /**
+     * Builds the JSplitPane that holds two JPanels (ControlsPanel and FilePanel) which are defined in external classes.
+     * @return a JSplitPane holding a ControlsPanel to the left and FilePanel to the right.
+     */
+    public JSplitPane createControlsAndMainPanel() {
+        JSplitPane controlsAndMainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+
+        // [controls][files]
+        // [      data     ]
+        controlsAndMainPanel.setLeftComponent(new ControlsPanel());
+        controlsAndMainPanel.setRightComponent(new FilePanel());
+
+        // behavior
+        controlsAndMainPanel.setResizeWeight(0.5); // keeps relative split location on frame resize
+
+        // appearance
+        controlsAndMainPanel.setDividerSize(5);
+        controlsAndMainPanel.setDividerLocation(this.getWidth() - (this.getWidth() / 100) * 80);
+
+        return controlsAndMainPanel;
+    }
+
+    /**
+     * Builds the JSplitPane that holds the JSplitPane consisting of a ControlsPanel and FilePanel on the top,
+     * and a DataPanel on the bottom.
+     * @return a JSplitPane with a JSplitPane above a DataPanel.
+     */
+    public JSplitPane createDataPanel() {
+        JSplitPane dataPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+
+        // [controls][files]
+        // [      data     ]
+        dataPanel.setTopComponent(this.horizontalSplitPane);
+        dataPanel.setBottomComponent(new DataPanel());
+
+        // behavior
+        dataPanel.setResizeWeight(0.5); // keeps relative split location on frame resize
+
+        // appearance
+        dataPanel.setDividerSize(5);
+        dataPanel.setDividerLocation(this.getHeight() - (this.getHeight() / 100)  * 30);
+
+        return dataPanel;
     }
 
     public JSplitPane getHorizontalSplitPane() {

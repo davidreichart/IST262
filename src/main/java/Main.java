@@ -16,10 +16,10 @@ import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
-
+        runUITest();
     }
 
-    public void runUITest() {
+    public static void runUITest() {
         BrowserUIFrame browserUIFrame = new BrowserUIFrame();
 
         browserUIFrame.addComponentListener(new ComponentAdapter() {
@@ -37,17 +37,29 @@ public class Main {
                     delayTimer.stop();
                 }
                 delayTimer = new Timer(delay, actionEvent -> {
-                    int newWidth = componentEvent.getComponent().getWidth();
-                    int newHeight = componentEvent.getComponent().getHeight();
+                    int newWidth = componentEvent.getComponent().getWidth(); // the height that this frame is now
+                    int newHeight = componentEvent.getComponent().getHeight(); // the width that this frame is now
 
-                    int widthChange = previousWidth - newWidth; // # of pixels changed, absolute value
-                    int heightChange = previousHeight - newHeight;
+                    int widthChange = previousWidth - newWidth; // the frame changed by this many pixels in width
+                    int heightChange = previousHeight - newHeight; // the frame changed by this many pixels in height
 
-                    int pWidthOnePercent = previousWidth / 100; // 1% of the previous size
-                    int pHeightOnePercent = previousHeight / 100;
+                    int pWidthOnePercent = previousWidth / 100; // 1% of the previous width
+                    int pHeightOnePercent = previousHeight / 100; // 1% of the previous height
 
                     int widthPercentChange = widthChange / pWidthOnePercent; // by what % did this change?
                     int heightPercentChange = heightChange / pHeightOnePercent;
+
+
+                    // how many pixels did the frame increase/decrease by?
+                    int pixelDifferenceHeight = newHeight - previousHeight;
+                    int pixelDifferenceWidth = newWidth - previousWidth;
+
+                    int onePercentPreviousHeight = previousHeight / 100;
+                    int onePercentPreviousWidth = previousWidth / 100;
+
+
+
+
 
                     /**************************/
 

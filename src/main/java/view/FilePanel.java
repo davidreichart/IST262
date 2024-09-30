@@ -7,7 +7,7 @@ import java.awt.*;
 public class FilePanel extends JPanel {
 
     public FilePanel() {
-        this.setBackground(new Color(0x3f4148));
+        this.setBackground(new Color(0x1e1f22));
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setLayout(new GridBagLayout());
     }
