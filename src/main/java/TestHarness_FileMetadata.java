@@ -1,5 +1,4 @@
-import model.data.FileMetadata;
-import model.data.UserFile;
+import model.data.metadata.FileMetadata;
 import model.util.FileInspector;
 
 import java.io.File;

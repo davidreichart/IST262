@@ -1,4 +1,6 @@
-package model.data;
+package model.data.metadata;
+
+import model.data.PixelColor;
 
 import java.awt.*;
 import java.util.TreeMap;

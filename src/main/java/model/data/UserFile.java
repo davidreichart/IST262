@@ -1,5 +1,7 @@
 package model.data;
 
+import model.data.metadata.FileMetadata;
+import model.data.metadata.ImageMetadata;
 import model.util.FileInspector;
 import model.util.ImageInspector;
 

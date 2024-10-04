@@ -1,4 +1,4 @@
-package model.data;
+package model.data.metadata;
 
 /**
  * The FileMetadata class is a representation of contextualizing data points for any valid file on a user's computer.

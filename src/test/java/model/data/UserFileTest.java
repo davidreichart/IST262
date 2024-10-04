@@ -1,5 +1,7 @@
 package model.data;
 
+import model.data.metadata.FileMetadata;
+import model.data.metadata.ImageMetadata;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.*;
