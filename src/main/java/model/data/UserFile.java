@@ -154,7 +154,7 @@ public class UserFile {
             System.out.println("There was an issue when parsing a BufferedImage from this UserFile's file object in: generateAllImageMetadata()");
             return;
         }
-        this.imageMetadata = ImageMetadata.builder()
+        this.imageMetadata = ImageMetadata.builder(this.imageMetadata.getAbsoluteFilePath())
                 .resolution(ImageInspector.getResolution(image))
                 .pixelCount(ImageInspector.getPixelCount(image))
                 .roughColorDistribution(ImageInspector.getRoughColorDistribution(image))

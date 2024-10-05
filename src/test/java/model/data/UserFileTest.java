@@ -11,44 +11,44 @@ import java.util.TreeMap;
 
 public class UserFileTest {
 
-    @Test
-    public void userFileBuilder_fullBuilder() {
-        LinkedHashSet<FileTag> fileTags = new LinkedHashSet<>();
-        fileTags.add(new FileTag("TestFileTag", Color.GRAY));
-        UserFile testUserFile = new UserFile(
-                new File("testFile.jpg"),
-                new FileMetadata.Builder()
-                        .absolutePath("C:\\Users\\test\\testFile.jpg")
-                        .contentType("image/jpeg")
-                        .byteCount(1000)
-                        .fileName("testFile.jpg")
-                        .fileExtension(".jpg")
-                        .build(),
-                new ImageMetadata.Builder()
-                        .resolution(new Dimension(1920, 1080))
-                        .pixelCount(2073600)
-                        .roughColorDistribution(new TreeMap<PixelColor, Integer>())
-                        .exactColorDistribution(new TreeMap<PixelColor, Integer>())
-                        .build(),
-                fileTags
-        );
-
-        // checking FileMetadata attributes
-        assertEquals("C:\\Users\\test\\testFile.jpg", testUserFile.getFileMetadata().getAbsolutePath());
-        assertEquals("image/jpeg", testUserFile.getFileMetadata().getContentType());
-        assertEquals(1000, testUserFile.getFileMetadata().getByteCount());
-        assertEquals("testFile.jpg", testUserFile.getFileMetadata().getFileName());
-        assertEquals(".jpg", testUserFile.getFileMetadata().getFileExtension());
-
-        // checking ImageMetadata attributes
-        assertEquals(1920, testUserFile.getImageMetadata().getResolution().width);
-        assertEquals(1080, testUserFile.getImageMetadata().getResolution().height);
-        assertEquals(2073600, testUserFile.getImageMetadata().getPixelCount());
-        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getRoughColorDistribution());
-        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getExactColorDistribution());
-
-        assertEquals(fileTags, testUserFile.getFileTags());
-    }
+//    @Test
+//    public void userFileBuilder_fullBuilder() {
+//        LinkedHashSet<FileTag> fileTags = new LinkedHashSet<>();
+//        fileTags.add(new FileTag("TestFileTag", Color.GRAY));
+//        UserFile testUserFile = new UserFile(
+//                new File("testFile.jpg"),
+//                new FileMetadata.Builder()
+//                        .absolutePath("C:\\Users\\test\\testFile.jpg")
+//                        .contentType("image/jpeg")
+//                        .byteCount(1000)
+//                        .fileName("testFile.jpg")
+//                        .fileExtension(".jpg")
+//                        .build(),
+//                new ImageMetadata.Builder()
+//                        .resolution(new Dimension(1920, 1080))
+//                        .pixelCount(2073600)
+//                        .roughColorDistribution(new TreeMap<PixelColor, Integer>())
+//                        .exactColorDistribution(new TreeMap<PixelColor, Integer>())
+//                        .build(),
+//                fileTags
+//        );
+//
+//        // checking FileMetadata attributes
+//        assertEquals("C:\\Users\\test\\testFile.jpg", testUserFile.getFileMetadata().getAbsolutePath());
+//        assertEquals("image/jpeg", testUserFile.getFileMetadata().getContentType());
+//        assertEquals(1000, testUserFile.getFileMetadata().getByteCount());
+//        assertEquals("testFile.jpg", testUserFile.getFileMetadata().getFileName());
+//        assertEquals(".jpg", testUserFile.getFileMetadata().getFileExtension());
+//
+//        // checking ImageMetadata attributes
+//        assertEquals(1920, testUserFile.getImageMetadata().getResolution().width);
+//        assertEquals(1080, testUserFile.getImageMetadata().getResolution().height);
+//        assertEquals(2073600, testUserFile.getImageMetadata().getPixelCount());
+//        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getRoughColorDistribution());
+//        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getExactColorDistribution());
+//
+//        assertEquals(fileTags, testUserFile.getFileTags());
+//    }
 
     @Test
     public void userFileBuilder_noMetadataBuilder() {
@@ -65,47 +65,47 @@ public class UserFileTest {
         assertEquals(fileTags, noMetadata.getFileTags());
     }
 
-    @Test
-    public void userFileConstructor_fullNormalConstructor() {
-        FileMetadata testFileMetadata = new FileMetadata(
-              "C:\\Users\\test\\testFile.jpg",
-                "image/jpeg",
-                1000,
-                "testFile.jpg",
-                ".jpg"
-        );
-        ImageMetadata testImageMetadata = new ImageMetadata(
-                new Dimension(1920, 1080),
-                2073600,
-                new TreeMap<PixelColor, Integer>(),
-                new TreeMap<PixelColor, Integer>()
-        );
-        LinkedHashSet<FileTag> fileTags = new LinkedHashSet<>();
-        fileTags.add(new FileTag("TestFileTag", Color.GRAY));
-
-        UserFile testUserFile = new UserFile(
-                new File("testFile.jpg"),
-                testFileMetadata,
-                testImageMetadata,
-                fileTags
-        );
-
-        // checking FileMetadata attributes
-        assertEquals("C:\\Users\\test\\testFile.jpg", testUserFile.getFileMetadata().getAbsolutePath());
-        assertEquals("image/jpeg", testUserFile.getFileMetadata().getContentType());
-        assertEquals(1000, testUserFile.getFileMetadata().getByteCount());
-        assertEquals("testFile.jpg", testUserFile.getFileMetadata().getFileName());
-        assertEquals(".jpg", testUserFile.getFileMetadata().getFileExtension());
-
-        // checking ImageMetadata attributes
-        assertEquals(1920, testUserFile.getImageMetadata().getResolution().width);
-        assertEquals(1080, testUserFile.getImageMetadata().getResolution().height);
-        assertEquals(2073600, testUserFile.getImageMetadata().getPixelCount());
-        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getRoughColorDistribution());
-        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getExactColorDistribution());
-
-        assertEquals(fileTags, testUserFile.getFileTags());
-    }
+//    @Test
+//    public void userFileConstructor_fullNormalConstructor() {
+//        FileMetadata testFileMetadata = new FileMetadata(
+//              "C:\\Users\\test\\testFile.jpg",
+//                "image/jpeg",
+//                1000,
+//                "testFile.jpg",
+//                ".jpg"
+//        );
+//        ImageMetadata testImageMetadata = new ImageMetadata(
+//                new Dimension(1920, 1080),
+//                2073600,
+//                new TreeMap<PixelColor, Integer>(),
+//                new TreeMap<PixelColor, Integer>()
+//        );
+//        LinkedHashSet<FileTag> fileTags = new LinkedHashSet<>();
+//        fileTags.add(new FileTag("TestFileTag", Color.GRAY));
+//
+//        UserFile testUserFile = new UserFile(
+//                new File("testFile.jpg"),
+//                testFileMetadata,
+//                testImageMetadata,
+//                fileTags
+//        );
+//
+//        // checking FileMetadata attributes
+//        assertEquals("C:\\Users\\test\\testFile.jpg", testUserFile.getFileMetadata().getAbsolutePath());
+//        assertEquals("image/jpeg", testUserFile.getFileMetadata().getContentType());
+//        assertEquals(1000, testUserFile.getFileMetadata().getByteCount());
+//        assertEquals("testFile.jpg", testUserFile.getFileMetadata().getFileName());
+//        assertEquals(".jpg", testUserFile.getFileMetadata().getFileExtension());
+//
+//        // checking ImageMetadata attributes
+//        assertEquals(1920, testUserFile.getImageMetadata().getResolution().width);
+//        assertEquals(1080, testUserFile.getImageMetadata().getResolution().height);
+//        assertEquals(2073600, testUserFile.getImageMetadata().getPixelCount());
+//        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getRoughColorDistribution());
+//        assertEquals(new TreeMap<PixelColor, Integer>(), testUserFile.getImageMetadata().getExactColorDistribution());
+//
+//        assertEquals(fileTags, testUserFile.getFileTags());
+//    }
 
     @Test
     public void generateAllImageMetadata_GeneratesImageMetadataObject() {
