@@ -2,8 +2,10 @@ package model.util;
 
 import model.data.PixelColor;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.TreeMap;
 
 /**
@@ -93,5 +95,27 @@ public final class ImageInspector {
      */
     public static int getPixelCount(BufferedImage image) {
         return image.getWidth() * image.getHeight();
+    }
+
+    /**
+     * Loads an image from the provided file path.
+     * If the file is not a valid image file, an IllegalArgumentException is thrown.
+     * @param path The path to the image file.
+     * @return A BufferedImage object representing the image file.
+     * @throws IllegalArgumentException If the provided file is not a valid image file.
+     */
+    public static BufferedImage loadImage(String path) throws IllegalArgumentException {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File(path));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (image == null) {
+            throw new IllegalArgumentException("The provided file is not a valid image file.");
+        } else {
+            return image;
+        }
     }
 }

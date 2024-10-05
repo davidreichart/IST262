@@ -213,4 +213,13 @@ public abstract class Metadata implements Comparable<Metadata> {
     public float getTerabyteCount() {
         return (float) this.byteCount / 1000 / 1000 / 1000 / 1000;
     }
+
+    /**
+     * Returns the file object associated with this metadata object.
+     * The file object can be used to access the file's contents, metadata, and other file attributes.
+     * @return The file object associated with this metadata object.
+     */
+    public File getFile() {
+        return this.file;
+    }
 }

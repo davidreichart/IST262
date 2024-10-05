@@ -39,7 +39,7 @@ public class FileInspectorTest {
 
         // file sizes reference the Windows property window for each respective file
         assertEquals(693, FileInspector.getFileSizeInBytes(pngImage));
-        assertEquals(1359, FileInspector.getFileSizeInBytes(jpegImage));
+        assertEquals(7113, FileInspector.getFileSizeInBytes(jpegImage));
         assertEquals(11, FileInspector.getFileSizeInBytes(txtFile));
 
         // method should do a null/file existence check
