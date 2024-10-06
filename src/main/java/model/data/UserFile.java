@@ -54,7 +54,7 @@ public class UserFile {
         } else {
             this.imageMetadata = builder.imageMetadata;
         }
-        if (builder.fileTags.isEmpty() || builder.fileTags == null) {
+        if (builder.fileTags == null) {
             this.fileTags = new LinkedHashSet<>();
         } else {
             this.fileTags = builder.fileTags;

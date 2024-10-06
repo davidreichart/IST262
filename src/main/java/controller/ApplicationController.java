@@ -9,5 +9,10 @@ public class ApplicationController {
 
     public ApplicationController(ApplicationJFrame applicationJFrame, ApplicationContext applicationContext) {
         this.applicationJMenuBarController = new ApplicationJMenuBarController(applicationJFrame, applicationContext);
+        configureDirectoryListListeners(applicationJFrame, applicationContext);
+    }
+
+    public void configureDirectoryListListeners(ApplicationJFrame frame, ApplicationContext context) {
+        context.getDirectoryList().addListener(frame.getFileBrowserJPanel());
     }
 }

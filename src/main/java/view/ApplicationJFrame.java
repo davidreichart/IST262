@@ -1,11 +1,14 @@
 package view;
 
+import view.filebrowser.FileBrowserJPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ApplicationJFrame extends JFrame implements Renderable {
 
     private ApplicationJMenuBar applicationJMenuBar;
+    private FileBrowserJPanel fileBrowserJPanel;
 
     public ApplicationJFrame() {
         setAttributes();
@@ -35,7 +38,8 @@ public class ApplicationJFrame extends JFrame implements Renderable {
         JSplitPane topPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         topPanel.setDividerLocation(300);
         topPanel.setDividerSize(2);
-        topPanel.setLeftComponent(new FileExplorerJPanel());
+        this.fileBrowserJPanel = new FileBrowserJPanel();
+        topPanel.setLeftComponent(this.fileBrowserJPanel);
         topPanel.setRightComponent(new JPanel());
         add(topPanel, BorderLayout.CENTER);
     }
@@ -51,5 +55,9 @@ public class ApplicationJFrame extends JFrame implements Renderable {
 
     public ApplicationJMenuBar getApplicationJMenuBar() {
         return this.applicationJMenuBar;
+    }
+
+    public FileBrowserJPanel getFileBrowserJPanel() {
+        return fileBrowserJPanel;
     }
 }

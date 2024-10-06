@@ -1,10 +1,14 @@
 package model.context;
 
+import model.data.UserFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -14,6 +18,7 @@ public class UserDirectory {
 
     private File directoryPath;
     private int directoryFileCount;
+    private HashSet<UserFile> directoryFiles;
 
     /**
      * Constructs a new UserDirectory object when all possible attributes are already known.
@@ -21,7 +26,7 @@ public class UserDirectory {
      * @param directoryPath The path leading to this UserDirectory.
      * @param directoryFileCount The number of files found in this UserDirectory.
      */
-    public UserDirectory(File directoryPath, int directoryFileCount) {
+    public UserDirectory(File directoryPath, int directoryFileCount, HashSet<UserFile> directoryFiles) {
         try {
             isValidDirectory(directoryPath);
             this.directoryPath = directoryPath;
@@ -30,6 +35,7 @@ public class UserDirectory {
             this.directoryPath = null;
         }
         this.directoryFileCount = directoryFileCount;
+        this.directoryFiles = directoryFiles;
     }
 
     /**
@@ -38,9 +44,11 @@ public class UserDirectory {
      * @param directoryPath The path leading to this UserDirectory.
      */
     public UserDirectory(File directoryPath) {
+        this.directoryFiles = new HashSet<>();
         try {
             isValidDirectory(directoryPath);
             this.directoryPath = directoryPath;
+            findAllFilesInDirectory();
         } catch (IllegalArgumentException illegalArgumentException) {
             System.out.println(illegalArgumentException.getMessage());
             this.directoryPath = null;
@@ -76,6 +84,14 @@ public class UserDirectory {
         return 0;
     }
 
+    public void findAllFilesInDirectory() {
+        for (File file : Objects.requireNonNull(this.directoryPath.listFiles())) {
+            if (file.isFile()) {
+                this.directoryFiles.add(UserFile.builder(file).build());
+            }
+        }
+    }
+
     /**
      * Compares two UserDirectory objects for equality based on their directory path names.
      * @param obj The UserDirectory object to compare against.
@@ -92,11 +108,23 @@ public class UserDirectory {
         }
     }
 
+    public void addFileToDirectory(UserFile file) {
+        this.directoryFiles.add(file);
+    }
+
     /**
      * Returns the file object containing the directory path for this UserDirectory.
      * @return The file object containing the directory path for this UserDirectory.
      */
     public File getDirectoryPath() {
         return directoryPath;
+    }
+
+    public String getName() {
+        return directoryPath.getName();
+    }
+
+    public HashSet<UserFile> getDirectoryFiles() {
+        return directoryFiles;
     }
 }

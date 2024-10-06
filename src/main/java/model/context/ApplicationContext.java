@@ -14,17 +14,16 @@ import java.util.*;
 public final class ApplicationContext {
 
     private TreeSet<FileTag> definedTags;
-    private ArrayList<UserDirectory> knownDirectories;
+    private ObservableDirectoryList directoryList;
 
     /**
      * Instantiates a new instance of the ApplicationContext to store persistent data.
      * This class centralizes all persistent data (it is essentially the meta-state of the program).
      * @param definedTags A set of all FileTags created by the user.
-     * @param knownDirectories A list of Strings representing file directories to be scanned by the program for image files.
      */
-    public ApplicationContext(TreeSet<FileTag> definedTags, ArrayList<UserDirectory> knownDirectories) {
+    public ApplicationContext(TreeSet<FileTag> definedTags) {
         this.definedTags = definedTags;
-        this.knownDirectories = knownDirectories;
+        this.directoryList = new ObservableDirectoryList();
     }
 
     /**
@@ -64,50 +63,6 @@ public final class ApplicationContext {
     }
 
     /**
-     * Adds the provided directory to the list of tracked directories by the program.
-     * @param directoryPath The directory to begin tracking.
-     * @throws IllegalArgumentException If the input directory is already being tracked.
-     */
-    public void addNewDirectory(String directoryPath) throws IllegalArgumentException {
-        // must be given a valid directory
-        if (!Files.isDirectory(Path.of(directoryPath))) {
-            throw new IllegalArgumentException("The provided path is not a directory.");
-        }
-
-        // only add new directories
-        UserDirectory newDirectory = new UserDirectory(new File(directoryPath));
-        if (!this.knownDirectories.contains(newDirectory)) {
-            this.knownDirectories.add(new UserDirectory(new File(directoryPath)));
-        } else {
-            throw new IllegalArgumentException("The directory path you attempted to add already is already stored by the program.");
-        }
-    }
-
-    /**
-     * Scans the list of stored directories and, if a matching one is found, removes it from the list.
-     * After being removed, the program will no longer track the directory.
-     * @param directoryPath The directory to remove from tracking.
-     * @throws IllegalArgumentException If the directory provided is not found within the stored list of tracked directories.
-     */
-    public void removeExistingDirectory(String directoryPath) throws IllegalArgumentException {
-        boolean directoryRemoved = false;
-        // search for the directory and remove it if found
-        for (int i = 0; i < this.knownDirectories.size(); i++) {
-            UserDirectory currentDirectory = this.knownDirectories.get(i);
-            if (currentDirectory.getDirectoryPath().getName().equals(directoryPath)) {
-                this.knownDirectories.remove(i);
-                directoryRemoved = true;
-                break;
-            }
-        }
-
-        // the directory was not found, throw an exception
-        if (!directoryRemoved) {
-            throw new IllegalArgumentException("There was no stored directory found with the input path.");
-        }
-    }
-
-    /**
      * Defined tags refer to a set of all tags declared by the user. A set prevents duplicate creation and tag reuse.
      * @return A set of all FileTag objects know by the program.
      */
@@ -124,24 +79,7 @@ public final class ApplicationContext {
         this.definedTags = definedTags;
     }
 
-    /**
-     * Known directories refer to locations on the user's computer that should be observed so that the program may
-     * mirror the user's images to them through this program.
-     * This list controls what directories are relevant as instructed by the user.
-     * @return A list of Strings containing all relevant file recordists on the user's computer to be watched for images.
-     */
-    public ArrayList<UserDirectory> getKnownDirectories() {
-        return knownDirectories;
-    }
-
-    /**
-     * Known directories refer to locations on the user's computer that should be observed so that the program may
-     * mirror the user's images to them through this program.
-     * This list controls what directories are relevant as instructed by the user.
-     * This method erases the existing list and replaces it with the supplied list.
-     * @param knownDirectories The list of Strings of directory paths to replace the existing list.
-     */
-    public void setKnownDirectories(ArrayList<UserDirectory> knownDirectories) {
-        this.knownDirectories = knownDirectories;
+    public ObservableDirectoryList getDirectoryList() {
+        return directoryList;
     }
 }

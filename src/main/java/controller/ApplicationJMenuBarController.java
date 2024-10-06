@@ -10,12 +10,12 @@ import java.nio.file.Path;
 
 public class ApplicationJMenuBarController {
 
-    ApplicationContext context;
     ApplicationJFrame frame;
+    ApplicationContext context;
 
     public ApplicationJMenuBarController(ApplicationJFrame applicationJFrame, ApplicationContext applicationContext) {
-        this.context = applicationContext;
         this.frame = applicationJFrame;
+        this.context = applicationContext;
 
         // add directory needs to take input from the text field and add it to the known directories when clicked
         frame.getApplicationJMenuBar()
@@ -55,11 +55,11 @@ public class ApplicationJMenuBarController {
 
                 // directory path is valid and not empty
                 try {
-                    context.addNewDirectory(input);
+                    context.getDirectoryList().addNewDirectory(input);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-                System.out.println(context.getKnownDirectories());
+                System.out.println(context.getDirectoryList());
             }
         };
     }

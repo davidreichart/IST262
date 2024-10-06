@@ -19,7 +19,7 @@ public class Main {
             @Override
             public void run() {
                 ApplicationJFrame applicationJFrame = new ApplicationJFrame();
-                ApplicationContext applicationContext = new ApplicationContext(new TreeSet<FileTag>(), new ArrayList<UserDirectory>());
+                ApplicationContext applicationContext = new ApplicationContext(new TreeSet<FileTag>());
                 ApplicationController applicationController = new ApplicationController(applicationJFrame, applicationContext);
             }
         });
