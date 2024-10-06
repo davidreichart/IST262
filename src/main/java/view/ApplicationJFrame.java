@@ -14,7 +14,18 @@ public class ApplicationJFrame extends JFrame implements Renderable {
         setAttributes();
         buildComponents();
         addComponents();
+
+        // For some reason, I have to do this to make it so the jtextarea in the menu bar isn't in focus.
+        // Why? I have no idea right now.
+        JLabel focusGrabber = new JLabel("");
+        focusGrabber.setPreferredSize(new Dimension(0, 0));
+        add(focusGrabber, BorderLayout.SOUTH);
+
         setVisible(true);
+
+        // This forces focus to the focusGrabber label.
+        // It MUST be called after setVisible(true).
+        focusGrabber.requestFocusInWindow();
     }
 
     /**

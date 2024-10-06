@@ -46,8 +46,10 @@ public class ImageMetadata extends Metadata {
      * @param builder The builder instance used to create a new ImageMetadata object.
      */
     private ImageMetadata(Builder builder) {
-        super(builder.absoluteFilePath); // Call to parent constructor for file Metadata
+        // calling the parent constructor to apply core file metadata
+        super(builder.absoluteFilePath);
 
+        // applying the resolution
         if (builder.resolution != null) {
             this.resolution = builder.resolution;
         } else {
@@ -59,6 +61,7 @@ public class ImageMetadata extends Metadata {
             }
         }
 
+        // applying the pixel count
         if (builder.pixelCount > 0) {
             this.pixelCount = builder.pixelCount;
         } else {
@@ -70,6 +73,7 @@ public class ImageMetadata extends Metadata {
             }
         }
 
+        // applying the rough color distribution
         if (builder.roughColorDistribution != null) {
             this.roughColorDistribution = builder.roughColorDistribution;
         } else {
@@ -81,6 +85,7 @@ public class ImageMetadata extends Metadata {
             }
         }
 
+        // applying the exact color distribution
         if (builder.exactColorDistribution != null) {
             this.exactColorDistribution = builder.exactColorDistribution;
         } else {
@@ -106,7 +111,7 @@ public class ImageMetadata extends Metadata {
     /**
      * Builder class for constructing an ImageMetadata object.
      * Allows for the creation of ImageMetadata objects using order agnostic method-chaining.
-     * There are zero required variables. Default null values are inserted in place of missing data.
+     * Only a file path is required to create a new ImageMetadata object.
      */
     public static class Builder {
         private String absoluteFilePath;

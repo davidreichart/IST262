@@ -22,7 +22,6 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
      */
     @Override
     public void setAttributes() {
-
     }
 
     @Override
@@ -80,6 +79,11 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
         return textField;
     }
 
+    /**
+     * Sets a hint for a text field that disappears when the user clicks on the text field.
+     * @param textField the text field to set a hint for.
+     * @param hint The hint text to display in the text field.
+     */
     private void setHint(final JTextField textField, final String hint) {
         textField.setText(hint);
         textField.setForeground(Color.GRAY);
