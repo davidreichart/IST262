@@ -1,18 +1,11 @@
-import model.data.PixelColor;
-import model.util.ImageInspector;
-import view.BrowserUIFrame;
+import controller.ApplicationJMenuBarController;
+import model.context.ApplicationContext;
+import model.data.FileTag;
+import view.ApplicationJFrame;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,6 +13,13 @@ public class Main {
     }
 
     public static void runUITest() {
-        BrowserUIFrame browserUIFrame = new BrowserUIFrame();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ApplicationJFrame applicationJFrame = new ApplicationJFrame();
+                ApplicationContext applicationContext = new ApplicationContext(new TreeSet<FileTag>(), new ArrayList<String>());
+                ApplicationJMenuBarController applicationJMenuBarController = new ApplicationJMenuBarController(applicationJFrame, applicationContext);
+            }
+        });
     }
 }
