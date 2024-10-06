@@ -48,17 +48,7 @@ public class FileBrowserJPanel extends JPanel implements Renderable, DirectoryLi
     @Override
     public void buildComponents() {
         this.fileTree = new UserFileJTree();
-        this.expandAllJButton = createExpandAllJButton();
-    }
-
-    public JButton createExpandAllJButton() {
-        JButton expandAllJButton = new JButton("Expand All");
-        expandAllJButton.addActionListener(e -> {
-            for (int i = 0; i < fileTree.getRowCount(); i++) {
-                fileTree.expandRow(i);
-            }
-        });
-        return expandAllJButton;
+        this.expandAllJButton = new JButton("Expand All");
     }
 
     public UserFileJTree getFileTree() {
@@ -79,8 +69,6 @@ public class FileBrowserJPanel extends JPanel implements Renderable, DirectoryLi
     public void directoryListChanged(HashSet<UserDirectory> newDirectoryList) {
         for (UserDirectory directory : newDirectoryList) {
             fileTree.addDirectoryNode(directory);
-            System.out.printf("Added directory: %s\n", directory.getName());
         }
-        System.out.println("method invoked");
     }
 }

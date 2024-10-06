@@ -47,6 +47,7 @@ public class UserFileJTree extends JTree {
         }
 
         rootNode.add(directoryNode);
+        ((DefaultTreeModel) getModel()).reload();
     }
 
     public HashSet<String> getCurrentlyStoredDirectories() {
