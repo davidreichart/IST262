@@ -12,6 +12,7 @@ import java.util.HashSet;
 public class FileBrowserJPanel extends JPanel implements Renderable, DirectoryListListener {
 
     UserFileJTree fileTree;
+    JButton expandAllJButton;
 
     public FileBrowserJPanel() {
         setAttributes();
@@ -37,6 +38,7 @@ public class FileBrowserJPanel extends JPanel implements Renderable, DirectoryLi
     @Override
     public void addComponents() {
         add(fileTree);
+        add(expandAllJButton, BorderLayout.NORTH);
     }
 
     /**
@@ -46,10 +48,25 @@ public class FileBrowserJPanel extends JPanel implements Renderable, DirectoryLi
     @Override
     public void buildComponents() {
         this.fileTree = new UserFileJTree();
+        this.expandAllJButton = createExpandAllJButton();
+    }
+
+    public JButton createExpandAllJButton() {
+        JButton expandAllJButton = new JButton("Expand All");
+        expandAllJButton.addActionListener(e -> {
+            for (int i = 0; i < fileTree.getRowCount(); i++) {
+                fileTree.expandRow(i);
+            }
+        });
+        return expandAllJButton;
     }
 
     public UserFileJTree getFileTree() {
         return fileTree;
+    }
+
+    public JButton getExpandAllJButton() {
+        return expandAllJButton;
     }
 
     /**

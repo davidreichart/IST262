@@ -5,6 +5,9 @@ import view.ApplicationJFrame;
 
 import javax.swing.event.*;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
 
 public class FileBrowserJPanelController {
 
@@ -17,5 +20,20 @@ public class FileBrowserJPanelController {
         this.frame = frame;
         this.context = context;
         this.lastCheckedDirectoryCount = 0;
+
+        frame.getFileBrowserJPanel()
+                .getExpandAllJButton()
+                .addActionListener(expandAllDirectories());
+    }
+
+    public ActionListener expandAllDirectories() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < frame.getFileBrowserJPanel().getFileTree().getRowCount(); i++) {
+                    frame.getFileBrowserJPanel().getFileTree().expandRow(i);
+                }
+            }
+        };
     }
 }
