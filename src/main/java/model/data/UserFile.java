@@ -5,10 +5,12 @@ import model.util.FileInspector;
 import model.util.ImageInspector;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 
 /**
  * The UserFile class represents a file on the user's system.
@@ -41,7 +43,7 @@ public class UserFile {
     private UserFile(Builder builder) {
         this.file = builder.file;
         if (builder.imageMetadata == null) {
-            this.imageMetadata = null;
+            this.imageMetadata = ImageMetadata.builder(this.file.getAbsolutePath()).build();
         } else {
             this.imageMetadata = builder.imageMetadata;
         }
@@ -172,7 +174,7 @@ public class UserFile {
      * @throws UnsupportedOperationException If the ImageMetadata object for this UserFile is currently null.
      */
     public ImageMetadata getImageMetadata() throws UnsupportedOperationException {
-        if (this.imageMetadata == null) {
+        if (Objects.equals(this.imageMetadata.getResolution(), new Dimension(0, 0))) {
             throw new UnsupportedOperationException("This file's image-metadata is currently null. Run \"generateAllImageMetadata\" to create this object.");
         }
         return this.imageMetadata;

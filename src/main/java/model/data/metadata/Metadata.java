@@ -51,18 +51,12 @@ public abstract class Metadata implements Comparable<Metadata> {
     }
 
     /**
-     * Returns a JSON representation of the core metadata attributes for this file.
-     * Content Type specific metadata should be accessed through other methods prefixed with the specific type.
-     * (i.e., "imageMetadataJson()" for ImageMetadata objects).
-     * @return A JSON representation of the core metadata attributes for this file.
+     * Content type metadata is specific to each sub-metadata class.
+     * I.e., ImageMetadata will have different content type metadata than TextMetadata.
+     * This method is abstract and must be implemented by each sub-metadata class.
+     * @return A string representing the content type metadata attributes for this file.
      */
-    public String metadataJSON() {
-        return "\"Metadata\": {\n" +
-                "  \"absoluteFilePath\": \"" + this.absoluteFilePath + "\",\n" +
-                "  \"contentType\": \"" + this.contentType + "\",\n" +
-                "  \"byteCount\": " + this.byteCount + ",\n" +
-                "}";
-    }
+    public abstract String getContentTypeMetadata();
 
     /**
      * Returns a string representing the core metadata attributes for this file.

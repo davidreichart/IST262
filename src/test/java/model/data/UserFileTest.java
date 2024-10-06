@@ -1,6 +1,5 @@
 package model.data;
 
-import model.data.metadata.FileMetadata;
 import model.data.metadata.ImageMetadata;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,7 +58,6 @@ public class UserFileTest {
                 .build();
 
         // UserFiles without metadata should throw UnsupportedOperationException when trying to access metadata
-        assertThrows(UnsupportedOperationException.class, () -> noMetadata.getFileMetadata());
         assertThrows(UnsupportedOperationException.class, () -> noMetadata.getImageMetadata());
         assertEquals(new File("testFile.jpg"), noMetadata.getFile());
         assertEquals(fileTags, noMetadata.getFileTags());
@@ -120,23 +118,6 @@ public class UserFileTest {
         assertEquals(100, testUserFile.getImageMetadata().getResolution().width);
         assertEquals(100, testUserFile.getImageMetadata().getResolution().height);
         assertEquals(10000, testUserFile.getImageMetadata().getPixelCount());
-    }
-
-    @Test
-    public void generateAllFileMetadata_GeneratesFileMetadataObject() {
-        File testFile = new File("src/test/resources/bluePNG.png");
-        LinkedHashSet<FileTag> fileTags = new LinkedHashSet<>();
-        UserFile testUserFile = UserFile.builder(testFile)
-                .fileTags(fileTags)
-                .build();
-        testUserFile.generateAllFileMetadata();
-
-        assertNotNull(testUserFile.getFileMetadata());
-        // not checking an absolute path since this varies by system
-        assertEquals("image/png", testUserFile.getFileMetadata().getContentType());
-        assertEquals(693, testUserFile.getFileMetadata().getByteCount());
-        assertEquals("bluePNG.png", testUserFile.getFileMetadata().getFileName());
-        assertEquals("png", testUserFile.getFileMetadata().getFileExtension());
     }
 
     @Test

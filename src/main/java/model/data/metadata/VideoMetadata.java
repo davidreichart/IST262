@@ -28,6 +28,20 @@ public class VideoMetadata extends Metadata {
     }
 
     /**
+     * Content type metadata is specific to each sub-metadata class.
+     * This method returns a string of video metadata attributes.
+     * @return A string representing the VideoMetadata attributes for this file.
+     */
+    @Override
+    public String getContentTypeMetadata() {
+        return "\u001B[31m\"VideoMetadata\": {\n" +
+                "  \"frameCount\": " + this.frameCount + ",\n" +
+                "  \"durationInSeconds\": " + this.durationInSeconds + ",\n" +
+                "  \"resolution\": \"" + this.resolution.height + "x" + this.resolution.width + "\"\n" +
+                "}\u001B[0m";
+    }
+
+    /**
      * Constructs a new VideoMetadata object when all possible attributes are already known.
      * The VideoMetadata class is a representation of contextualizing data points for any valid video file on
      * a user's computer.
@@ -66,6 +80,17 @@ public class VideoMetadata extends Metadata {
         } else {
             this.resolution = builder.resolution;
         }
+    }
+
+    /**
+     * Initializes the build process for creating a new VideoMetadata object.
+     * Allows for the creation of VideoMetadata objects using order agnostic method-chaining.
+     * Only a file path is required to create a new TextMetadata object.
+     * Default zero/zero equivalent values are placed where data is not provided.
+     * @return An instance of the VideoMetadata builder.
+     */
+    public static Builder builder(String absoluteFilePath) {
+        return new Builder(absoluteFilePath);
     }
 
     /**

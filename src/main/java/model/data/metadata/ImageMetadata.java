@@ -185,6 +185,21 @@ public class ImageMetadata extends Metadata {
     }
 
     /**
+     * Content type metadata is specific to each sub-metadata class.
+     * This method returns a string of image metadata attributes.
+     * @return A string representing the ImageMetadata attributes for this file.
+     */
+    @Override
+    public String getContentTypeMetadata() {
+        return "\u001b[32m\"ImageMetadata\": {\n" +
+                "  \"resolution\": \"" + this.resolution.height + "x" + this.resolution.width + "\",\n" +
+                "  \"pixelCount\": " + this.pixelCount + ",\n" +
+                "  \"roughColorDistributionSize\": " + this.roughColorDistribution.size() + ",\n" +
+                "  \"exactColorDistributionSize\": " + this.exactColorDistribution.size() + "\n" +
+                "}\u001B[0m";
+    }
+
+    /**
      * Presents all currently stored attributes that contextualize the corresponding image for this ImageMetadata object.
      * @return A string listing all attributes store on this ImageMetadata object.
      */

@@ -48,10 +48,34 @@ public class TextMetadata extends Metadata {
         this.characterCount = 0;
     }
 
+    /**
+     * Content type metadata is specific to each sub-metadata class.
+     * This method returns a string of text metadata attributes.
+     * @return A string representing the TextMetadata attributes for this file.
+     */
+    @Override
+    public String getContentTypeMetadata() {
+        return "\u001b[34m\"TextMetadata\": {\n" +
+                "  \"wordCount\": " + this.wordCount + ",\n" +
+                "  \"characterCount\": " + this.characterCount + "\n" +
+                "}\u001B[0m";
+    }
+
     private TextMetadata(Builder builder) {
         super(builder.absoluteFilePath);
         this.wordCount = builder.wordCount;
         this.characterCount = builder.characterCount;
+    }
+
+    /**
+     * Initializes the build process for creating a new TextMetadata object.
+     * Allows for the creation of TextMetadata objects using order agnostic method-chaining.
+     * Only a file path is required to create a new TextMetadata object.
+     * Default zero/zero equivalent values are placed where data is not provided.
+     * @return An instance of the TextMetadata builder.
+     */
+    public static Builder builder(String absoluteFilePath) {
+        return new Builder(absoluteFilePath);
     }
 
     /**
