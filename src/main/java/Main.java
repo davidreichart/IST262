@@ -1,12 +1,9 @@
 import controller.ApplicationController;
-import controller.ApplicationJMenuBarController;
 import model.context.ApplicationContext;
-import model.context.UserDirectory;
 import model.data.FileTag;
 import view.ApplicationJFrame;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Main {

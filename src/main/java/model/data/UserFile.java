@@ -1,6 +1,5 @@
 package model.data;
 
-import model.data.metadata.FileMetadata;
 import model.data.metadata.ImageMetadata;
 import model.util.FileInspector;
 import model.util.ImageInspector;
@@ -16,7 +15,6 @@ import java.util.LinkedHashSet;
  */
 public class UserFile {
     private File file;
-    private FileMetadata fileMetadata;
     private ImageMetadata imageMetadata;
     private LinkedHashSet<FileTag> fileTags;
 
@@ -24,14 +22,12 @@ public class UserFile {
      * Constructs a new UserFile object when all possible attributes are already known.
      * The UserFile class represents a file on the user's system.
      * @param file The file object leading to a valid file on the user's system.
-     * @param fileMetadata A representation of contextualizing data points for any valid file on a user's computer.
      * @param imageMetadata A collection of data points/statistics to be associated with an
      *                      image file on the user's system
      * @param fileTags A set of FileTags used in additional categorization of UserFiles.
      */
-    public UserFile(File file, FileMetadata fileMetadata, ImageMetadata imageMetadata, LinkedHashSet<FileTag> fileTags) {
+    public UserFile(File file, ImageMetadata imageMetadata, LinkedHashSet<FileTag> fileTags) {
         this.file = file;
-        this.fileMetadata = fileMetadata;
         this.imageMetadata = imageMetadata;
         this.fileTags = fileTags;
     }
@@ -44,11 +40,6 @@ public class UserFile {
      */
     private UserFile(Builder builder) {
         this.file = builder.file;
-        if (builder.fileMetadata == null) {
-            this.fileMetadata = null;
-        } else {
-            this.fileMetadata = builder.fileMetadata;
-        }
         if (builder.imageMetadata == null) {
             this.imageMetadata = null;
         } else {
@@ -81,7 +72,6 @@ public class UserFile {
      */
     public static class Builder {
         private File file;
-        private FileMetadata fileMetadata;
         private ImageMetadata imageMetadata;
         private LinkedHashSet<FileTag> fileTags;
 
@@ -93,18 +83,6 @@ public class UserFile {
         public Builder(File file) {
             // required fields
             this.file = file;
-        }
-
-        /**
-         * Sets the FileMetadata object associated to this UserFile. All files have a FileMetadata object.
-         * The FileMetadata class is a representation of contextualizing data points for any valid file on a user's computer.
-         * If skipped during the build process, a new FileMetadata object will be generated automatically.
-         * @param fileMetadata The FileMetadata object contextualizing this file.
-         * @return An instance of the UserFile builder.
-         */
-        public Builder fileMetadata(FileMetadata fileMetadata) {
-            this.fileMetadata = fileMetadata;
-            return this;
         }
 
         /**
@@ -163,20 +141,6 @@ public class UserFile {
     }
 
     /**
-     * Calls on methods provided by the FileInspector class to generate a fully populated FileMetadata object.
-     * The FileMetadata class is a representation of contextualizing data points for any valid file on a user's computer.
-     */
-    public void generateAllFileMetadata() {
-        this.fileMetadata = FileMetadata.builder()
-                .absolutePath(this.file.getAbsolutePath())
-                .contentType(FileInspector.getFileContentType(this.file))
-                .byteCount(FileInspector.getFileSizeInBytes(this.file))
-                .fileName(this.file.getName())
-                .fileExtension(FileInspector.getFileExtension(this.file))
-                .build();
-    }
-
-    /**
      * Adds a new FileTag to this UserFile.
      * If the tag provided is already attached to this UserFile, an exception is thrown.
      * @param fileTag The FileTag to attach to this UserFile.
@@ -201,17 +165,6 @@ public class UserFile {
                 break;
             }
         }
-    }
-
-    /**
-     * @return The FileMetadata object attached to this UserFile.
-     * @throws UnsupportedOperationException If the FileMetadata object for this UserFile is currently null.
-     */
-    public FileMetadata getFileMetadata() throws UnsupportedOperationException {
-        if (this.fileMetadata == null) {
-            throw new UnsupportedOperationException("This file's metadata is currently null. Run \"generateAllFileMetadata\" to create this object.");
-        }
-        return this.fileMetadata;
     }
 
     /**

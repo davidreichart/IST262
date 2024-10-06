@@ -5,7 +5,6 @@ import model.context.UserDirectory;
 import view.Renderable;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.util.HashSet;
 

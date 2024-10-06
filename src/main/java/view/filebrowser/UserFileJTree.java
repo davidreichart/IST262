@@ -1,14 +1,11 @@
 package view.filebrowser;
 
-import model.context.DirectoryListListener;
-import model.context.ObservableDirectoryList;
 import model.context.UserDirectory;
 import model.data.UserFile;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.io.File;
 import java.util.HashSet;
 
 public class UserFileJTree extends JTree {
@@ -20,7 +17,6 @@ public class UserFileJTree extends JTree {
         currentlyStoredDirectories = new HashSet<>();
         setModel(new DefaultTreeModel(rootNode = new DefaultMutableTreeNode("Root")));
         setShowsRootHandles(false);
-        addDirectoryNode(new UserDirectory(new File("C:\\Users\\Snaxx\\Pictures")));
     }
 
     /**
