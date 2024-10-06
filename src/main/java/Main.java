@@ -1,5 +1,7 @@
+import controller.ApplicationController;
 import controller.ApplicationJMenuBarController;
 import model.context.ApplicationContext;
+import model.context.UserDirectory;
 import model.data.FileTag;
 import view.ApplicationJFrame;
 
@@ -17,8 +19,8 @@ public class Main {
             @Override
             public void run() {
                 ApplicationJFrame applicationJFrame = new ApplicationJFrame();
-                ApplicationContext applicationContext = new ApplicationContext(new TreeSet<FileTag>(), new ArrayList<String>());
-                ApplicationJMenuBarController applicationJMenuBarController = new ApplicationJMenuBarController(applicationJFrame, applicationContext);
+                ApplicationContext applicationContext = new ApplicationContext(new TreeSet<FileTag>(), new ArrayList<UserDirectory>());
+                ApplicationController applicationController = new ApplicationController(applicationJFrame, applicationContext);
             }
         });
     }

@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ApplicationJFrame extends JFrame implements Renderable {
 
@@ -13,18 +14,36 @@ public class ApplicationJFrame extends JFrame implements Renderable {
         setVisible(true);
     }
 
-    private void setAttributes() {
+    /**
+     * Sets the default style and behavior of this Renderable object.
+     */
+    @Override
+    public void setAttributes() {
         setTitle("IST 261");
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Attaches JComponent objects to this Renderable object.
+     * {@link #buildComponents()} should be before this method.
+     */
     @Override
     public void addComponents() {
         setJMenuBar(applicationJMenuBar);
+        JSplitPane topPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        topPanel.setDividerLocation(300);
+        topPanel.setDividerSize(2);
+        topPanel.setLeftComponent(new FileExplorerJPanel());
+        topPanel.setRightComponent(new JPanel());
+        add(topPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Builds the JComponent objects attached to this Renderable object.
+     * {@link #addComponents()} should be called after this method.
+     */
     @Override
     public void buildComponents() {
         this.applicationJMenuBar = new ApplicationJMenuBar();

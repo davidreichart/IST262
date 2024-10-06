@@ -12,8 +12,17 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
     private JMenuItem closeApplicationJMenuItem;
 
     public ApplicationJMenuBar() {
+        setAttributes();
         buildComponents();
         addComponents();
+    }
+
+    /**
+     * Sets the default style and behavior of this Renderable object.
+     */
+    @Override
+    public void setAttributes() {
+
     }
 
     @Override

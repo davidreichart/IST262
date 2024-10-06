@@ -75,4 +75,28 @@ public class UserDirectory {
         }
         return 0;
     }
+
+    /**
+     * Compares two UserDirectory objects for equality based on their directory path names.
+     * @param obj The UserDirectory object to compare against.
+     * @return True if the directory paths are the same. <br>
+     *    False if the directory paths are different or the input object is not a UserDirectory.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof UserDirectory) {
+            UserDirectory other = (UserDirectory) obj;
+            return this.getDirectoryPath().getName().equals(other.getDirectoryPath().getName());
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the file object containing the directory path for this UserDirectory.
+     * @return The file object containing the directory path for this UserDirectory.
+     */
+    public File getDirectoryPath() {
+        return directoryPath;
+    }
 }

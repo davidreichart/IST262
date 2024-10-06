@@ -2,6 +2,9 @@ package model.context;
 
 import model.data.FileTag;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -11,7 +14,7 @@ import java.util.*;
 public final class ApplicationContext {
 
     private TreeSet<FileTag> definedTags;
-    private ArrayList<String> knownDirectories;
+    private ArrayList<UserDirectory> knownDirectories;
 
     /**
      * Instantiates a new instance of the ApplicationContext to store persistent data.
@@ -19,7 +22,7 @@ public final class ApplicationContext {
      * @param definedTags A set of all FileTags created by the user.
      * @param knownDirectories A list of Strings representing file directories to be scanned by the program for image files.
      */
-    public ApplicationContext(TreeSet<FileTag> definedTags, ArrayList<String> knownDirectories) {
+    public ApplicationContext(TreeSet<FileTag> definedTags, ArrayList<UserDirectory> knownDirectories) {
         this.definedTags = definedTags;
         this.knownDirectories = knownDirectories;
     }
@@ -45,6 +48,7 @@ public final class ApplicationContext {
      */
     public void removeExistingFileTag(String tagName) throws IllegalArgumentException {
         boolean tagRemoved = false;
+        // search for the tag and remove it if found
         for (FileTag tag : this.definedTags) {
             if (tag.getName().equals(tagName)) {
                 this.definedTags.remove(tag);
@@ -52,6 +56,8 @@ public final class ApplicationContext {
                 break;
             }
         }
+
+        // the tag was not found, throw an exception
         if (!tagRemoved) {
             throw new IllegalArgumentException("There is no known file tag with the name provided. No tag has been removed.");
         }
@@ -63,8 +69,15 @@ public final class ApplicationContext {
      * @throws IllegalArgumentException If the input directory is already being tracked.
      */
     public void addNewDirectory(String directoryPath) throws IllegalArgumentException {
-        if (!this.knownDirectories.contains(directoryPath)) {
-            this.knownDirectories.add(directoryPath);
+        // must be given a valid directory
+        if (!Files.isDirectory(Path.of(directoryPath))) {
+            throw new IllegalArgumentException("The provided path is not a directory.");
+        }
+
+        // only add new directories
+        UserDirectory newDirectory = new UserDirectory(new File(directoryPath));
+        if (!this.knownDirectories.contains(newDirectory)) {
+            this.knownDirectories.add(new UserDirectory(new File(directoryPath)));
         } else {
             throw new IllegalArgumentException("The directory path you attempted to add already is already stored by the program.");
         }
@@ -78,13 +91,17 @@ public final class ApplicationContext {
      */
     public void removeExistingDirectory(String directoryPath) throws IllegalArgumentException {
         boolean directoryRemoved = false;
-        for (String directory :this.knownDirectories) {
-            if (directory.equals(directoryPath)) {
-                this.knownDirectories.remove(directory);
+        // search for the directory and remove it if found
+        for (int i = 0; i < this.knownDirectories.size(); i++) {
+            UserDirectory currentDirectory = this.knownDirectories.get(i);
+            if (currentDirectory.getDirectoryPath().getName().equals(directoryPath)) {
+                this.knownDirectories.remove(i);
                 directoryRemoved = true;
                 break;
             }
         }
+
+        // the directory was not found, throw an exception
         if (!directoryRemoved) {
             throw new IllegalArgumentException("There was no stored directory found with the input path.");
         }
@@ -113,7 +130,7 @@ public final class ApplicationContext {
      * This list controls what directories are relevant as instructed by the user.
      * @return A list of Strings containing all relevant file recordists on the user's computer to be watched for images.
      */
-    public ArrayList<String> getKnownDirectories() {
+    public ArrayList<UserDirectory> getKnownDirectories() {
         return knownDirectories;
     }
 
@@ -124,7 +141,7 @@ public final class ApplicationContext {
      * This method erases the existing list and replaces it with the supplied list.
      * @param knownDirectories The list of Strings of directory paths to replace the existing list.
      */
-    public void setKnownDirectories(ArrayList<String> knownDirectories) {
+    public void setKnownDirectories(ArrayList<UserDirectory> knownDirectories) {
         this.knownDirectories = knownDirectories;
     }
 }
