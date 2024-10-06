@@ -1,5 +1,11 @@
 package model.data.metadata;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
  * The TextMetadata object is a collection of data points/statistics to be associated with a text file
  * on the user's system.
@@ -61,10 +67,67 @@ public class TextMetadata extends Metadata {
                 "}\u001B[0m";
     }
 
+    /**
+     * Counts the total number of characters in this text file.
+     * @return The total number of characters in this text file.
+     */
+    public int countCharactersInFile() {
+        try {
+            int characterCount = 0;
+            Scanner scanner = new Scanner(this.getFile());
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                characterCount += line.length();
+            }
+            scanner.close();
+            return characterCount;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * Counts the total number of words in this text file.
+     * Words are defined as any sequence of characters separated by whitespace.
+     * @return The total number of words in this text file.
+     */
+    public int countWordsInFile() {
+        int wordCount = 0;
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(this.getFile()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] words = line.split(" ");
+                wordCount += words.length;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return wordCount;
+    }
+
+    /**
+     * Constructor used by the TextMetadata builder.
+     * Attempts to calculate relevant metadata fields if they are not provided.
+     * Default zero/zero equivalent values are placed where data is not provided and not calculable.
+     * @param builder The builder instance used to create a new TextMetadata object.
+     */
     private TextMetadata(Builder builder) {
         super(builder.absoluteFilePath);
-        this.wordCount = builder.wordCount;
-        this.characterCount = builder.characterCount;
+        if (builder.wordCount == 0) {
+            this.wordCount = countWordsInFile();
+        } else {
+            this.wordCount = builder.wordCount;
+        }
+
+        if (builder.characterCount == 0) {
+            this.characterCount = countCharactersInFile();
+        } else {
+            this.characterCount = builder.characterCount;
+        }
     }
 
     /**

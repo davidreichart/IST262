@@ -15,7 +15,7 @@ public class TestHarness {
     }
 
     /**
-     * This class is intended to test the polymorphism of the Metadata class and its sub-classes.
+     * This class is intended to test the polymorphism of the Metadata class and its subclasses.
      * M04-A01: Implementing Inheritance
      */
     private static class PolymorphismTestHarness {
