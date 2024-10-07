@@ -17,10 +17,9 @@ public class ImageFile extends SystemFile {
      * The ImageMetadata record contains image-specific metadata.
      * @param width The width of the image in pixels.
      * @param height The height of the image in pixels.
-     * @param roughColorHistogram A TreeMap containing the rough color distribution of the image.
-     * @param preciseColorHistogram A TreeMap containing the precise color distribution of the image.
+     * @param colorHistogram A 3D array representing the color histogram of the image.
      */
-    public record ImageMetadata(int width, int height, TreeMap<PixelColor, Integer> roughColorHistogram, TreeMap<PixelColor, Integer> preciseColorHistogram) {
+    public record ImageMetadata(int width, int height, int[][][] colorHistogram) {
         public int pixelCount() {
             return width * height;
         }
@@ -38,7 +37,7 @@ public class ImageFile extends SystemFile {
 
         BufferedImage image = ImageInspector.loadImage(absoluteFilePath);
         Dimension resolution = ImageInspector.getResolution(image);
-        this.IMAGE_METADATA = new ImageMetadata(resolution.width, resolution.height, new TreeMap<>(), new TreeMap<>());
+        this.IMAGE_METADATA = new ImageMetadata(resolution.width, resolution.height, ImageInspector.generateColorHistogram(image, 8));
     }
 
     /**

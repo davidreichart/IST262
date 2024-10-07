@@ -1,17 +1,21 @@
 import model.data.filetypes.ImageFile;
+import model.util.ImageInspector;
+
+import java.awt.image.BufferedImage;
 
 public class TEST {
     public static void main(String[] args) {
-        ImageFile imageFile = new ImageFile("C:\\Users\\Snaxx\\Pictures\\gw058.jpg");
-        System.out.println(imageFile.METADATA().absoluteFilePath());
-        System.out.println(imageFile.IMAGE_METADATA().width());
-        System.out.println(imageFile.IMAGE_METADATA().height());
-        System.out.println(imageFile.METADATA().byteCount());
-        System.out.println(imageFile.IMAGE_METADATA().pixelCount());
-        System.out.println(imageFile.METADATA().kilobyteCount());
-        System.out.println(imageFile.METADATA().megabyteCount());
-        System.out.println(imageFile.METADATA().gigabyteCount());
-        System.out.println(imageFile.IMAGE_METADATA().roughColorHistogram().size());
-        System.out.println(imageFile.IMAGE_METADATA().preciseColorHistogram().size());
+        BufferedImage image = ImageInspector.loadImage("C:\\Users\\Snaxx\\Pictures\\gw058.jpg");
+        int[][][] histogram = ImageInspector.generateColorHistogram(image, 8);
+        for (int red = 0; red < histogram.length; red++) {
+            for (int blue = 0; blue < histogram[red].length; blue++) {
+                for (int green = 0; green < histogram[red][blue].length; green++) {
+                    if (histogram[red][blue][green] == 0) {
+                        continue;
+                    }
+                    System.out.println("Red: " + red + " Blue: " + blue + " Green: " + green + " Count: " + histogram[red][blue][green]);
+                }
+            }
+        }
     }
 }

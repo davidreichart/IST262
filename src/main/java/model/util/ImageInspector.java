@@ -17,64 +17,31 @@ public final class ImageInspector {
 
     private ImageInspector() {}
 
-    /**
-     * Reads a given image pixel-by-pixel to count the frequency of individual colors occurring in that image.
-     * The provided map may have thousands of keys since this method does not have any limits on the number of
-     * colors logged.
-     * @param image The image to create a color map from.
-     * @return A Map of Color keys with Integer values representing the frequency of each color.
-     */
-    public static TreeMap<PixelColor, Integer> getExactColorDistribution(BufferedImage image) {
-        TreeMap<PixelColor, Integer> colorDistributionMap = new TreeMap<>();
-
-        // iterating through every pixel in the image
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                PixelColor currentPixelColor = new PixelColor(new Color(image.getRGB(x, y)));
-                if (!colorDistributionMap.containsKey(currentPixelColor)) {
-                    colorDistributionMap.put(currentPixelColor, 1);
-                } else {
-                    colorDistributionMap.merge(currentPixelColor, 1, Integer::sum);
-                }
-            }
-        }
-        return colorDistributionMap;
-    }
-
-    /**
-     * Reads a given image pixel-by-pixel to count the frequency of a limited set of colors in that image.
-     * The possible colors to be logged include: red, green or blue.
-     * A pixel is assigned based upon which color value it is closest to.
-     * For example, a pixel with RGB values of [255,100,20] would be assigned as "red" and increment that key's value.
-     * @param image The image to create a limited color map from.
-     * @return A Map of specific Color keys with Integer values representing the frequency of each color.
-     */
-    public static TreeMap<PixelColor, Integer> getRoughColorDistribution(BufferedImage image) {
-        TreeMap<PixelColor, Integer> colorDistributionMap = new TreeMap<>();
-        colorDistributionMap.put(new PixelColor(Color.RED), 0);
-        colorDistributionMap.put(new PixelColor(Color.GREEN), 0);
-        colorDistributionMap.put(new PixelColor(Color.BLUE), 0);
+    // bin size is the number of bins for each color channel
+    // for example, if binSize is 8, then there will be 8 bins for red, 8 bins for blue, and 8 bins for green
+    // this means that there will be 8^3 = 512 total bins
+    public static int[][][] generateColorHistogram(BufferedImage image, int binSize) {
+        int[][][] histogram = new int[256 / binSize][256 / binSize][256 / binSize];
 
         // iterating through every pixel in the image
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 Color currentPixelColor = new Color(image.getRGB(x, y));
+                // get the red, blue, and green values of the current pixel
                 int redValue = currentPixelColor.getRed();
                 int blueValue = currentPixelColor.getBlue();
                 int greenValue = currentPixelColor.getGreen();
-                if (redValue > blueValue && redValue > greenValue) {
-                    // red is dominant
-                    colorDistributionMap.merge(new PixelColor(Color.RED), 1, Integer::sum);
-                } else if (blueValue > greenValue) {
-                    // blue is dominant
-                    colorDistributionMap.merge(new PixelColor(Color.BLUE), 1, Integer::sum);
-                } else {
-                    // green is dominant
-                    colorDistributionMap.merge(new PixelColor(Color.GREEN), 1, Integer::sum);
-                }
+
+                // calculate the bin that corresponds to the current pixel's color
+                int redBin = redValue / histogram.length;
+                int blueBin = blueValue / histogram.length;
+                int greenBin = greenValue / histogram.length;
+
+                // increment the count of the corresponding bin
+                histogram[redBin][blueBin][greenBin]++;
             }
         }
-        return colorDistributionMap;
+        return histogram;
     }
 
     /**
