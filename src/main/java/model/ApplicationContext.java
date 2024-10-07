@@ -1,4 +1,4 @@
-package model.context;
+package model;
 
 import model.data.FileTag;
 import model.data.filetypes.SystemDirectoryList;

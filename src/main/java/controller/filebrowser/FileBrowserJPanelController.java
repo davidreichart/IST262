@@ -1,13 +1,10 @@
 package controller.filebrowser;
 
-import model.context.ApplicationContext;
+import model.ApplicationContext;
 import view.ApplicationJFrame;
 
-import javax.swing.event.*;
-import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventListener;
 
 public class FileBrowserJPanelController {
 

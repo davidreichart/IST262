@@ -30,7 +30,7 @@ public class SystemDirectory {
      * @throws IllegalArgumentException If the file is not an image file.
      */
     public void scanDirectoryForImages() throws IllegalArgumentException {
-        for (File file : Objects.requireNonNull(new File(directoryPath).listFiles())) {
+        for (File file : new File(directoryPath).listFiles()) {
             if (FileInspector.isImageFile(file)) {
                 directoryImageFiles.add(new ImageFile(file.getAbsolutePath()));
             } else {

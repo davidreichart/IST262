@@ -18,8 +18,10 @@ public class SystemDirectoryList {
      * @throws IllegalArgumentException If the SystemDirectory is already in the list.
      */
     public void addDirectory(SystemDirectory systemDirectory) throws IllegalArgumentException {
-        if (systemDirectories.contains(systemDirectory)) {
-            throw new IllegalArgumentException("The directory path you attempted to add already is already stored by the program.");
+        for (SystemDirectory directory : this.systemDirectories) {
+            if (directory.directoryPath().equals(systemDirectory.directoryPath())) {
+                throw new IllegalArgumentException("The directory you attempted to add is already in the list.");
+            }
         }
         systemDirectories.add(systemDirectory);
 

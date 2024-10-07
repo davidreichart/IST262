@@ -38,7 +38,7 @@ public class ImageFile extends SystemFile {
 
         BufferedImage image = ImageInspector.loadImage(absoluteFilePath);
         Dimension resolution = ImageInspector.getResolution(image);
-        this.IMAGE_METADATA = new ImageMetadata(resolution.width, resolution.height, ImageInspector.getRoughColorDistribution(image), ImageInspector.getExactColorDistribution(image));
+        this.IMAGE_METADATA = new ImageMetadata(resolution.width, resolution.height, new TreeMap<>(), new TreeMap<>());
     }
 
     /**

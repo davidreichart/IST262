@@ -1,5 +1,5 @@
 import controller.ApplicationController;
-import model.context.ApplicationContext;
+import model.ApplicationContext;
 import model.data.FileTag;
 import view.ApplicationJFrame;
 

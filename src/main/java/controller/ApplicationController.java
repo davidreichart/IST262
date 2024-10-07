@@ -1,9 +1,8 @@
 package controller;
 
 import controller.filebrowser.FileBrowserJPanelController;
-import model.context.ApplicationContext;
+import model.ApplicationContext;
 import view.ApplicationJFrame;
-import view.filebrowser.FileBrowserJPanel;
 
 public class ApplicationController {
 

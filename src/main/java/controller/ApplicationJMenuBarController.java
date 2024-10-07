@@ -1,6 +1,6 @@
 package controller;
 
-import model.context.ApplicationContext;
+import model.ApplicationContext;
 import model.data.filetypes.SystemDirectory;
 import view.ApplicationJFrame;
 
