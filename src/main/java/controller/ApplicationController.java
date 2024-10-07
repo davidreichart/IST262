@@ -18,6 +18,6 @@ public class ApplicationController {
     }
 
     public void configureDirectoryListListeners(ApplicationJFrame frame, ApplicationContext context) {
-        context.getDirectoryList().addListener(frame.getFileBrowserJPanel());
+        context.getSystemDirectoryList().addListener(frame.getFileBrowserJPanel());
     }
 }

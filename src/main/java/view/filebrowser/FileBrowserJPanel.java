@@ -1,14 +1,14 @@
 package view.filebrowser;
 
-import model.context.DirectoryListListener;
-import model.context.UserDirectory;
+import model.data.filetypes.SystemDirectory;
+import model.data.filetypes.SystemDirectoryListListener;
 import view.Renderable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
 
-public class FileBrowserJPanel extends JPanel implements Renderable, DirectoryListListener {
+public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirectoryListListener {
 
     UserFileJTree fileTree;
     JButton expandAllJButton;
@@ -59,14 +59,14 @@ public class FileBrowserJPanel extends JPanel implements Renderable, DirectoryLi
     }
 
     /**
-     * Called when the directory list has changed.
-     * Listeners should update their view of the directory list to match the new list.
+     * Method to be called when the list of SystemDirectories is updated.
+     * Any logic that needs to respond to the list of SystemDirectories being updated should be placed here.
      *
-     * @param newDirectoryList The new list of directories.
+     * @param systemDirectories The updated list of SystemDirectories.
      */
     @Override
-    public void directoryListChanged(HashSet<UserDirectory> newDirectoryList) {
-        for (UserDirectory directory : newDirectoryList) {
+    public void systemDirectoriesListUpdated(HashSet<SystemDirectory> systemDirectories) {
+        for (SystemDirectory directory : systemDirectories) {
             fileTree.addDirectoryNode(directory);
         }
     }

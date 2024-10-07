@@ -1,6 +1,7 @@
 package model.context;
 
 import model.data.FileTag;
+import model.data.filetypes.SystemDirectoryList;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -14,7 +15,7 @@ import java.util.*;
 public final class ApplicationContext {
 
     private TreeSet<FileTag> definedTags;
-    private ObservableDirectoryList directoryList;
+    private SystemDirectoryList systemDirectoryList;
 
     /**
      * Instantiates a new instance of the ApplicationContext to store persistent data.
@@ -23,7 +24,7 @@ public final class ApplicationContext {
      */
     public ApplicationContext(TreeSet<FileTag> definedTags) {
         this.definedTags = definedTags;
-        this.directoryList = new ObservableDirectoryList();
+        this.systemDirectoryList = new SystemDirectoryList();
     }
 
     /**
@@ -79,7 +80,7 @@ public final class ApplicationContext {
         this.definedTags = definedTags;
     }
 
-    public ObservableDirectoryList getDirectoryList() {
-        return directoryList;
+    public SystemDirectoryList getSystemDirectoryList() {
+        return systemDirectoryList;
     }
 }

@@ -1,11 +1,13 @@
 package view.filebrowser;
 
-import model.context.UserDirectory;
-import model.data.UserFile;
+import model.data.filetypes.ImageFile;
+import model.data.filetypes.SystemDirectory;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
 import java.util.HashSet;
 
 public class UserFileJTree extends JTree {
@@ -23,22 +25,20 @@ public class UserFileJTree extends JTree {
      * Adds a directory node to the JTree.
      * The directory node will contain all the files in the directory.
      * todo: all files are added. this app only cares about images.
-     * @param userDirectory The directory to add to the JTree.
      */
-    public void addDirectoryNode(UserDirectory userDirectory) {
+    public void addDirectoryNode(SystemDirectory systemDirectory) {
         // only add new directories to the tree
         // keep track of the directories that have already been added
-        if (currentlyStoredDirectories.contains(userDirectory.getDirectoryPath().getAbsolutePath())) {
+        if (currentlyStoredDirectories.contains(systemDirectory.directoryPath())) {
             return;
         } else {
-            currentlyStoredDirectories.add(userDirectory.getDirectoryPath().getAbsolutePath());
+            currentlyStoredDirectories.add(systemDirectory.directoryPath());
         }
 
-        DefaultMutableTreeNode directoryNode = new DefaultMutableTreeNode(userDirectory.getName());
+        DefaultMutableTreeNode directoryNode = new DefaultMutableTreeNode(new File(systemDirectory.directoryPath()).getName());
 
-        for (UserFile file : userDirectory.getDirectoryFiles()) {
-            String fileName = file.getFile().getName();
-            DefaultMutableTreeNode fileNode = new DefaultMutableTreeNode(fileName);
+        for (ImageFile imageFile : systemDirectory.directoryImageFiles()) {
+            FileNode fileNode = new FileNode(imageFile);
             directoryNode.add(fileNode);
         }
 

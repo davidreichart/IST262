@@ -1,6 +1,7 @@
 package controller;
 
 import model.context.ApplicationContext;
+import model.data.filetypes.SystemDirectory;
 import view.ApplicationJFrame;
 
 import javax.swing.*;
@@ -55,11 +56,10 @@ public class ApplicationJMenuBarController {
 
                 // directory path is valid and not empty
                 try {
-                    context.getDirectoryList().addNewDirectory(input);
+                    context.getSystemDirectoryList().addDirectory(new SystemDirectory(input));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-                System.out.println(context.getDirectoryList());
             }
         };
     }
