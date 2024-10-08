@@ -5,12 +5,14 @@ import model.data.filetypes.SystemDirectoryListListener;
 import view.Renderable;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.util.HashSet;
 
 public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirectoryListListener {
 
     UserFileJTree fileTree;
+    JScrollPane fileScrollPane;
     JButton expandAllJButton;
 
     public FileBrowserJPanel() {
@@ -26,7 +28,7 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
      */
     @Override
     public void setAttributes() {
-        setPreferredSize(new java.awt.Dimension(1000, 800));
+        setPreferredSize(new java.awt.Dimension(1000, 600));
         setLayout(new BorderLayout());
     }
 
@@ -36,7 +38,7 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
      */
     @Override
     public void addComponents() {
-        add(fileTree);
+        add(fileScrollPane, BorderLayout.CENTER);
         add(expandAllJButton, BorderLayout.NORTH);
     }
 
@@ -47,7 +49,13 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
     @Override
     public void buildComponents() {
         this.fileTree = new UserFileJTree();
+        this.fileScrollPane = createFileTreeScrollPane();
         this.expandAllJButton = new JButton("Expand All");
+    }
+
+    public JScrollPane createFileTreeScrollPane() {
+        JScrollPane scrollPane = new JScrollPane(fileTree);
+        return scrollPane;
     }
 
     public UserFileJTree getFileTree() {

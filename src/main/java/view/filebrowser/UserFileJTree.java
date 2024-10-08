@@ -24,7 +24,6 @@ public class UserFileJTree extends JTree {
     /**
      * Adds a directory node to the JTree.
      * The directory node will contain all the files in the directory.
-     * todo: all files are added. this app only cares about images.
      */
     public void addDirectoryNode(SystemDirectory systemDirectory) {
         // only add new directories to the tree
@@ -37,6 +36,7 @@ public class UserFileJTree extends JTree {
 
         DefaultMutableTreeNode directoryNode = new DefaultMutableTreeNode(new File(systemDirectory.directoryPath()).getName());
 
+        // create file nodes with references to each tracked image file
         for (ImageFile imageFile : systemDirectory.directoryImageFiles()) {
             FileNode fileNode = new FileNode(imageFile);
             directoryNode.add(fileNode);

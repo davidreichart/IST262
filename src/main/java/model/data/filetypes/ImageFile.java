@@ -1,6 +1,5 @@
 package model.data.filetypes;
 
-import model.data.PixelColor;
 import model.util.ImageInspector;
 
 import java.awt.*;

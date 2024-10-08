@@ -2,6 +2,10 @@ package model.data.filetypes;
 
 import java.util.HashSet;
 
+/**
+ * The SystemDirectoryListListener interface provides a method for responding to changes in the list of SystemDirectories.
+ * Any class that needs to respond to changes in the list of SystemDirectories should implement this interface.
+ */
 public interface SystemDirectoryListListener {
 
     /**
