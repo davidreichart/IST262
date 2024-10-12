@@ -2,8 +2,7 @@ package model.data.filetypes;
 
 import model.util.FileInspector;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
@@ -38,6 +37,7 @@ public class SystemDirectory implements FileSystemResource {
                 continue;
             }
         }
+
     }
 
     /**
@@ -57,29 +57,64 @@ public class SystemDirectory implements FileSystemResource {
     }
 
     /**
-     * Provides a string with the absolute path of the file system resource.
-     * @return The absolute path of the file system resource.
+     * Opens an input stream which can be used to read the data associated with this file system resource.
+     * Example uses are for reading characters in a text file, or for reading pixels in an image file.
+     * @return An InputStream for the contents contained within the input {@code file};
+     * @throws FileNotFoundException If the file does not exist.
      */
     @Override
-    public String getAbsolutePath() {
-        return this.directoryPath;
+    public InputStream open() throws FileNotFoundException {
+        if (!Files.exists(Path.of(directoryPath))) {
+            throw new FileNotFoundException("The file does not exist.");
+        }
+
+        return new FileInputStream(new File(directoryPath));
     }
 
     /**
-     * Identifies if this file system resource is a directory.
-     * @return True if the file system resource is a directory, false otherwise.
+     * Renames this file system resource.
+     * The previous name for the given file/directory will be lost.
+     *
+     * @param name The new name for this file system resource.
+     * @throws UnsupportedOperationException If the directory cannot be renamed.
      */
     @Override
-    public boolean isDirectory() {
-        return true;
+    public void rename(String name) throws UnsupportedOperationException {
+        File oldDirectory = new File(directoryPath);
+        File newDirectory = new File(oldDirectory.getParent() + File.separator + name);
+
+        if (!oldDirectory.renameTo(newDirectory)) {
+            throw new UnsupportedOperationException("Failed to rename the directory.");
+        }
     }
 
     /**
-     * Identifies if this file system resource is a system file.
-     * @return True if the file system resource is a system file, false otherwise.
+     * Moves this file system resource to the input file path.
+     *
+     * @param path The path to the directory to move this system resource to.
+     * @throws InvalidPathException If the input file path does not exist or
+     *                              this file system resource is already in the input directory.
      */
     @Override
-    public boolean isSystemFile() {
-        return false;
+    public void moveTo(String path) throws InvalidPathException {
+        try {
+            Files.move(Path.of(directoryPath), Path.of(path + File.separator + new File(directoryPath).getName()));
+        } catch (IOException e) {
+            throw new InvalidPathException("The input file path does not exist.", path);
+        }
+    }
+
+    /**
+     * Returns a string detailing the type of system resource this is.
+     * Possible values include: <br>
+     * "Directory" for directories, <br>
+     * "Image" for image files (e.g. .png, .jpg), <br>
+     * "Text" for text files (e.g. .txt), <br>
+     *
+     * @return A string detailing the type of system resource this is.
+     */
+    @Override
+    public String getContentType() {
+        return "Directory";
     }
 }

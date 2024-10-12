@@ -1,6 +1,9 @@
 package model.data.filetypes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.InvalidPathException;
 
 /**
  * FileSystemResources are objects that represent an element from the file system of a computer.
@@ -9,20 +12,36 @@ import java.io.InputStream;
 public interface FileSystemResource {
 
     /**
-     * Provides a string with the absolute path of the file system resource.
-     * @return The absolute path of the file system resource.
+     * Opens an input stream which can be used to read the data associated with this file system resource.
+     * Example uses are for reading characters in a text file, or for reading pixels in an image file.
+     * @return An InputStream for the contents contained within the input {@code file};
+     * @throws FileNotFoundException If this resource does not exist.
      */
-    public String getAbsolutePath();
+    public InputStream open() throws FileNotFoundException;
 
     /**
-     * Identifies if this file system resource is a directory.
-     * @return True if the file system resource is a directory, false otherwise.
+     * Renames this file system resource.
+     * The previous name for the given file/directory will be lost.
+     * @param name The new name for this file system resource.
+     * @throws UnsupportedOperationException If the resource cannot be renamed.
      */
-    public boolean isDirectory();
+    public void rename(String name) throws UnsupportedOperationException;
 
     /**
-     * Identifies if this file system resource is a system file.
-     * @return True if the file system resource is a system file, false otherwise.
+     * Moves this file system resource to the input file path.
+     * @param path The path to the directory to move this system resource to.
+     * @throws InvalidPathException If the input file path does not exist or
+     * this file system resource is already in the input directory.
      */
-    public boolean isSystemFile();
+    public void moveTo(String path) throws InvalidPathException;
+
+    /**
+     * Returns a string detailing the type of system resource this is.
+     * Possible values include: <br>
+     * "Directory" for directories, <br>
+     * "Image" for image files (e.g. .png, .jpg), <br>
+     * "Text" for text files (e.g. .txt), <br>
+     * @return A string detailing the type of system resource this is.
+     */
+    public String getContentType();
 }
