@@ -2,6 +2,8 @@ package view.filebrowser;
 
 import model.data.filetypes.ImageFile;
 import model.data.filetypes.SystemDirectory;
+import view.filebrowser.nodes.DirectoryNode;
+import view.filebrowser.nodes.ImageNode;
 
 import javax.swing.*;
 import javax.swing.tree.*;
@@ -34,12 +36,12 @@ public class UserFileJTree extends JTree {
             currentlyStoredDirectories.add(systemDirectory.directoryPath());
         }
 
-        DefaultMutableTreeNode directoryNode = new DefaultMutableTreeNode(new File(systemDirectory.directoryPath()).getName());
+        DefaultMutableTreeNode directoryNode = new DirectoryNode(systemDirectory);
 
         // create file nodes with references to each tracked image file
         for (ImageFile imageFile : systemDirectory.directoryImageFiles()) {
-            FileNode fileNode = new FileNode(imageFile);
-            directoryNode.add(fileNode);
+            ImageNode imageNode = new ImageNode(imageFile);
+            directoryNode.add(imageNode);
         }
 
         rootNode.add(directoryNode);

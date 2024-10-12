@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
  * This class is intended to be a parent class for all other file types and cannot be instantiated.
  * A METADATA record contains file statistics and information.
  */
-public abstract class SystemFile implements Comparable<SystemFile> {
+public abstract class SystemFile implements Comparable<SystemFile>, FileSystemResource {
     /**
      * The Metadata record contains file statistics and information.
      * @param byteCount The size of the file in bytes.
@@ -29,6 +29,10 @@ public abstract class SystemFile implements Comparable<SystemFile> {
 
         public int gigabyteCount() {
             return (int) (byteCount / 1000000000);
+        }
+
+        public String fileName() {
+            return new File(absoluteFilePath).getName();
         }
     }
 
@@ -127,6 +131,14 @@ public abstract class SystemFile implements Comparable<SystemFile> {
         String thisFileName = new File(this.METADATA().absoluteFilePath()).getName();
         String otherFileName = new File(otherSystemFile.METADATA().absoluteFilePath()).getName();
         return Comparator.comparing(String::toString).compare(thisFileName, otherFileName);
+    }
+
+    /**
+     * Provides a string with the directory path that this system file is located in.
+     * @return The absolute path of the file system resource.
+     */
+    public String getDirectoryPath() {
+        return this.METADATA.absoluteFilePath().substring(0, this.METADATA.absoluteFilePath().lastIndexOf(File.separator));
     }
 
     @Override
