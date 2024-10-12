@@ -4,6 +4,8 @@ import model.util.ImageInspector;
 
 import java.awt.*;
 import java.awt.image.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.TreeMap;
 
 /**
@@ -11,7 +13,8 @@ import java.util.TreeMap;
  * A METADATA record contains file statistics and information.
  * An IMAGE_METADATA record contains image-specific metadata.
  */
-public class ImageFile extends SystemFile {
+public class ImageFile extends SystemFile implements FileSystemResource {
+
     /**
      * The ImageMetadata record contains image-specific metadata.
      * @param width The width of the image in pixels.
@@ -46,5 +49,35 @@ public class ImageFile extends SystemFile {
      */
     public ImageMetadata IMAGE_METADATA() {
         return this.IMAGE_METADATA;
+    }
+
+    /**
+     * Provides a string with the absolute path of the file system resource.
+     *
+     * @return The absolute path of the file system resource.
+     */
+    @Override
+    public String getAbsolutePath() {
+        return this.METADATA().absoluteFilePath();
+    }
+
+    /**
+     * Identifies if this file system resource is a directory.
+     *
+     * @return True if the file system resource is a directory, false otherwise.
+     */
+    @Override
+    public boolean isDirectory() {
+        return false;
+    }
+
+    /**
+     * Identifies if this file system resource is a system file.
+     *
+     * @return True if the file system resource is a system file, false otherwise.
+     */
+    @Override
+    public boolean isSystemFile() {
+        return true;
     }
 }
