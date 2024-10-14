@@ -8,11 +8,7 @@ import javax.imageio.ImageIO;
 
 public class ImageProcessing {
     public static void main(String[] args) {
-        // The provided images are apple.jpg, flower.jpg, and kitten.jpg
-        int[][] imageData = imgToTwoD("./apple.jpg");
-        // Or load your own image using a URL!
-        //int[][] imageData = imgToTwoD("https://content.codecademy.com/projects/project_thumbnails/phaser/bug-dodger.png");
-        viewImageData(imageData);
+        /*
         int[][] trimmed = trimBorders(imageData, 20);
         int[][] negative = negativeColor(imageData);
         int[][] horizontallyStretched = stretchHorizontally(imageData);
@@ -26,6 +22,7 @@ public class ImageProcessing {
         twoDToImage(randomRectangles, "./trimmed_apple.jpg");
         // int[][] allFilters = stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData), 50)), 200, 20, 40)));
         // Painting with pixels
+         */
     }
 
     /**
