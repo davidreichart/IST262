@@ -93,7 +93,7 @@ public class FileStatisticsJPanelController {
         fileMetadataTable.setValueAt(imageFile.METADATA().absoluteFilePath(), 0, 1);
 
         fileMetadataTable.setValueAt("File Size (kb)", 1, 0);
-        fileMetadataTable.setValueAt(imageFile.METADATA().kilobyteCount(), 1, 1);
+        fileMetadataTable.setValueAt(imageFile.METADATA().byteCount(), 1, 1);
 
         fileMetadataTable.setValueAt("Image Dimensions", 2, 0);
         fileMetadataTable.setValueAt(imageFile.IMAGE_METADATA().width() + " x " + imageFile.IMAGE_METADATA().height(), 2, 1);
@@ -134,10 +134,11 @@ public class FileStatisticsJPanelController {
             DefaultMutableTreeNode node = getSelectedNode();
             if (node instanceof ImageNode) {
                 ImageFile imageFile = ((ImageNode) node).getImageFile();
-                String input = JOptionPane.showInputDialog("Enter a new file size for this object:");
+                String input = JOptionPane.showInputDialog("Enter a new file size (in bytes) for this object:");
                 // only the core metadata record needs to be changed
                 if (input != null) {
-                    SystemFile.Metadata updatedMetadata = new SystemFile.Metadata(Integer.parseInt(input), imageFile.METADATA().absoluteFilePath());
+                    long newSize = Long.parseLong(input);
+                    SystemFile.Metadata updatedMetadata = new SystemFile.Metadata(newSize, imageFile.METADATA().absoluteFilePath());
                     imageFile.setMETADATA(updatedMetadata);
                     renderImageMetadataTable((ImageNode) node);
                 }
