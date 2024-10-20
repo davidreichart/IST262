@@ -10,10 +10,20 @@ import view.filebrowser.nodes.ImageNode;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+/**
+ * Controller for the FileBrowserJPanel in the ApplicationJFrame.
+ * The FileBrowserJPanelController is responsible for the following: <br>
+ * - Expanding all directories in the file tree. <br>
+ * - Moving the selected file to the previous file. <br>
+ * - Moving the selected file to the next file. <br>
+ * - Adding a new file to the file tree. <br>
+ * - Refreshing the file tree. <br>
+ * - Deleting the selected file from the file tree. <br>
+ * The FileBrowserJPanelController is initialized in the ApplicationJFrameController.
+ */
 public class FileBrowserJPanelController {
 
     private ApplicationJFrame frame;

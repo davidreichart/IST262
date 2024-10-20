@@ -3,19 +3,20 @@ package controller;
 import model.ApplicationContext;
 import model.data.filetypes.ImageFile;
 import model.data.filetypes.SystemDirectory;
-import model.data.filetypes.SystemFile;
 import model.util.FileInspector;
 import view.ApplicationJFrame;
-import view.filebrowser.nodes.ImageNode;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
 
+/**
+ * Controller for the application's menu bar.
+ * The menu bar contains options to add a directory and close the application.
+ */
 public class ApplicationJMenuBarController {
 
     ApplicationJFrame frame;

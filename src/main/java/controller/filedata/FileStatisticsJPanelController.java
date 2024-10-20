@@ -15,6 +15,16 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Controller for the FileStatisticsJPanel in the ApplicationJFrame.
+ * The FileStatisticsJPanelController is responsible for the following: <br>
+ * - Displaying the metadata of the selected file in the file tree. <br>
+ * - Editing the file path of the selected file. <br>
+ * - Editing the file size of the selected file. <br>
+ * - Editing the image height of the selected file. <br>
+ * - Editing the image width of the selected file. <br>
+ * The FileStatisticsJPanelController is initialized in the ApplicationJFrameController.
+ */
 public class FileStatisticsJPanelController {
 
     private ApplicationJFrame frame;
@@ -44,6 +54,10 @@ public class FileStatisticsJPanelController {
                 .addActionListener(editImageWidthButtonActionListener());
     }
 
+    /**
+     * Updates the JTable in the FileStatisticsJPanel with the metadata of the selected file.
+     * @return A TreeSelectionListener that updates the JTable in the FileStatisticsJPanel.
+     */
     public TreeSelectionListener displayFileMetadataInFileStatisticsJPanel() {
         return new TreeSelectionListener() {
             @Override
@@ -64,6 +78,11 @@ public class FileStatisticsJPanelController {
         };
     }
 
+    /**
+     * Creates a JTable with the metadata of the file attached to the given ImageNode.
+     * @param node The selected image file node.
+     * @return A JTable with the metadata of the file attached to the given ImageNode.
+     */
     public JTable imageMetadataTable(ImageNode node) {
         ImageFile imageFile = node.getImageFile();
 
@@ -84,6 +103,11 @@ public class FileStatisticsJPanelController {
         return fileMetadataTable;
     }
 
+    /**
+     * Updates the metadata of the selected file with the new file path.
+     * The metadata is updated in the model and the JTable is re-rendered.
+     * @return An ActionListener that updates the metadata of the selected file with the new file path.
+     */
     public ActionListener editFilePathButtonActionListener() {
         return e -> {
             DefaultMutableTreeNode node = getSelectedNode();
@@ -100,6 +124,11 @@ public class FileStatisticsJPanelController {
         };
     }
 
+    /**
+     * Updates the metadata of the selected file with the new file size.
+     * The metadata is updated in the model and the JTable is re-rendered.
+     * @return An ActionListener that updates the metadata of the selected file with the new file size.
+     */
     public ActionListener editFileSizeButtonActionListener() {
         return e -> {
             DefaultMutableTreeNode node = getSelectedNode();
@@ -116,6 +145,11 @@ public class FileStatisticsJPanelController {
         };
     }
 
+    /**
+     * Updates the metadata of the selected file with the new image height.
+     * The metadata is updated in the model and the JTable is re-rendered.
+     * @return An ActionListener that updates the metadata of the selected file with the new image height.
+     */
     public ActionListener editImageHeightButtonActionListener() {
         return e -> {
             DefaultMutableTreeNode node = getSelectedNode();
@@ -132,6 +166,11 @@ public class FileStatisticsJPanelController {
         };
     }
 
+    /**
+     * Updates the metadata of the selected file with the new image width.
+     * The metadata is updated in the model and the JTable is re-rendered.
+     * @return An ActionListener that updates the metadata of the selected file with the new image width.
+     */
     public ActionListener editImageWidthButtonActionListener() {
         return e -> {
             DefaultMutableTreeNode node = getSelectedNode();
@@ -148,10 +187,17 @@ public class FileStatisticsJPanelController {
         };
     }
 
+    /**
+     * Returns the currently selected node in the file tree.
+     * @return The currently selected node in the file tree.
+     */
     private DefaultMutableTreeNode getSelectedNode() {
         return (DefaultMutableTreeNode) userFileJTree.getLastSelectedPathComponent();
     }
 
+    /**
+     * Enables all the edit buttons in the FileStatisticsJPanel.
+     */
     private void enableAllEditButtons() {
         fileStatisticsJPanel.getEditFilePathButton().setEnabled(true);
         fileStatisticsJPanel.getEditFileSizeButton().setEnabled(true);
@@ -159,6 +205,9 @@ public class FileStatisticsJPanelController {
         fileStatisticsJPanel.getEditImageWidthButton().setEnabled(true);
     }
 
+    /**
+     * Disables all the edit buttons in the FileStatisticsJPanel.
+     */
     private void disableAllEditButtons() {
         fileStatisticsJPanel.getEditFilePathButton().setEnabled(false);
         fileStatisticsJPanel.getEditFileSizeButton().setEnabled(false);
@@ -166,6 +215,10 @@ public class FileStatisticsJPanelController {
         fileStatisticsJPanel.getEditImageWidthButton().setEnabled(false);
     }
 
+    /**
+     * Clears the FileStatisticsJPanel and renders a new JTable with the most up-to-date metadata of the selected image file.
+     * @param node The selected image file node.
+     */
     private void renderImageMetadataTable(ImageNode node) {
         fileStatisticsJPanel.removeAll();
         fileStatisticsJPanel.add(fileStatisticsJPanel.getControlsPanel(), BorderLayout.WEST);

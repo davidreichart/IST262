@@ -6,6 +6,10 @@ import controller.filedisplay.FileDisplayJPanelController;
 import model.ApplicationContext;
 import view.ApplicationJFrame;
 
+/**
+ * The ApplicationController is a meta-controller that initializes all the other controllers in the application.
+ * The ApplicationController is initialized in the Main class.
+ */
 public class ApplicationController {
 
     ApplicationJMenuBarController applicationJMenuBarController;
@@ -24,6 +28,11 @@ public class ApplicationController {
 
     }
 
+    /**
+     * Adds the main view and model classes to the directory list listeners.
+     * @param frame The main view class.
+     * @param context The main model class.
+     */
     public void configureDirectoryListListeners(ApplicationJFrame frame, ApplicationContext context) {
         context.getSystemDirectoryList().addListener(frame.getFileBrowserJPanel());
     }

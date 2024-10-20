@@ -11,6 +11,12 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+/**
+ * Controller for the FileDisplayJPanel in the ApplicationJFrame.
+ * The FileDisplayJPanelController is responsible for the following: <br>
+ * - Displaying all images in the selected directory. todo: not finished <br>
+ * The FileDisplayJPanelController is initialized in the ApplicationJFrameController.
+ */
 public class FileDisplayJPanelController {
 
     private ApplicationJFrame frame;
@@ -28,6 +34,14 @@ public class FileDisplayJPanelController {
         userFileJTree.addTreeSelectionListener(displayFilesInSelectedDirectory());
     }
 
+    /**
+     * Returns a TreeSelectionListener that displays all files in the selected directory.
+     * Images are rendered in the fileDisplayJPanel.
+     * todo: this only works when the directory node is selected
+     * todo: this should work on the directory node AND the root node
+     * todo: or just show the singular selected image?
+     * @return A TreeSelectionListener that displays all files in the selected directory.
+     */
     public TreeSelectionListener displayFilesInSelectedDirectory() {
         return new TreeSelectionListener() {
             @Override
