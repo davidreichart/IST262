@@ -7,17 +7,22 @@ import view.filebrowser.nodes.ImageNode;
 
 import javax.swing.*;
 import javax.swing.tree.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class UserFileJTree extends JTree {
 
     private DefaultMutableTreeNode rootNode;
+    private DefaultMutableTreeNode unknownDirectoryNode = new DefaultMutableTreeNode("Unknown Directory");
     private HashSet<String> currentlyStoredDirectories;
+    private ArrayList<DirectoryNode> currentDirectoryNodes;
 
     public UserFileJTree() {
         currentlyStoredDirectories = new HashSet<>();
         setModel(new DefaultTreeModel(rootNode = new DefaultMutableTreeNode("Root")));
-        setShowsRootHandles(false);
+        // the unknown directory node will hold any files added with the "Add File" button
+        rootNode.add(this.unknownDirectoryNode);
+        reloadTree();
     }
 
     /**
@@ -42,10 +47,22 @@ public class UserFileJTree extends JTree {
         }
 
         rootNode.add(directoryNode);
+        reloadTree();
+    }
+
+    public void reloadTree() {
         ((DefaultTreeModel) getModel()).reload();
     }
 
     public HashSet<String> getCurrentlyStoredDirectories() {
         return currentlyStoredDirectories;
+    }
+
+    public ArrayList<DirectoryNode> getCurrentDirectoryNodes() {
+        return currentDirectoryNodes;
+    }
+
+    public DefaultMutableTreeNode getUnknownDirectoryNode() {
+        return unknownDirectoryNode;
     }
 }

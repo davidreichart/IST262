@@ -27,6 +27,7 @@ public final class ApplicationContext {
     public ApplicationContext(TreeSet<FileTag> definedTags) {
         this.definedTags = definedTags;
         this.systemDirectoryList = new SystemDirectoryList();
+        this.systemFiles = new ArrayList<>();
     }
 
     /**
@@ -45,6 +46,10 @@ public final class ApplicationContext {
 
     public void addNewSystemFile(SystemFile systemFile) {
         this.systemFiles.add(systemFile);
+    }
+
+    public void removeSystemFile(SystemFile fileToRemove) {
+        this.systemFiles.remove(fileToRemove);
     }
 
     /**

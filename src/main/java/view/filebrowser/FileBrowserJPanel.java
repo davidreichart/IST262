@@ -14,6 +14,11 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
     UserFileJTree fileTree;
     JScrollPane fileScrollPane;
     JButton expandAllJButton;
+    JButton previousFileButton;
+    JButton nextFileButton;
+    JButton addNewFileButton;
+    JButton refreshListButton;
+    JButton deleteSelectedFileButton;
 
     public FileBrowserJPanel() {
         setAttributes();
@@ -39,7 +44,16 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
     @Override
     public void addComponents() {
         add(fileScrollPane, BorderLayout.CENTER);
-        add(expandAllJButton, BorderLayout.NORTH);
+
+        JPanel controls = new JPanel();
+        controls.setLayout(new GridLayout(2, 3));
+        controls.add(expandAllJButton);
+        controls.add(previousFileButton);
+        controls.add(nextFileButton);
+        controls.add(addNewFileButton);
+        controls.add(refreshListButton);
+        controls.add(deleteSelectedFileButton);
+        add(controls, BorderLayout.NORTH);
     }
 
     /**
@@ -51,19 +65,16 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
         this.fileTree = new UserFileJTree();
         this.fileScrollPane = createFileTreeScrollPane();
         this.expandAllJButton = new JButton("Expand All");
+        this.previousFileButton = new JButton("Previous");
+        this.nextFileButton = new JButton("Next");
+        this.addNewFileButton = new JButton("Add File");
+        this.refreshListButton = new JButton("Refresh");
+        this.deleteSelectedFileButton = new JButton("Remove");
     }
 
     public JScrollPane createFileTreeScrollPane() {
         JScrollPane scrollPane = new JScrollPane(fileTree);
         return scrollPane;
-    }
-
-    public UserFileJTree getFileTree() {
-        return fileTree;
-    }
-
-    public JButton getExpandAllJButton() {
-        return expandAllJButton;
     }
 
     /**
@@ -77,5 +88,38 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
         for (SystemDirectory directory : systemDirectories) {
             fileTree.addDirectoryNode(directory);
         }
+    }
+
+
+    public UserFileJTree getFileTree() {
+        return fileTree;
+    }
+
+    public JButton getExpandAllJButton() {
+        return expandAllJButton;
+    }
+
+    public JScrollPane getFileScrollPane() {
+        return fileScrollPane;
+    }
+
+    public JButton getPreviousFileButton() {
+        return previousFileButton;
+    }
+
+    public JButton getNextFileButton() {
+        return nextFileButton;
+    }
+
+    public JButton getAddNewFileButton() {
+        return addNewFileButton;
+    }
+
+    public JButton getRefreshListButton() {
+        return refreshListButton;
+    }
+
+    public JButton getDeleteSelectedFileButton() {
+        return deleteSelectedFileButton;
     }
 }

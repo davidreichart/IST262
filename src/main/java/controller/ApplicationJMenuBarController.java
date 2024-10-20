@@ -3,8 +3,10 @@ package controller;
 import model.ApplicationContext;
 import model.data.filetypes.ImageFile;
 import model.data.filetypes.SystemDirectory;
+import model.data.filetypes.SystemFile;
 import model.util.FileInspector;
 import view.ApplicationJFrame;
+import view.filebrowser.nodes.ImageNode;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -62,6 +64,7 @@ public class ApplicationJMenuBarController {
                 // directory path is valid and not empty
                 try {
                     context.getSystemDirectoryList().addDirectory(new SystemDirectory(input));
+                    // add only the image files from the given directory
                     for (File resource : Objects.requireNonNull(new File(directoryPathJTextField.getText()).listFiles())) {
                         if (resource.isFile() && FileInspector.isImageFile(resource)) {
                             ImageFile newImageFile = new ImageFile(resource.getAbsolutePath());
