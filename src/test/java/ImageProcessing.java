@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
+/**
+ * A testing class for various image processing and manipulation methods.
+ * These methods have NOT BEEN IMPLEMENTED in the main project.
+ */
 public class ImageProcessing {
     public static void main(String[] args) {
         /*

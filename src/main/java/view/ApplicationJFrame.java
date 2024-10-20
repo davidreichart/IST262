@@ -7,6 +7,14 @@ import view.filedisplay.FileDisplayJPanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The main JFrame for the application.
+ * This JFrame contains the main components of the application:
+ * - A menu bar - {@link ApplicationJMenuBar} for file operations <br>
+ * - A file browser - {@link FileBrowserJPanel} for browsing files <br>
+ * - A file display - {@link FileDisplayJPanel} for displaying the contents of a file <br>
+ * - A file statistics panel - {@link FileStatisticsJPanel} for displaying statistics about a file <br>
+ */
 public class ApplicationJFrame extends JFrame implements Renderable {
 
     private ApplicationJMenuBar applicationJMenuBar;
@@ -87,18 +95,41 @@ public class ApplicationJFrame extends JFrame implements Renderable {
         this.applicationJMenuBar = new ApplicationJMenuBar();
     }
 
+    /**
+     * Returns the ApplicationJMenuBar object.
+     * This part of the view is used for adding a new directory or closing the application.
+     * @return the ApplicationJMenuBar object
+     */
     public ApplicationJMenuBar getApplicationJMenuBar() {
         return this.applicationJMenuBar;
     }
 
+    /**
+     * Returns the FileBrowserJPanel object.
+     * This part of the view is used for browsing files and directories.
+     * A JTree is used to display the file system, a reference to which can be obtained using a chained getter.
+     * @return the FileBrowserJPanel object
+     */
     public FileBrowserJPanel getFileBrowserJPanel() {
         return fileBrowserJPanel;
     }
 
+    /**
+     * Returns the FileStatisticsJPanel object.
+     * This part of the view is used for displaying statistics about a file.
+     * A JTable is used to display the statistics, a reference to which can be obtained using a chained getter.
+     * A JPanel is positioned to the left of this table that contains buttons for editing the contents of the table.
+     * @return the FileStatisticsJPanel object
+     */
     public FileStatisticsJPanel getFileStatisticsJPanel() {
         return fileStatisticsJPanel;
     }
 
+    /**
+     * Returns the FileDisplayJPanel object.
+     * This part of the view is used for displaying the contents of a file.
+     * @return the FileDisplayJPanel object
+     */
     public FileDisplayJPanel getFileDisplayJPanel() {
         return fileDisplayJPanel;
     }

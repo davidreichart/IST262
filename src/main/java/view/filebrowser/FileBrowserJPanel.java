@@ -5,10 +5,14 @@ import model.data.filetypes.SystemDirectoryListListener;
 import view.Renderable;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.util.HashSet;
 
+/**
+ * The file browser JPanel that displays the list of files and directories in the FileBrowser.
+ * This JPanel contains a JTree that displays the list of files and directories in the FileBrowser.
+ * Controls are positioned at the top of the JPanel to allow the user to interact with the FileBrowser.
+ */
 public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirectoryListListener {
 
     UserFileJTree fileTree;
@@ -91,34 +95,70 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
     }
 
 
+    /**
+     * Getter for the fileTree.
+     * The fileTree is a JTree that displays the list of files and directories in the FileBrowser.
+     * @return The fileTree.
+     */
     public UserFileJTree getFileTree() {
         return fileTree;
     }
 
+    /**
+     * Getter for the expandAllJButton.
+     * The expandAllJButton is a JButton that allows the user to expand all directory nodes in the FileBrowser.
+     * @return The expandAllJButton.
+     */
     public JButton getExpandAllJButton() {
         return expandAllJButton;
     }
 
-    public JScrollPane getFileScrollPane() {
-        return fileScrollPane;
-    }
-
+    /**
+     * Getter for the previousFileButton.
+     * The previousFileButton is a JButton that allows the user to navigate to the previous file in the FileBrowser.
+     * This button will only allow navigation between files within the same level of the tree && the same parent (directory).
+     * @return The previousFileButton.
+     */
     public JButton getPreviousFileButton() {
         return previousFileButton;
     }
 
+    /**
+     * Getter for the nextFileButton.
+     * The nextFileButton is a JButton that allows the user to navigate to the next file in the FileBrowser.
+     * This button will only allow navigation between files within the same level of the tree && the same parent (directory).
+     * @return The nextFileButton.
+     */
     public JButton getNextFileButton() {
         return nextFileButton;
     }
 
+    /**
+     * Getter for the addNewFileButton.
+     * The addNewFileButton is a JButton that allows the user to add a new file to the FileBrowser.
+     * A file chooser dialog will be opened when the button is clicked for entering the file path.
+     * The input file will be added under the "unknown files" directory.
+     * @return The addNewFileButton.
+     */
     public JButton getAddNewFileButton() {
         return addNewFileButton;
     }
 
+    /**
+     * Getter for the refreshListButton.
+     * The refreshListButton is a JButton that allows the user to refresh the list of files in the FileBrowser.
+     * @return The refreshListButton.
+     */
     public JButton getRefreshListButton() {
         return refreshListButton;
     }
 
+    /**
+     * Getter for the deleteSelectedFileButton.
+     * The deleteSelectedFileButton is a JButton that allows the user to delete the currently selected file.
+     * This does not delete the file from the disk, but rather removes it from the list of files in the FileBrowser.
+     * @return The deleteSelectedFileButton.
+     */
     public JButton getDeleteSelectedFileButton() {
         return deleteSelectedFileButton;
     }

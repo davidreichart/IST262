@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * A JMenuBar that contains menu items for adding a directory, entering a directory path, and closing the application.
+ */
 public class ApplicationJMenuBar extends JMenuBar implements Renderable {
 
     private JMenuItem addDirectoryJMenuItem;
@@ -24,6 +27,10 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
     public void setAttributes() {
     }
 
+    /**
+     * Attaches JComponent objects to this Renderable object.
+     * {@link #buildComponents()} should be before this method.
+     */
     @Override
     public void addComponents() {
         add(addDirectoryJMenuItem);
@@ -31,6 +38,9 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
         add(closeApplicationJMenuItem);
     }
 
+    /**
+     * Builds the JComponent objects that will be attached to this Renderable object.
+     */
     @Override
     public void buildComponents() {
         this.addDirectoryJMenuItem = createAddDirectoryJMenuItem();
@@ -109,20 +119,38 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
         });
     }
 
+    /**
+     * Creates a JMenuItem that, when clicked, closes the application.
+     * @return a JMenuItem that allows the user to close the application
+     */
     private JMenuItem createCloseApplicationJMenuItem() {
         JMenuItem menuItem = new JMenuItem("Close Application");
         addHoverEffect(menuItem);
         return menuItem;
     }
 
+    /**
+     * Gets the JMenuItem that allows the user to add a directory.
+     * This control references the contents of the {@link #directoryPathJTextField} for the directory path to add.
+     * @return a JMenuItem that allows the user to add a directory
+     */
     public JMenuItem getAddDirectoryJMenuItem() {
         return addDirectoryJMenuItem;
     }
 
+    /**
+     * Gets the JTextField that allows the user to enter a directory path.
+     * The directory path entered is added to the list of directories when the user clicks the {@link #addDirectoryJMenuItem}.
+     * @return a JTextField that allows the user to enter a directory path
+     */
     public JTextField getDirectoryPathJTextField() {
         return directoryPathJTextField;
     }
 
+    /**
+     * Gets the JMenuItem that allows the user to close the application.
+     * @return a JMenuItem that allows the user to close the application
+     */
     public JMenuItem getCloseApplicationJMenuItem() {
         return closeApplicationJMenuItem;
     }

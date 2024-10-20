@@ -5,6 +5,10 @@ import view.Renderable;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The FileStatisticsJPanel class is a JPanel containing a JTable for displaying file statistics.
+ * It also contains buttons for editing the file path, file size, image width, and image height.
+ */
 public class FileStatisticsJPanel extends JPanel implements Renderable {
 
     private JButton editFilePathButton;
@@ -23,27 +27,43 @@ public class FileStatisticsJPanel extends JPanel implements Renderable {
         setVisible(true);
     }
 
+    /**
+     * Sets the attributes of the FileStatisticsJPanel.
+     */
     @Override
     public void setAttributes() {
         setPreferredSize(new java.awt.Dimension(1000, 800));
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Attaches JComponent objects to this view object.
+     * {@link #buildComponents()} should be before this method.
+     */
     @Override
     public void addComponents() {
         add(controlsPanel, BorderLayout.WEST);
         add(dataPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Builds the JComponent objects attached to this view object.
+     * {@link #addComponents()} should be called after this method.
+     */
     @Override
     public void buildComponents() {
         controlsPanel = createControlsPanel();
         statisticsTable = new JTable();
+        // the data panel holds the jtable containing the file statistics
         dataPanel = new JPanel();
         dataPanel.setLayout(new BorderLayout());
         dataPanel.add(statisticsTable);
     }
 
+    /**
+     * Creates the controls panel containing buttons for editing file statistics.
+     * @return the controls panel
+     */
     private JPanel createControlsPanel() {
         JPanel controlsPanel = new JPanel();
         controlsPanel.setLayout(new GridLayout(4, 1));

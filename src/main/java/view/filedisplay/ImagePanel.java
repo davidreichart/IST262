@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * A JPanel that displays an image.
+ */
 public class ImagePanel extends JPanel {
 
     BufferedImage image;
@@ -16,6 +19,10 @@ public class ImagePanel extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Paints the image on the panel.
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

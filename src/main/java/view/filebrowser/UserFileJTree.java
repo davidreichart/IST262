@@ -10,6 +10,12 @@ import javax.swing.tree.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * A JTree that displays the user's file system.
+ * Mimics the file system structure of the user's computer.
+ * Each directory node contains all the image files in the directory.
+ * The unknown directory node contains any files added with the "Add File" button.
+ */
 public class UserFileJTree extends JTree {
 
     private DefaultMutableTreeNode rootNode;
@@ -50,18 +56,36 @@ public class UserFileJTree extends JTree {
         reloadTree();
     }
 
+    /**
+     * Calls the reload method of the DefaultTreeModel to update the JTree.
+     */
     public void reloadTree() {
         ((DefaultTreeModel) getModel()).reload();
     }
 
+    /**
+     * Returns the currently stored directories.
+     * This is a list of directories currently displayed in the JTree.
+     * The list is of the absolute paths of the directories.
+     * @return The currently stored directories.
+     */
     public HashSet<String> getCurrentlyStoredDirectories() {
         return currentlyStoredDirectories;
     }
 
+    /**
+     * Return the current directory nodes being displayed in the JTree.
+     * @return The current directory nodes being displayed in the JTree as DirectoryNode objects.
+     */
     public ArrayList<DirectoryNode> getCurrentDirectoryNodes() {
         return currentDirectoryNodes;
     }
 
+    /**
+     * Returns a reference to the unknown directory node.
+     * This is the node that contains any files added with the "Add File" button.
+     * @return The unknown directory node.
+     */
     public DefaultMutableTreeNode getUnknownDirectoryNode() {
         return unknownDirectoryNode;
     }
