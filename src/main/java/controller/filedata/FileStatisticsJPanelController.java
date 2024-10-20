@@ -2,6 +2,7 @@ package controller.filedata;
 
 import model.ApplicationContext;
 import model.data.filetypes.ImageFile;
+import model.data.filetypes.SystemFile;
 import view.ApplicationJFrame;
 import view.filebrowser.UserFileJTree;
 import view.filebrowser.nodes.ImageNode;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class FileStatisticsJPanelController {
@@ -19,6 +21,7 @@ public class FileStatisticsJPanelController {
     private ApplicationContext context;
     private FileStatisticsJPanel fileStatisticsJPanel;
     private UserFileJTree userFileJTree;
+    private JTable currentlyActiveTable;
 
     public FileStatisticsJPanelController(ApplicationJFrame frame, ApplicationContext context) {
         this.frame = frame;
@@ -26,24 +29,36 @@ public class FileStatisticsJPanelController {
         this.fileStatisticsJPanel = frame.getFileStatisticsJPanel();
         this.userFileJTree = frame.getFileBrowserJPanel().getFileTree();
 
-        fileStatisticsJPanel.add(new JLabel("File Statistics"));
         userFileJTree.addTreeSelectionListener(displayFileMetadataInFileStatisticsJPanel());
+
+        fileStatisticsJPanel.getEditFilePathButton()
+                .addActionListener(editFilePathButtonActionListener());
+
+        fileStatisticsJPanel.getEditFileSizeButton()
+                .addActionListener(editFileSizeButtonActionListener());
+
+        fileStatisticsJPanel.getEditImageHeightButton()
+                .addActionListener(editImageHeightButtonActionListener());
+
+        fileStatisticsJPanel.getEditImageWidthButton()
+                .addActionListener(editImageWidthButtonActionListener());
     }
 
     public TreeSelectionListener displayFileMetadataInFileStatisticsJPanel() {
         return new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
+                // get currently selected node
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) userFileJTree.getLastSelectedPathComponent();
                 if (node == null) {
                     return;
                 }
 
+                // only update the view if the selected node is for an image file
                 if (node instanceof ImageNode) {
-                    node = (ImageNode) node;
-                    fileStatisticsJPanel.removeAll();
-                    fileStatisticsJPanel.add(imageMetadataTable((ImageNode) node));
-                    fileStatisticsJPanel.revalidate();
+                    enableAllEditButtons();
+                    JTable table = imageMetadataTable((ImageNode) node);
+                    renderImageMetadataTable((ImageNode) node);
                 }
             }
         };
@@ -69,9 +84,92 @@ public class FileStatisticsJPanelController {
         return fileMetadataTable;
     }
 
-    public ActionListener editDataButtonActionListener() {
+    public ActionListener editFilePathButtonActionListener() {
         return e -> {
-
+            DefaultMutableTreeNode node = getSelectedNode();
+            if (node instanceof ImageNode) {
+                ImageFile imageFile = ((ImageNode) node).getImageFile();
+                String input = JOptionPane.showInputDialog("Enter a new file path for this object:");
+                // only the core metadata record needs to be changed
+                if (input != null) {
+                    SystemFile.Metadata updatedMetadata = new SystemFile.Metadata(imageFile.METADATA().byteCount(), input);
+                    imageFile.setMETADATA(updatedMetadata);
+                    renderImageMetadataTable((ImageNode) node);
+                }
+            }
         };
+    }
+
+    public ActionListener editFileSizeButtonActionListener() {
+        return e -> {
+            DefaultMutableTreeNode node = getSelectedNode();
+            if (node instanceof ImageNode) {
+                ImageFile imageFile = ((ImageNode) node).getImageFile();
+                String input = JOptionPane.showInputDialog("Enter a new file size for this object:");
+                // only the core metadata record needs to be changed
+                if (input != null) {
+                    SystemFile.Metadata updatedMetadata = new SystemFile.Metadata(Integer.parseInt(input), imageFile.METADATA().absoluteFilePath());
+                    imageFile.setMETADATA(updatedMetadata);
+                    renderImageMetadataTable((ImageNode) node);
+                }
+            }
+        };
+    }
+
+    public ActionListener editImageHeightButtonActionListener() {
+        return e -> {
+            DefaultMutableTreeNode node = getSelectedNode();
+            if (node instanceof ImageNode) {
+                ImageFile imageFile = ((ImageNode) node).getImageFile();
+                String input = JOptionPane.showInputDialog("Enter a new image height for this object:");
+                // only the image metadata record needs to be changed
+                if (input != null) {
+                    ImageFile.ImageMetadata updatedMetadata = new ImageFile.ImageMetadata(imageFile.IMAGE_METADATA().width(), Integer.parseInt(input), imageFile.IMAGE_METADATA().colorHistogram());
+                    imageFile.setIMAGE_METADATA(updatedMetadata);
+                    renderImageMetadataTable((ImageNode) node);
+                }
+            }
+        };
+    }
+
+    public ActionListener editImageWidthButtonActionListener() {
+        return e -> {
+            DefaultMutableTreeNode node = getSelectedNode();
+            if (node instanceof ImageNode) {
+                ImageFile imageFile = ((ImageNode) node).getImageFile();
+                String input = JOptionPane.showInputDialog("Enter a new image width for this object:");
+                // only the image metadata record needs to be changed
+                if (input != null) {
+                    ImageFile.ImageMetadata updatedMetadata = new ImageFile.ImageMetadata(Integer.parseInt(input), imageFile.IMAGE_METADATA().height(), imageFile.IMAGE_METADATA().colorHistogram());
+                    imageFile.setIMAGE_METADATA(updatedMetadata);
+                    renderImageMetadataTable((ImageNode) node);
+                }
+            }
+        };
+    }
+
+    private DefaultMutableTreeNode getSelectedNode() {
+        return (DefaultMutableTreeNode) userFileJTree.getLastSelectedPathComponent();
+    }
+
+    private void enableAllEditButtons() {
+        fileStatisticsJPanel.getEditFilePathButton().setEnabled(true);
+        fileStatisticsJPanel.getEditFileSizeButton().setEnabled(true);
+        fileStatisticsJPanel.getEditImageHeightButton().setEnabled(true);
+        fileStatisticsJPanel.getEditImageWidthButton().setEnabled(true);
+    }
+
+    private void disableAllEditButtons() {
+        fileStatisticsJPanel.getEditFilePathButton().setEnabled(false);
+        fileStatisticsJPanel.getEditFileSizeButton().setEnabled(false);
+        fileStatisticsJPanel.getEditImageHeightButton().setEnabled(false);
+        fileStatisticsJPanel.getEditImageWidthButton().setEnabled(false);
+    }
+
+    private void renderImageMetadataTable(ImageNode node) {
+        fileStatisticsJPanel.removeAll();
+        fileStatisticsJPanel.add(fileStatisticsJPanel.getControlsPanel(), BorderLayout.WEST);
+        fileStatisticsJPanel.add(imageMetadataTable(node), BorderLayout.CENTER);
+        fileStatisticsJPanel.revalidate();
     }
 }

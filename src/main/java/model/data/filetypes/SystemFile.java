@@ -36,7 +36,7 @@ public abstract class SystemFile implements Comparable<SystemFile>, FileSystemRe
         }
     }
 
-    private final Metadata METADATA;
+    private Metadata METADATA;
     private LinkedHashSet<FileTag> fileTags;
 
     /**
@@ -144,5 +144,9 @@ public abstract class SystemFile implements Comparable<SystemFile>, FileSystemRe
     @Override
     public int compareTo(SystemFile otherSystemFile) {
         return this.compareLexicographically(otherSystemFile);
+    }
+
+    public void setMETADATA(Metadata metadata) {
+        this.METADATA = metadata;
     }
 }

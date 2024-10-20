@@ -28,7 +28,7 @@ public class ImageFile extends SystemFile implements FileSystemResource {
         }
     }
 
-    private final ImageMetadata IMAGE_METADATA;
+    private ImageMetadata IMAGE_METADATA;
 
     /**
      * Constructs a new ImageFile object.
@@ -112,5 +112,9 @@ public class ImageFile extends SystemFile implements FileSystemResource {
     @Override
     public String getContentType() {
         return "Image";
+    }
+
+    public void setIMAGE_METADATA(ImageMetadata imageMetadata) {
+        this.IMAGE_METADATA = imageMetadata;
     }
 }
