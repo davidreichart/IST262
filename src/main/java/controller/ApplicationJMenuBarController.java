@@ -1,13 +1,18 @@
 package controller;
 
 import model.ApplicationContext;
+import model.data.filetypes.ImageFile;
 import model.data.filetypes.SystemDirectory;
+import model.util.FileInspector;
 import view.ApplicationJFrame;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 public class ApplicationJMenuBarController {
 
@@ -57,6 +62,12 @@ public class ApplicationJMenuBarController {
                 // directory path is valid and not empty
                 try {
                     context.getSystemDirectoryList().addDirectory(new SystemDirectory(input));
+                    for (File resource : Objects.requireNonNull(new File(directoryPathJTextField.getText()).listFiles())) {
+                        if (resource.isFile() && FileInspector.isImageFile(resource)) {
+                            ImageFile newImageFile = new ImageFile(resource.getAbsolutePath());
+                            context.addNewSystemFile(newImageFile);
+                        }
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }

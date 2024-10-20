@@ -2,6 +2,7 @@ package model;
 
 import model.data.FileTag;
 import model.data.filetypes.SystemDirectoryList;
+import model.data.filetypes.SystemFile;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -16,6 +17,7 @@ public final class ApplicationContext {
 
     private TreeSet<FileTag> definedTags;
     private SystemDirectoryList systemDirectoryList;
+    private ArrayList<SystemFile> systemFiles;
 
     /**
      * Instantiates a new instance of the ApplicationContext to store persistent data.
@@ -39,6 +41,10 @@ public final class ApplicationContext {
         } else {
             throw new IllegalArgumentException("The file tag you attempted to add is already defined.");
         }
+    }
+
+    public void addNewSystemFile(SystemFile systemFile) {
+        this.systemFiles.add(systemFile);
     }
 
     /**
@@ -82,5 +88,9 @@ public final class ApplicationContext {
 
     public SystemDirectoryList getSystemDirectoryList() {
         return systemDirectoryList;
+    }
+
+    public ArrayList<SystemFile> getSystemFiles() {
+        return systemFiles;
     }
 }

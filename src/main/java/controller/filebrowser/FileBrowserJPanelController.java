@@ -23,6 +23,10 @@ public class FileBrowserJPanelController {
                 .addActionListener(expandAllDirectories());
     }
 
+    /**
+     * Adds an ActionListener that when triggered, expands all directories in the file tree.
+     * @return an ActionListener that expands all directories in the file tree.
+     */
     public ActionListener expandAllDirectories() {
         return new ActionListener() {
             @Override

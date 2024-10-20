@@ -7,9 +7,6 @@ import view.filebrowser.nodes.ImageNode;
 
 import javax.swing.*;
 import javax.swing.tree.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
 import java.util.HashSet;
 
 public class UserFileJTree extends JTree {
