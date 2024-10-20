@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.event.ActionListener;
 
 public class FileStatisticsJPanelController {
 
@@ -66,5 +67,11 @@ public class FileStatisticsJPanelController {
         fileMetadataTable.setValueAt("Pixel Count", 3, 0);
         fileMetadataTable.setValueAt(imageFile.IMAGE_METADATA().pixelCount(), 3, 1);
         return fileMetadataTable;
+    }
+
+    public ActionListener editDataButtonActionListener() {
+        return e -> {
+
+        };
     }
 }

@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class FileStatisticsJPanel extends JPanel implements Renderable {
 
+    private JButton editDataButton;
+
     public FileStatisticsJPanel() {
         setAttributes();
         buildComponents();
@@ -23,9 +25,16 @@ public class FileStatisticsJPanel extends JPanel implements Renderable {
 
     @Override
     public void addComponents() {
+        add(editDataButton, BorderLayout.NORTH);
     }
 
     @Override
     public void buildComponents() {
+        editDataButton = new JButton("Edit Data");
+        editDataButton.setEnabled(false);
+    }
+
+    public JButton getEditDataButton() {
+        return editDataButton;
     }
 }

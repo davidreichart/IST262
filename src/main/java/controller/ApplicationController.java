@@ -18,7 +18,8 @@ public class ApplicationController {
         this.fileBrowserJPanelController = new FileBrowserJPanelController(applicationJFrame, applicationContext);
         this.fileStatisticsJPanelController = new FileStatisticsJPanelController(applicationJFrame, applicationContext);
         this.fileDisplayJPanelController = new FileDisplayJPanelController(applicationJFrame, applicationContext);
-        
+
+        // these are the views that need to know when any changes are made to the directory list
         configureDirectoryListListeners(applicationJFrame, applicationContext);
 
     }
