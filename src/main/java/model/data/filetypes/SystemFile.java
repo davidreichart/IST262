@@ -146,6 +146,10 @@ public abstract class SystemFile implements Comparable<SystemFile>, FileSystemRe
         return this.compareLexicographically(otherSystemFile);
     }
 
+    /**
+     * Replaces the core metadata record associated with this SystemFile.
+     * @param metadata The new metadata record to associate with this SystemFile.
+     */
     public void setMETADATA(Metadata metadata) {
         this.METADATA = metadata;
     }

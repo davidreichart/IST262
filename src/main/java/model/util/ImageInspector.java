@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.TreeMap;
 
 /**
  * The ImageInspector class provides utility methods for extracting data about image files.

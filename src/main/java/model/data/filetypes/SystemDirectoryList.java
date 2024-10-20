@@ -2,6 +2,11 @@ package model.data.filetypes;
 
 import java.util.HashSet;
 
+/**
+ * The SystemDirectoryList class is a representation of a list of SystemDirectories.
+ * This class can be listened to by implementing the {@link SystemDirectoryListListener} interface.
+ * Any listening classes will be notified when the list of SystemDirectories changes.
+ */
 public class SystemDirectoryList {
 
     private HashSet<SystemDirectory> systemDirectories;

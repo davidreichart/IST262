@@ -114,6 +114,10 @@ public class ImageFile extends SystemFile implements FileSystemResource {
         return "Image";
     }
 
+    /**
+     * Replaces the image metadata record associated with this ImageFile.
+     * @param imageMetadata The image metadata record to associate with this ImageFile.
+     */
     public void setIMAGE_METADATA(ImageMetadata imageMetadata) {
         this.IMAGE_METADATA = imageMetadata;
     }
