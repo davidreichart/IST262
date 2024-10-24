@@ -61,9 +61,8 @@ public class FileDisplayJPanel extends JScrollPane implements Renderable {
     public void renderImages(HashSet<ImageFile> imageFiles) {
         JPanel content = new JPanel();
         content.setLayout(new GridLayout(imageFiles.size() / 4, 4));
-
         for (ImageFile imageFile : imageFiles) {
-            ImagePanel imagePanel = new ImagePanel(imageFile.METADATA().absoluteFilePath());
+            ImagePanel imagePanel = new ImagePanel(imageFile.METADATA().absoluteFilePath(), this.getSize());
             content.add(imagePanel);
         }
 

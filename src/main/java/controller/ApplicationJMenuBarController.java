@@ -60,21 +60,16 @@ public class ApplicationJMenuBarController {
                     return;
                 }
 
-                // don't add preexisting directories
-                if (context.getSystemDirectoryList().containsDirectory(new SystemDirectory(input))) {
-                    JOptionPane.showMessageDialog(null, "Directory already added.");
-                    return;
-                }
-
                 frame.getApplicationJMenuBar().getProgressBar().setVisible(true);
                 frame.getApplicationJMenuBar().getProgressBar().setIndeterminate(false); // ensure it's not in indeterminate mode
 
+                // swing worker to perform asynchronous adding of directory and image files
                 SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
                     @Override
                     protected Void doInBackground() throws Exception {
-                        // Directory path is valid and not empty
+                        // directory path is valid and not empty
                         context.getSystemDirectoryList().addDirectory(new SystemDirectory(input));
-                        // Add only the image files from the given directory
+                        // add only the image files from the given directory
                         File[] resources = new File(directoryPathJTextField.getText()).listFiles();
                         if (resources != null) {
                             int totalFiles = resources.length;
@@ -116,7 +111,7 @@ public class ApplicationJMenuBarController {
                     }
                 });
 
-                worker.execute(); // Start the background task
+                worker.execute(); // start the background task
             }
         };
     }

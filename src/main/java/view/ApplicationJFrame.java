@@ -62,12 +62,12 @@ public class ApplicationJFrame extends JFrame implements Renderable {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Configuration for the top panel (JSplitPane)
-        gbc.fill = GridBagConstraints.BOTH; // Fill both x and y
-        gbc.weightx = 1.0; // Take up available width
-        gbc.weighty = 0.7; // Allocate 70% height to the top panel
-        gbc.gridx = 0; // Column 0
-        gbc.gridy = 0; // Row 0
+        // configuration for the top panel (JSplitPane)
+        gbc.fill = GridBagConstraints.BOTH; // fill both x and y
+        gbc.weightx = 1.0; // take up available width
+        gbc.weighty = 0.7; // allocate 70% height to the top panel
+        gbc.gridx = 0; // column 0
+        gbc.gridy = 0; // row 0
         JSplitPane topFileAndBrowserPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         topFileAndBrowserPane.setDividerLocation(300);
         topFileAndBrowserPane.setDividerSize(2);

@@ -11,9 +11,9 @@ public class ImagePanel extends JPanel {
     private String imagePath;
     private BufferedImage image;
 
-    public ImagePanel(String imagePath) {
+    public ImagePanel(String imagePath, Dimension parentSize) {
         this.imagePath = imagePath;
-        setPreferredSize(new Dimension(200, 200));
+        setPreferredSize(new Dimension(parentSize.width / 4, parentSize.height / 4));
         setVisible(true);
         loadImage(); // async image load/render
     }
