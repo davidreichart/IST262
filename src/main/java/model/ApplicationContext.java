@@ -1,6 +1,7 @@
 package model;
 
 import model.data.FileTag;
+import model.data.filetypes.SystemDirectory;
 import model.data.filetypes.SystemDirectoryList;
 import model.data.filetypes.SystemFile;
 
@@ -41,10 +42,21 @@ public final class ApplicationContext {
         }
     }
 
+    /**
+     * Adds a new SystemFile to the list of known system files.
+     * If the file is already known, no action is taken.
+     * This file will be displayed in the GUI under the "unknown" directory.s
+     * @param systemFile The SystemFile to add to the list of known system files.
+     */
     public void addNewSystemFile(SystemFile systemFile) {
         this.systemFiles.add(systemFile);
     }
 
+    /**
+     * Attempts to remove the given SystemFile from the list of known system files.
+     * If the file is not found, no action is taken.
+     * @param fileToRemove The SystemFile to remove from the list of known system files.
+     */
     public void removeSystemFile(SystemFile fileToRemove) {
         this.systemFiles.remove(fileToRemove);
     }
@@ -88,11 +100,29 @@ public final class ApplicationContext {
         this.definedTags = definedTags;
     }
 
+    /**
+     * Returns the list of known directories.
+     * The list contains objects as instances of the SystemDirectory class.
+     * @return The list of known directories.
+     */
     public SystemDirectoryList getSystemDirectoryList() {
         return systemDirectoryList;
     }
 
+    /**
+     * Returns a list of all known system files currently tracked by the program.
+     * @return A list of all known system files currently tracked by the program.
+     */
     public ArrayList<SystemFile> getSystemFiles() {
         return systemFiles;
+    }
+
+    /**
+     * Checks if the list of known directories contains the provided directory.
+     * @param directory The directory to check for.
+     * @return True if the directory is known, false otherwise.
+     */
+    public boolean containsDirectory(SystemDirectory directory) {
+        return systemDirectoryList.containsDirectory(directory);
     }
 }

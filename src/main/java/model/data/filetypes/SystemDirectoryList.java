@@ -63,4 +63,13 @@ public class SystemDirectoryList {
             listener.systemDirectoriesListUpdated(this.systemDirectories);
         }
     }
+
+    /**
+     * Informs if this list of SystemDirectories contains a specific SystemDirectory.
+     * @param directory The SystemDirectory to check for.
+     * @return true if the SystemDirectory is in the list, false otherwise.
+     */
+    public boolean containsDirectory(SystemDirectory directory) {
+        return systemDirectories.contains(directory);
+    }
 }

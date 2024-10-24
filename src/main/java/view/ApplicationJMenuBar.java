@@ -13,6 +13,7 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
     private JMenuItem addDirectoryJMenuItem;
     private JTextField directoryPathJTextField;
     private JMenuItem closeApplicationJMenuItem;
+    private JProgressBar progressBar;
 
     public ApplicationJMenuBar() {
         setAttributes();
@@ -36,6 +37,7 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
         add(addDirectoryJMenuItem);
         add(directoryPathJTextField);
         add(closeApplicationJMenuItem);
+        add(progressBar);
     }
 
     /**
@@ -46,6 +48,7 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
         this.addDirectoryJMenuItem = createAddDirectoryJMenuItem();
         this.directoryPathJTextField = createDirectoryPathTextField();
         this.closeApplicationJMenuItem = createCloseApplicationJMenuItem();
+        this.progressBar = createProgressBar();
     }
 
     /**
@@ -130,6 +133,18 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
     }
 
     /**
+     * Creates a JProgressBar that is indeterminate and not visible.
+     * This will show the progress of a background task that adds a directory.
+     * @return a JProgressBar that shows the progress of a background task
+     */
+    private JProgressBar createProgressBar() {
+        JProgressBar progressBar = new JProgressBar();
+        progressBar.setIndeterminate(true);
+        progressBar.setVisible(false);
+        return progressBar;
+    }
+
+    /**
      * Gets the JMenuItem that allows the user to add a directory.
      * This control references the contents of the {@link #directoryPathJTextField} for the directory path to add.
      * @return a JMenuItem that allows the user to add a directory
@@ -153,5 +168,15 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
      */
     public JMenuItem getCloseApplicationJMenuItem() {
         return closeApplicationJMenuItem;
+    }
+
+    /**
+     * Gets the JProgressBar that shows the progress of a background task.
+     * This progress bar is indeterminate and not visible by default.
+     * Be sure to set it to visible when a background task is running and set it to invisible when the task is complete.
+     * @return a JProgressBar that shows the progress of a background task
+     */
+    public JProgressBar getProgressBar() {
+        return progressBar;
     }
 }

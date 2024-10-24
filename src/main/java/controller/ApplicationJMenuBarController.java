@@ -29,9 +29,7 @@ public class ApplicationJMenuBarController {
         // add directory needs to take input from the text field and add it to the known directories when clicked
         frame.getApplicationJMenuBar()
                 .getAddDirectoryJMenuItem()
-                .addActionListener(addDirectory(frame
-                        .getApplicationJMenuBar()
-                        .getDirectoryPathJTextField()));
+                .addActionListener(addDirectory(frame.getApplicationJMenuBar().getDirectoryPathJTextField()));
 
         // close application needs to close the application when clicked
         frame.getApplicationJMenuBar()
@@ -62,19 +60,63 @@ public class ApplicationJMenuBarController {
                     return;
                 }
 
-                // directory path is valid and not empty
-                try {
-                    context.getSystemDirectoryList().addDirectory(new SystemDirectory(input));
-                    // add only the image files from the given directory
-                    for (File resource : Objects.requireNonNull(new File(directoryPathJTextField.getText()).listFiles())) {
-                        if (resource.isFile() && FileInspector.isImageFile(resource)) {
-                            ImageFile newImageFile = new ImageFile(resource.getAbsolutePath());
-                            context.addNewSystemFile(newImageFile);
+                // don't add preexisting directories
+                if (context.getSystemDirectoryList().containsDirectory(new SystemDirectory(input))) {
+                    JOptionPane.showMessageDialog(null, "Directory already added.");
+                    return;
+                }
+
+                frame.getApplicationJMenuBar().getProgressBar().setVisible(true);
+                frame.getApplicationJMenuBar().getProgressBar().setIndeterminate(false); // ensure it's not in indeterminate mode
+
+                SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        // Directory path is valid and not empty
+                        context.getSystemDirectoryList().addDirectory(new SystemDirectory(input));
+                        // Add only the image files from the given directory
+                        File[] resources = new File(directoryPathJTextField.getText()).listFiles();
+                        if (resources != null) {
+                            int totalFiles = resources.length;
+                            int count = 0;
+
+                            for (File resource : resources) {
+                                if (resource.isFile() && FileInspector.isImageFile(resource)) {
+                                    ImageFile newImageFile = new ImageFile(resource.getAbsolutePath());
+                                    context.addNewSystemFile(newImageFile);
+                                    count++;
+                                    // Update progress
+                                    int progress = (int) (((double) count / totalFiles) * 100);
+                                    setProgress(progress);
+                                }
+                            }
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        try {
+                            // check for any exceptions that occurred during execution
+                            get();
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                        } finally {
+                            frame.getApplicationJMenuBar().getProgressBar().setVisible(false);
                         }
                     }
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
+                };
+
+
+                // track the progress of the background task
+                worker.addPropertyChangeListener(evt -> {
+                    if ("progress".equals(evt.getPropertyName())) {
+                        int progress = (Integer) evt.getNewValue();
+                        frame.getApplicationJMenuBar().getProgressBar().setValue(progress); // Update the progress bar
+                    }
+                });
+
+                worker.execute(); // Start the background task
             }
         };
     }
