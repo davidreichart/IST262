@@ -5,6 +5,7 @@ import model.data.filetypes.SystemDirectory;
 import view.ApplicationJFrame;
 import view.filebrowser.UserFileJTree;
 import view.filebrowser.nodes.DirectoryNode;
+import view.filebrowser.nodes.ImageNode;
 import view.filedisplay.FileDisplayJPanel;
 
 import javax.swing.event.TreeSelectionEvent;
@@ -51,13 +52,26 @@ public class FileDisplayJPanelController {
                     return;
                 }
 
+                // when a directory is selected, render the images in that directory
+                // when an image is selected, render all images in its parent directory
                 if (node instanceof DirectoryNode) {
                     String directoryPath = ((DirectoryNode) node).getSystemDirectory().directoryPath();
+                    // don't rerender an already displayed directory
                     if (lastCheckedDirectoryPath.equals(directoryPath)) {
                         return;
                     } else {
                         lastCheckedDirectoryPath = directoryPath;
                         renderFiles(((DirectoryNode) node).getSystemDirectory());
+                    }
+                } else if (node instanceof ImageNode) {
+                    String directoryPath = ((ImageNode) node).parentPath();
+                    // don't rerender an already displayed directory
+                    if (lastCheckedDirectoryPath.equals(directoryPath)) {
+                        return;
+                    } else {
+                        lastCheckedDirectoryPath = directoryPath;
+                        DirectoryNode parentNode = (DirectoryNode) node.getParent();
+                        renderFiles(parentNode.getSystemDirectory());
                     }
                 }
             }

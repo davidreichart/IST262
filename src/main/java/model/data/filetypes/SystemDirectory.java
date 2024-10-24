@@ -12,10 +12,17 @@ import java.util.*;
  */
 public class SystemDirectory implements FileSystemResource {
 
-    private final String directoryPath;
+    private String directoryPath;
     private HashSet<ImageFile> directoryImageFiles;
 
     public SystemDirectory(String directoryPath) throws IllegalArgumentException {
+        // unknown is a special case used to hold individually added images
+        // it is not an actual directory
+        if (directoryPath.equals("unknown")) {
+            this.directoryPath = directoryPath;
+            this.directoryImageFiles = new HashSet<>();
+            return;
+        }
         if (!Files.isDirectory(Path.of(directoryPath))) {
             throw new IllegalArgumentException("Directory path must lead to a valid directory.");
         }

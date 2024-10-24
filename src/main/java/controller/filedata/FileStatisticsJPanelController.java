@@ -5,6 +5,7 @@ import model.data.filetypes.ImageFile;
 import model.data.filetypes.SystemFile;
 import view.ApplicationJFrame;
 import view.filebrowser.UserFileJTree;
+import view.filebrowser.nodes.DirectoryNode;
 import view.filebrowser.nodes.ImageNode;
 import view.filedata.FileStatisticsJPanel;
 
@@ -39,17 +40,22 @@ public class FileStatisticsJPanelController {
         this.fileStatisticsJPanel = frame.getFileStatisticsJPanel();
         this.userFileJTree = frame.getFileBrowserJPanel().getFileTree();
 
+        // display table of metadata when a file is selected in the browser
         userFileJTree.addTreeSelectionListener(displayFileMetadataInFileStatisticsJPanel());
 
+        // file path edit
         fileStatisticsJPanel.getEditFilePathButton()
                 .addActionListener(editFilePathButtonActionListener());
 
+        // file size edit
         fileStatisticsJPanel.getEditFileSizeButton()
                 .addActionListener(editFileSizeButtonActionListener());
 
+        // image height edit
         fileStatisticsJPanel.getEditImageHeightButton()
                 .addActionListener(editImageHeightButtonActionListener());
 
+        // image width edit
         fileStatisticsJPanel.getEditImageWidthButton()
                 .addActionListener(editImageWidthButtonActionListener());
     }
@@ -73,6 +79,13 @@ public class FileStatisticsJPanelController {
                     enableAllEditButtons();
                     JTable table = imageMetadataTable((ImageNode) node);
                     renderImageMetadataTable((ImageNode) node);
+                } else if (node instanceof DirectoryNode) {
+                    // directories shouldn't show metadata
+                    fileStatisticsJPanel.removeAll();
+                    fileStatisticsJPanel.add(fileStatisticsJPanel.getControlsPanel(), BorderLayout.WEST);
+                    disableAllEditButtons();
+                    fileStatisticsJPanel.repaint();
+                    fileStatisticsJPanel.revalidate();
                 }
             }
         };

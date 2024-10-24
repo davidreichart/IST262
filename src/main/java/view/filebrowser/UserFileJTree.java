@@ -19,7 +19,7 @@ import java.util.HashSet;
 public class UserFileJTree extends JTree {
 
     private DefaultMutableTreeNode rootNode;
-    private DefaultMutableTreeNode unknownDirectoryNode = new DefaultMutableTreeNode("Unknown Directory");
+    private DefaultMutableTreeNode unknownDirectoryNode = new DirectoryNode(new SystemDirectory("unknown"));
     private HashSet<String> currentlyStoredDirectories;
     private ArrayList<DirectoryNode> currentDirectoryNodes;
 

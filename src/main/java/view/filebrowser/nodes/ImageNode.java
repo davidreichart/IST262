@@ -1,8 +1,10 @@
 package view.filebrowser.nodes;
 
 import model.data.filetypes.ImageFile;
+import model.data.filetypes.SystemDirectory;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.io.File;
 
 /**
  * A node representing an image file in the file browser.
@@ -23,5 +25,10 @@ public class ImageNode extends DefaultMutableTreeNode {
      */
     public ImageFile getImageFile() {
         return imageFile;
+    }
+
+    public String parentPath() {
+        File imageFile = new File(this.imageFile.METADATA().absoluteFilePath());
+        return imageFile.getParent();
     }
 }
