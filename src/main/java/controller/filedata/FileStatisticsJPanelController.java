@@ -3,6 +3,7 @@ package controller.filedata;
 import model.ApplicationContext;
 import model.data.filetypes.ImageFile;
 import model.data.filetypes.SystemFile;
+import model.util.FileInspector;
 import view.ApplicationJFrame;
 import view.filebrowser.UserFileJTree;
 import view.filebrowser.nodes.DirectoryNode;
@@ -129,6 +130,14 @@ public class FileStatisticsJPanelController {
                 String input = JOptionPane.showInputDialog("Enter a new file path for this object:");
                 // only the core metadata record needs to be changed
                 if (input != null) {
+                    if (!FileInspector.isFile(input)) {
+                        JOptionPane.showMessageDialog(
+                                frame,
+                                "The file path you entered is not valid.",
+                                "Invalid File Path",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     SystemFile.Metadata updatedMetadata = new SystemFile.Metadata(imageFile.METADATA().byteCount(), input);
                     imageFile.setMETADATA(updatedMetadata);
                     renderImageMetadataTable((ImageNode) node);
@@ -148,13 +157,34 @@ public class FileStatisticsJPanelController {
             if (node instanceof ImageNode) {
                 ImageFile imageFile = ((ImageNode) node).getImageFile();
                 String input = JOptionPane.showInputDialog("Enter a new file size (in bytes) for this object:");
-                // only the core metadata record needs to be changed
-                if (input != null) {
-                    long newSize = Long.parseLong(input);
-                    SystemFile.Metadata updatedMetadata = new SystemFile.Metadata(newSize, imageFile.METADATA().absoluteFilePath());
-                    imageFile.setMETADATA(updatedMetadata);
-                    renderImageMetadataTable((ImageNode) node);
+
+                // empty input check
+                if (input.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "The file size cannot be empty.",
+                            "Invalid File Size",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+
+                // numeric / negative input check
+                for (char c : input.toCharArray()) {
+                    if (!Character.isDigit(c)) {
+                        JOptionPane.showMessageDialog(
+                                frame,
+                                "The file size must only consist of numbers AND be a positive value.",
+                                "Invalid File Size",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                long newSize = Long.parseLong(input);
+
+                SystemFile.Metadata updatedMetadata = new SystemFile.Metadata(newSize, imageFile.METADATA().absoluteFilePath());
+                imageFile.setMETADATA(updatedMetadata);
+                renderImageMetadataTable((ImageNode) node);
             }
         };
     }
@@ -170,12 +200,34 @@ public class FileStatisticsJPanelController {
             if (node instanceof ImageNode) {
                 ImageFile imageFile = ((ImageNode) node).getImageFile();
                 String input = JOptionPane.showInputDialog("Enter a new image height for this object:");
-                // only the image metadata record needs to be changed
-                if (input != null) {
-                    ImageFile.ImageMetadata updatedMetadata = new ImageFile.ImageMetadata(imageFile.IMAGE_METADATA().width(), Integer.parseInt(input), imageFile.IMAGE_METADATA().colorHistogram());
-                    imageFile.setIMAGE_METADATA(updatedMetadata);
-                    renderImageMetadataTable((ImageNode) node);
+
+                // empty input check
+                if (input.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "The image height cannot be empty.",
+                            "Invalid Image Height",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+
+                // numeric / negative input check
+                for (char c : input.toCharArray()) {
+                    if (!Character.isDigit(c)) {
+                        JOptionPane.showMessageDialog(
+                                frame,
+                                "The image height must only consist of numbers AND be a positive value",
+                                "Invalid Image Height",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                int newHeight = Integer.parseInt(input);
+
+                ImageFile.ImageMetadata updatedMetadata = new ImageFile.ImageMetadata(imageFile.IMAGE_METADATA().width(), newHeight, imageFile.IMAGE_METADATA().colorHistogram());
+                imageFile.setIMAGE_METADATA(updatedMetadata);
+                renderImageMetadataTable((ImageNode) node);
             }
         };
     }
@@ -191,12 +243,32 @@ public class FileStatisticsJPanelController {
             if (node instanceof ImageNode) {
                 ImageFile imageFile = ((ImageNode) node).getImageFile();
                 String input = JOptionPane.showInputDialog("Enter a new image width for this object:");
-                // only the image metadata record needs to be changed
-                if (input != null) {
-                    ImageFile.ImageMetadata updatedMetadata = new ImageFile.ImageMetadata(Integer.parseInt(input), imageFile.IMAGE_METADATA().height(), imageFile.IMAGE_METADATA().colorHistogram());
-                    imageFile.setIMAGE_METADATA(updatedMetadata);
-                    renderImageMetadataTable((ImageNode) node);
+
+                // empty input check
+                if (input.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "The image width cannot be empty.",
+                            "Invalid Image Width",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+
+                // numeric / negative input check
+                for (char c : input.toCharArray()) {
+                    if (!Character.isDigit(c)) {
+                        JOptionPane.showMessageDialog(
+                                frame,
+                                "The image width must only consist of numbers AND be a positive value",
+                                "Invalid Image Width",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                ImageFile.ImageMetadata updatedMetadata = new ImageFile.ImageMetadata(Integer.parseInt(input), imageFile.IMAGE_METADATA().height(), imageFile.IMAGE_METADATA().colorHistogram());
+                imageFile.setIMAGE_METADATA(updatedMetadata);
+                renderImageMetadataTable((ImageNode) node);
             }
         };
     }

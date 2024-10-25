@@ -31,6 +31,17 @@ public final class FileInspector {
     }
 
     /**
+     * Checks the given string to see if it is a valid file path.
+     * @param filePath The file path to check.
+     * @return True if the provided string is a valid file path. <br>
+     * False if the provided string is not a valid file path.
+     */
+    public static boolean isFile(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
+    }
+
+    /**
      * Analyzes a file to assess its content type. For example, a PNG file would return "image/png".
      * A TXT file would return "plain/text". If the file provided is invalid and does not lead to a file on the user's
      * system, an empty string will be returned.
