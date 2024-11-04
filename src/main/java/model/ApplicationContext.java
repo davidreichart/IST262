@@ -5,13 +5,14 @@ import model.data.filetypes.SystemDirectory;
 import model.data.filetypes.SystemDirectoryList;
 import model.data.filetypes.SystemFile;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * The ApplicationContext class centralizes all persistent data.
  * This class should be referred to at boot/termination of the program.
  */
-public final class ApplicationContext {
+public final class ApplicationContext implements Serializable {
 
     private TreeSet<FileTag> definedTags;
     private SystemDirectoryList systemDirectoryList;

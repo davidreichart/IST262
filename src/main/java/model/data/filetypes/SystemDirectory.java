@@ -10,7 +10,7 @@ import java.util.*;
  * The SystemDirectory class is a representation of a directory on the user's system.
  * SystemDirectories contain HashSets of SystemFiles found in the directory.
  */
-public class SystemDirectory implements FileSystemResource {
+public class SystemDirectory implements FileSystemResource, Serializable {
 
     private String directoryPath;
     private HashSet<ImageFile> directoryImageFiles;

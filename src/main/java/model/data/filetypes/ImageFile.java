@@ -14,7 +14,7 @@ import java.nio.file.Path;
  * A METADATA record contains file statistics and information.
  * An IMAGE_METADATA record contains image-specific metadata.
  */
-public class ImageFile extends SystemFile implements FileSystemResource {
+public class ImageFile extends SystemFile implements FileSystemResource, Serializable {
 
     /**
      * The ImageMetadata record contains image-specific metadata.
@@ -22,7 +22,7 @@ public class ImageFile extends SystemFile implements FileSystemResource {
      * @param height The height of the image in pixels.
      * @param colorHistogram A 3D array representing the color histogram of the image.
      */
-    public record ImageMetadata(int width, int height, int[][][] colorHistogram) {
+    public record ImageMetadata(int width, int height, int[][][] colorHistogram) implements Serializable {
         public int pixelCount() {
             return width * height;
         }

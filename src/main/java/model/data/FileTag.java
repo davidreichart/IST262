@@ -1,12 +1,13 @@
 package model.data;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * The FileTag class represents a user-definable data point to categorize ImageFile objects with.
  * These tags can be used when performing filtering/sorting operations when displaying files in the program's GUI.
  */
-public class FileTag implements Comparable<FileTag> {
+public class FileTag implements Comparable<FileTag>, Serializable {
 
     private String name;
     private Color color;

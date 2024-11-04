@@ -1,5 +1,6 @@
 package model.data.filetypes;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
@@ -7,7 +8,7 @@ import java.util.HashSet;
  * This class can be listened to by implementing the {@link SystemDirectoryListListener} interface.
  * Any listening classes will be notified when the list of SystemDirectories changes.
  */
-public class SystemDirectoryList {
+public class SystemDirectoryList implements Serializable {
 
     private HashSet<SystemDirectory> systemDirectories;
     private HashSet<SystemDirectoryListListener> listeners;

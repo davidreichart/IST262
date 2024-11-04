@@ -47,7 +47,7 @@ public class ApplicationJFrame extends JFrame implements Renderable {
     public void setAttributes() {
         setTitle("IST 261");
         setSize(1000, 800);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 

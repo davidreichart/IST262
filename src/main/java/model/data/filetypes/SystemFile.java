@@ -3,6 +3,7 @@ package model.data.filetypes;
 import model.data.FileTag;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 
@@ -11,13 +12,13 @@ import java.util.LinkedHashSet;
  * This class is intended to be a parent class for all other file types and cannot be instantiated.
  * A METADATA record contains file statistics and information.
  */
-public abstract class SystemFile implements Comparable<SystemFile>, FileSystemResource {
+public abstract class SystemFile implements Comparable<SystemFile>, FileSystemResource, Serializable {
     /**
      * The Metadata record contains file statistics and information.
      * @param byteCount The size of the file in bytes.
      * @param absoluteFilePath The absolute file path leading to this file on the user's system.
      */
-    public record Metadata(long byteCount, String absoluteFilePath) {
+    public record Metadata(long byteCount, String absoluteFilePath) implements Serializable {
 
         public int kilobyteCount() {
             return (int) (byteCount / 1000);
