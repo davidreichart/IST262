@@ -1,41 +1,36 @@
-# M06-A01 Implementing the List-Detail Pattern 
-The following details the implementation of the requested capabilities from the canvas rubric
+# M07-A02 Persistent Data Implementation<hr>
+The following details what objects are being serialized, and how that serialization is occurring.
+
+### A test folder of images in <code>serTest</code> can be used to test data persistence by adding its absolute file path in the menu bar text  field. Only the images found in <code>src/test/resources</code> are auto loaded by the application.<hr>
 
 
-### *A controller object instantiates and shows the list view containing a JTable of some model objects*
+These two classes are currently placed in the model package, but may easily be refactored to the controller package if more appropraite:
+
+- [Serializer.java](src/main/java/model/Serializer.java) - Instantiated at exit in [App.java](src/main/java/App.java) briefly so it has access to all model/view/controller objects. The following objects are the only ones written to the state.ser bytecode file:
+  - [ApplicationContext.java](src/main/java/model/ApplicationContext.java) - Holds all currently tracked directories, files, and file details.
+  - [UserFileJTree.java](src/main/java/view/filebrowser/UserFileJTree.java) - Holds the node's and their structure that makes up the file browser tree in the GUI. 
+
+- [Deserializer.java](src/main/java/model/Deserializer.java) - Static class that has individual methods for loading each serialized object whenever needed when the program launches and a new frame is being created.
+  - All serialized objects are stored in one file with the following object order:
+    - ApplicationContext.java
+    - UserFileJTree.java
+
+<code>state.ser</code> should be located @ src/main/resources
 <hr>
 
-[ApplicationController.java](src/main/java/controller/ApplicationController.java) 
-is the meta controller that instantiates all other controllers.
+The following is a complete list of all objects implementing <code>Serializable</code> and which directly serialized object they are found in:<br>
 
-[FileBrowserJPanelController.java](src/main/java/controller/filebrowser/FileBrowserJPanelController.java) 
-is the controller that manages the list as a JTree as defined by [UserFileJTree.java](src/main/java/view/filebrowser/UserFileJTree.java).<br>
-The JTable of details is created by [FileStatisticsJPanelController.java](src/main/java/controller/filedata/FileStatisticsJPanelController.java).
+<code>model</code><br>
+- [ApplicationContext.java](src/main/java/model/ApplicationContext.java) <code>ApplicationContext</code>
+- [FileTag.java](src/main/java/model/data/FileTag.java) <code>ApplicationContext</code>
+- [SystemDirectoryList](src/main/java/model/data/filetypes/SystemDirectoryList.java) <code>ApplicationContext</code>
+- [SystemDirectory](src/main/java/model/data/filetypes/SystemDirectory.java) <code>ApplicationContext</code>
+- [ImageFile.java](src/main/java/model/data/filetypes/ImageFile.java) <code>ApplicationContext</code>
+- [SystemFile.java](src/main/java/model/data/filetypes/SystemFile.java) <code>ApplicationContext</code>
 
+<code>view</code><br>
+- [UserFileJTree.java](src/main/java/view/filebrowser/UserFileJTree.java) <code>UserFileJTree</code>
 
+<code>controller</code><br>
+- *none*
 
-### *The user can select a model object from the list and view its details in a separate detail view*
-<hr>
-
-When a model object is clicked on in the JTree [FileStatisticsJPanelController.java](src/main/java/controller/filedata/FileStatisticsJPanelController.java)
-is notified and updates the JTable with the details of the selected model object.
-At the same time [FileDisplayJPanelController.java](src/main/java/controller/filedisplay/FileDisplayJPanelController.java) is notified and displays ALL images within the directory of the selected image (this may change later).
-
-### *The user can add new items to the list using the detail view as the input data form*
-<hr>
-
-[ApplicationJMenuBar.java](src/main/java/view/ApplicationJMenuBar.java) has a text field that allows a user to enter in a new directory. All images found in said directory are added to the file tree.
-A button above the file tree allows a user to add an individual image to the file tree.
-
-### *The user can change the data for a particular item using the detail view as the input data form*
-<hr>
-
-[FileStatisticsJPanelController.java](src/main/java/controller/filedata/FileStatisticsJPanelController.java) 
-manages multiple buttons to the left of the data table that allows a user to change the data of that model object given they input reasonably valid data.
-
-### *The user can delete items from the list*
-<hr>
-
-[FileBrowserJPanelController.java](src/main/java/controller/filebrowser/FileBrowserJPanelController.java)
-manages a button above the file tree that allows a user to remove a model object from the program.
-It does not delete the file from their system, it simply tells the program to stop tracking that item. Directories are not permitted to be removed (currently).

@@ -37,6 +37,7 @@ public class ApplicationJFrame extends JFrame implements Renderable {
         // This forces focus to the focusGrabber label.
         // It MUST be called after setVisible(true).
         focusGrabber.requestFocusInWindow();
+        fileBrowserJPanel.getFileTree().reloadTree();
     }
 
     /**

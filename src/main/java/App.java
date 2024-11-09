@@ -2,14 +2,12 @@ import controller.ApplicationController;
 import model.ApplicationContext;
 import model.Deserializer;
 import model.Serializer;
-import model.data.FileTag;
 import model.data.filetypes.SystemDirectory;
 import view.ApplicationJFrame;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.TreeSet;
 
 public class App implements Runnable {
 
@@ -26,11 +24,19 @@ public class App implements Runnable {
      */
     @Override
     public void run() {
-        loadApplicationContext();
         this.applicationJFrame = new ApplicationJFrame();
+        loadApplicationContext();
         this.applicationController = new ApplicationController(this.applicationJFrame, this.applicationContext);
         this.serializer = new Serializer(this.applicationContext, this.applicationJFrame, this.applicationController);
         addExitSerializationListener();
+
+        // test data
+        // this must be added AFTER the context and frames have been loaded in otherwise the tree will not show the test data
+        try {
+            applicationContext.getSystemDirectoryList().addDirectory(new SystemDirectory("src/test/resources"));
+        } catch (Exception e) {
+            System.err.println("Directory already exists in the application context");
+        }
     }
 
     /**
@@ -40,11 +46,6 @@ public class App implements Runnable {
      */
     private void loadApplicationContext() {
         ApplicationContext applicationContext = Deserializer.loadApplicationContext();
-        try {
-            applicationContext.getSystemDirectoryList().addDirectory(new SystemDirectory("src/test/resources"));
-        } catch (Exception e) {
-            System.err.println("Directory already exists in the application context");
-        }
         this.applicationContext = applicationContext;
     }
 

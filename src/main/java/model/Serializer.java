@@ -2,6 +2,7 @@ package model;
 
 import controller.ApplicationController;
 import view.ApplicationJFrame;
+import view.filebrowser.UserFileJTree;
 
 import java.io.*;
 
@@ -12,13 +13,21 @@ public final class Serializer {
     private final ApplicationController CONTROLLER;
     private final String FILE_PATH = "src/main/resources/state.ser";
 
-
     public Serializer(ApplicationContext context, ApplicationJFrame frame, ApplicationController controller) {
         this.CONTEXT = context;
         this.FRAME = frame;
         this.CONTROLLER = controller;
     }
 
+    /**
+     * Saves the current state of the application to a serialized file.
+     * The file is saved at the path specified by {@link #FILE_PATH}.
+     * The following classes are directly serialized:
+     * <ul>
+     *     <li>{@link ApplicationContext}</li>
+     *     <li>{@link UserFileJTree}</li>
+     * </ul>
+     */
     public void saveState() {
         FileOutputStream fileOut = null;
         ObjectOutputStream out = null;

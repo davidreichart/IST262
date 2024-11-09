@@ -14,7 +14,11 @@ public final class Deserializer {
     public Deserializer() {
     }
 
-
+    /**
+     * Attempts to load the ApplicationContext from a serialized file.
+     * If no file is found, a new default ApplicationContext is created.
+     * @return the ApplicationContext loaded from the serialized file, or a new default ApplicationContext if the file is not found
+     */
     public static ApplicationContext loadApplicationContext() {
         FileInputStream fileIn = null;
         ObjectInputStream in = null;
@@ -51,6 +55,11 @@ public final class Deserializer {
         return context;
     }
 
+    /**
+     * Attempts to load the UserFileJTree from a serialized file.
+     * If no file is found, a new default UserFileJTree is created.
+     * @return the UserFileJTree loaded from the serialized file, or a new default UserFileJTree if the file is not found
+     */
     public static UserFileJTree loadUserFileJTree() {
         FileInputStream fileIn = null;
         ObjectInputStream in = null;
