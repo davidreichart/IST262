@@ -73,4 +73,12 @@ public class SystemDirectoryList implements Serializable {
     public boolean containsDirectory(SystemDirectory directory) {
         return systemDirectories.contains(directory);
     }
+
+    /**
+     * Returns the list of SystemDirectories.
+     * @return The list of SystemDirectories.
+     */
+    public HashSet<SystemDirectory> getSystemDirectories() {
+        return systemDirectories;
+    }
 }

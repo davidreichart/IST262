@@ -7,6 +7,7 @@ import view.filebrowser.nodes.ImageNode;
 
 import javax.swing.*;
 import javax.swing.tree.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -16,16 +17,16 @@ import java.util.HashSet;
  * Each directory node contains all the image files in the directory.
  * The unknown directory node contains any files added with the "Add File" button.
  */
-public class UserFileJTree extends JTree {
+public class UserFileJTree extends JTree implements Serializable {
 
-    private DefaultMutableTreeNode rootNode;
+    private final DefaultMutableTreeNode rootNode;
     private DefaultMutableTreeNode unknownDirectoryNode = new DirectoryNode(new SystemDirectory("unknown"));
     private HashSet<String> currentlyStoredDirectories;
     private ArrayList<DirectoryNode> currentDirectoryNodes;
 
     public UserFileJTree() {
         currentlyStoredDirectories = new HashSet<>();
-        setModel(new DefaultTreeModel(rootNode = new DefaultMutableTreeNode("Root")));
+        setModel(new DefaultTreeModel(rootNode = new DefaultMutableTreeNode()));
         // the unknown directory node will hold any files added with the "Add File" button
         rootNode.add(this.unknownDirectoryNode);
         reloadTree();

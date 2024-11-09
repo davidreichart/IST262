@@ -1,42 +1,54 @@
 package model;
 
+import controller.ApplicationController;
+import view.ApplicationJFrame;
+
 import java.io.*;
 
-public class Serializer {
+public final class Serializer {
 
-    public Serializer() {
+    private final ApplicationContext CONTEXT;
+    private final ApplicationJFrame FRAME;
+    private final ApplicationController CONTROLLER;
+    private final String FILE_PATH = "src/main/resources/state.ser";
+
+
+    public Serializer(ApplicationContext context, ApplicationJFrame frame, ApplicationController controller) {
+        this.CONTEXT = context;
+        this.FRAME = frame;
+        this.CONTROLLER = controller;
     }
 
-    public static void saveState(ApplicationContext applicationContext) {
+    public void saveState() {
+        FileOutputStream fileOut = null;
+        ObjectOutputStream out = null;
+
+        // creating file streams
         try {
-            FileOutputStream fileOut = new FileOutputStream("src/main/resources/state.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(applicationContext);
+            fileOut = new FileOutputStream(FILE_PATH);
+            out = new ObjectOutputStream(fileOut);
+        } catch (IOException e) {
+            System.err.println("Cannot save state.ser at " + FILE_PATH);
+            return; // cannot continue without file streams
+        }
+
+        // writing objects to file
+        try {
+            out.writeObject(CONTEXT);
+            out.writeObject(FRAME.getFileBrowserJPanel().getFileTree());
+        } catch (IOException e) {
+            System.err.println("Error writing objects to state.ser");
+            e.printStackTrace();
+        }
+
+        // finishing up
+        try {
             out.close();
             fileOut.close();
             System.out.println("Serialized data is saved in state.ser");
-        } catch (IOException i) {
-            i.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Error closing file streams, state.ser may be corrupted");
+            e.printStackTrace();
         }
-    }
-
-    public static ApplicationContext loadState() {
-        ApplicationContext applicationContext = null;
-        try {
-            FileInputStream fileIn = new FileInputStream("src/main/resources/state.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            applicationContext = (ApplicationContext) in.readObject();
-            in.close();
-            fileIn.close();
-            System.out.println("Deserialized data is loaded from state.ser");
-        } catch (IOException i) {
-            i.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException c) {
-            System.out.println("ApplicationContext class not found");
-            c.printStackTrace();
-            return null;
-        }
-        return applicationContext;
     }
 }
