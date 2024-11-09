@@ -1,9 +1,11 @@
-import model.ApplicationContext;
+package model;
+
 import view.filebrowser.UserFileJTree;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.TreeSet;
 
 public final class Deserializer {
 
@@ -23,8 +25,8 @@ public final class Deserializer {
             fileIn = new FileInputStream(FILE_PATH);
             in = new ObjectInputStream(fileIn);
         } catch (IOException e) {
-            System.err.println("Cannot load state.ser at " + FILE_PATH);
-            return null; // cannot continue without file streams
+            System.err.println("loadApplicationContext :: File state.ser not found at " + FILE_PATH);
+            return new ApplicationContext(new TreeSet<>()); // cannot continue without file streams
         }
 
         // reading objects from file
@@ -43,6 +45,9 @@ public final class Deserializer {
             System.err.println("Error closing file streams, state.ser may be corrupted");
         }
 
+        if (context == null) {
+            return new ApplicationContext(new TreeSet<>());
+        }
         return context;
     }
 
@@ -56,8 +61,8 @@ public final class Deserializer {
             fileIn = new FileInputStream(FILE_PATH);
             in = new ObjectInputStream(fileIn);
         } catch (IOException e) {
-            System.err.println("Cannot load state.ser at " + FILE_PATH);
-            return null; // cannot continue without file streams
+            System.err.println("loadUserFileJTree :: File state.ser not found at " + FILE_PATH);
+            return new UserFileJTree(); // cannot continue without file streams
         }
 
         // reading objects from file
@@ -77,6 +82,9 @@ public final class Deserializer {
             System.err.println("Error closing file streams, state.ser may be corrupted");
         }
 
+        if (fileTree == null) {
+            return new UserFileJTree();
+        }
         return fileTree;
     }
 }

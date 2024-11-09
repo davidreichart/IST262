@@ -1,5 +1,6 @@
 package view.filebrowser;
 
+import model.Deserializer;
 import model.data.filetypes.SystemDirectory;
 import model.data.filetypes.SystemDirectoryListListener;
 import view.Renderable;
@@ -66,7 +67,7 @@ public class FileBrowserJPanel extends JPanel implements Renderable, SystemDirec
      */
     @Override
     public void buildComponents() {
-        this.fileTree = new UserFileJTree();
+        this.fileTree = Deserializer.loadUserFileJTree();
         this.fileScrollPane = createFileTreeScrollPane();
         this.expandAllJButton = new JButton("Expand All");
         this.previousFileButton = new JButton("Previous");

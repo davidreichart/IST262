@@ -1,10 +1,10 @@
 import controller.ApplicationController;
 import model.ApplicationContext;
+import model.Deserializer;
 import model.Serializer;
 import model.data.FileTag;
 import model.data.filetypes.SystemDirectory;
 import view.ApplicationJFrame;
-import view.filebrowser.UserFileJTree;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
@@ -31,9 +31,6 @@ public class App implements Runnable {
         this.applicationController = new ApplicationController(this.applicationJFrame, this.applicationContext);
         this.serializer = new Serializer(this.applicationContext, this.applicationJFrame, this.applicationController);
         addExitSerializationListener();
-
-        System.out.println(applicationContext.getSystemFiles().size());
-        System.out.println(applicationContext.getSystemDirectoryList().getSystemDirectories().size());
     }
 
     /**
@@ -43,9 +40,6 @@ public class App implements Runnable {
      */
     private void loadApplicationContext() {
         ApplicationContext applicationContext = Deserializer.loadApplicationContext();
-        if (applicationContext == null) {
-            applicationContext = new ApplicationContext(new TreeSet<FileTag>());
-        }
         try {
             applicationContext.getSystemDirectoryList().addDirectory(new SystemDirectory("src/test/resources"));
         } catch (Exception e) {
