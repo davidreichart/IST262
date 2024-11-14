@@ -95,12 +95,21 @@ public class SortedFileBrowserJPanelController {
         };
     }
 
+    /**
+     * Returns an ActionListener that will search for the item in the search text field.
+     * The search will select the requested item in the GUI file list if it is found.
+     * @return The ActionListener that will search for the item in the search text field.
+     */
     public ActionListener searchItem() {
         return e -> {
             String searchTerm = this.panel.getSearchField().getText();
-            String item = this.sortedFileList.getItem(searchTerm);
-            if (!item.isEmpty()) {
-                this.panel.getFileList().setSelectedValue(item, true);
+            JList<String> list = panel.getFileList();
+            if (this.sortedFileList.getItem(searchTerm)) {
+                int index = this.sortedFileList.getAbsoluteFilePaths().indexOf(searchTerm);
+                list.setSelectedIndex(index);
+                JOptionPane.showMessageDialog(this.frame, "Requested item has been selected in the browser.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this.frame, "The requested file is not currently being tracked.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         };
     }
@@ -109,6 +118,10 @@ public class SortedFileBrowserJPanelController {
         return e -> this.sortedFileList.printToCommandLine();
     }
 
+    /**
+     * Returns a MouseAdapter that will allow the user to copy the selected item to their clipboard.
+     * @return The MouseAdapter that will allow the user to copy the selected item to their clipboard.
+     */
     public MouseAdapter rightClickItemMenu() {
         return new MouseAdapter() {
             @Override
@@ -138,6 +151,10 @@ public class SortedFileBrowserJPanelController {
         };
     }
 
+    /**
+     * Returns a MouseAdapter that will allow the user to paste from their clipboard into the search text field.
+     * @return The MouseAdapter that will allow the user to paste from their clipboard into the search text field.
+     */
     public MouseAdapter rightClickSearchTextFieldMenu() {
         return new MouseAdapter() {
             @Override

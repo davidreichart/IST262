@@ -11,6 +11,7 @@ import view.filebrowser.nodes.ImageNode;
 import view.filedata.FileStatisticsJPanel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -59,6 +60,10 @@ public class FileStatisticsJPanelController {
         // image width edit
         fileStatisticsJPanel.getEditImageWidthButton()
                 .addActionListener(editImageWidthButtonActionListener());
+
+        frame.getSortedFileBrowserJPanel()
+                .getFileList()
+                .addListSelectionListener(displaySortedFilePanelStatistics());
     }
 
     /**
@@ -270,6 +275,49 @@ public class FileStatisticsJPanelController {
                 imageFile.setIMAGE_METADATA(updatedMetadata);
                 renderImageMetadataTable((ImageNode) node);
             }
+        };
+    }
+
+    /**
+     * Displays the metadata of the selected file in the FileStatisticsJPanel.
+     * @return A ListSelectionListener that displays the metadata of the selected file in the FileStatisticsJPanel.
+     */
+    public ListSelectionListener displaySortedFilePanelStatistics() {
+        return e -> {
+            JList<String> list = frame.getSortedFileBrowserJPanel().getFileList();
+            String selection = list.getSelectedValue();
+            // stream filter for selection
+            SystemFile selectedFile = context.getSystemFiles().stream()
+                    .filter(f -> f.METADATA().absoluteFilePath().equals(selection))
+                    .findFirst()
+                    .orElse(null);
+            if (selectedFile == null) {
+                // item doesnt exist, do nothing
+                return;
+            }
+            // making a table out of the metadata on this image file
+            ImageFile imageFile = (ImageFile) selectedFile;
+
+            JTable fileMetadataTable = new JTable(5, 2);
+            fileMetadataTable.getColumnModel().getColumn(0).setMaxWidth(400); // the first column is the key
+
+            fileMetadataTable.setValueAt("File Path", 0, 0);
+            fileMetadataTable.setValueAt(imageFile.METADATA().absoluteFilePath(), 0, 1);
+
+            fileMetadataTable.setValueAt("File Size (kb)", 1, 0);
+            fileMetadataTable.setValueAt(imageFile.METADATA().byteCount(), 1, 1);
+
+            fileMetadataTable.setValueAt("Image Dimensions", 2, 0);
+            fileMetadataTable.setValueAt(imageFile.IMAGE_METADATA().width() + " x " + imageFile.IMAGE_METADATA().height(), 2, 1);
+
+            fileMetadataTable.setValueAt("Pixel Count", 3, 0);
+            fileMetadataTable.setValueAt(imageFile.IMAGE_METADATA().pixelCount(), 3, 1);
+
+            // update GUI
+            fileStatisticsJPanel.removeAll();
+            fileStatisticsJPanel.add(fileStatisticsJPanel.getControlsPanel(), BorderLayout.WEST);
+            fileStatisticsJPanel.add(fileMetadataTable, BorderLayout.CENTER);
+            fileStatisticsJPanel.revalidate();
         };
     }
 

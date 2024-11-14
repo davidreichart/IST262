@@ -121,13 +121,14 @@ public class SortedFileList {
         sortFiles();
     }
 
-    public String getItem(String searchTerm) {
-        for (String item : this.fileNames) {
-            if (item.equals(searchTerm)) {
-                return item;
-            }
+    public boolean getItem(String searchTerm) {
+        if (this.fileNames.contains(searchTerm)) {
+            return true;
+        } else if (this.absoluteFilePaths.contains(searchTerm)) {
+            return true;
+        } else {
+            return false;
         }
-        return "";
     }
 
     /**
@@ -135,6 +136,7 @@ public class SortedFileList {
      */
     public void sortFiles() {
         Collections.sort(this.absoluteFilePaths);
+        Collections.sort(this.fileNames);
     }
 
     /**
