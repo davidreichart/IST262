@@ -2,12 +2,16 @@ import controller.ApplicationController;
 import model.ApplicationContext;
 import model.Deserializer;
 import model.Serializer;
+import model.data.filetypes.ImageFile;
 import model.data.filetypes.SystemDirectory;
+import model.util.FileInspector;
 import view.ApplicationJFrame;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.util.Objects;
 
 public class App implements Runnable {
 
@@ -33,7 +37,16 @@ public class App implements Runnable {
         // test data
         // this must be added AFTER the context and frames have been loaded in otherwise the tree will not show the test data
         try {
+            // add directory to tracked context
             applicationContext.getSystemDirectoryList().addDirectory(new SystemDirectory("src/test/resources"));
+            // add all image files in the test resources directory to the context
+            File[] resources = new File("src/test/resources").listFiles();
+            for (File resource : Objects.requireNonNull(resources)) {
+                if (resource.isFile() && FileInspector.isImageFile(resource)) {
+                    ImageFile imageFile = new ImageFile(resource.getAbsolutePath());
+                    applicationContext.addNewSystemFile(imageFile);
+                }
+            }
         } catch (Exception e) {
             System.err.println("Test data src/test/resources already exists in the application context.");
         }
