@@ -13,6 +13,11 @@ public class SortedFileBrowserJPanel extends JPanel implements Renderable, Syste
 
     private JList<String> fileList;
     private DefaultListModel<String> listModel;
+    private JButton addItemButton;
+    private JButton removeItemButton;
+    private JTextField searchField;
+    private JButton searchButton;
+    private JButton printButton;
 
     public SortedFileBrowserJPanel() {
         setAttributes();
@@ -49,7 +54,22 @@ public class SortedFileBrowserJPanel extends JPanel implements Renderable, Syste
     @Override
     public void addComponents() {
         add(new JScrollPane(fileList), BorderLayout.CENTER);
-        add(new JLabel("Sorted Files"), BorderLayout.NORTH);
+
+        JPanel buttons = new JPanel();
+        buttons.add(addItemButton);
+        buttons.add(removeItemButton);
+        buttons.add(searchButton);
+
+        JPanel search = new JPanel();
+        search.add(searchField);
+
+        JPanel controls = new JPanel();
+        controls.setLayout(new BorderLayout());
+        controls.add(search, BorderLayout.NORTH);
+        controls.add(buttons, BorderLayout.SOUTH);
+
+        add(controls, BorderLayout.NORTH);
+        add(printButton, BorderLayout.SOUTH);
     }
 
     /**
@@ -60,6 +80,13 @@ public class SortedFileBrowserJPanel extends JPanel implements Renderable, Syste
     public void buildComponents() {
         this.listModel = new DefaultListModel<>();
         this.fileList = new JList<>(listModel);
+        this.addItemButton = new JButton("Add Item");
+        this.removeItemButton = new JButton("Remove Item");
+        this.searchField = new JTextField();
+        searchField.setPreferredSize(new Dimension(300, 20));
+        setHint(searchField, "Enter the absolute file path to search/add/remove");
+        this.searchButton = new JButton("Search");
+        this.printButton = new JButton("Print to Console");
     }
 
     /**
@@ -76,10 +103,64 @@ public class SortedFileBrowserJPanel extends JPanel implements Renderable, Syste
     }
 
     /**
+     * Sets a hint for a text field that disappears when the user clicks on the text field.
+     * @param textField the text field to set a hint for.
+     * @param hint The hint text to display in the text field.
+     */
+    private void setHint(final JTextField textField, final String hint) {
+        textField.setText(hint);
+        textField.setForeground(Color.GRAY);
+
+        // Add focus listener to remove a hint when the user clicks on text field
+        // Hint will reappear if the user does not enter any text
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (textField.getText().equals(hint)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(hint);
+                    textField.setForeground(Color.GRAY);
+                }
+            }
+        });
+    }
+
+    /**
      * Returns the JList object that displays the sorted file names.
      * @return The JList object that displays the sorted file names.
      */
     public JList<String> getFileList() {
         return fileList;
+    }
+
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
+    }
+
+    public JButton getRemoveItemButton() {
+        return removeItemButton;
+    }
+
+    public JButton getAddItemButton() {
+        return addItemButton;
+    }
+
+    public DefaultListModel<String> getListModel() {
+        return listModel;
+    }
+
+    public JButton getPrintButton() {
+        return printButton;
     }
 }

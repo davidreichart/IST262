@@ -44,9 +44,6 @@ public class FileDisplayJPanelController {
     /**
      * Returns a TreeSelectionListener that displays all files in the selected directory.
      * Images are rendered in the fileDisplayJPanel.
-     * todo: this only works when the directory node is selected
-     * todo: this should work on the directory node AND the root node
-     * todo: or just show the singular selected image?
      * @return A TreeSelectionListener that displays all files in the selected directory.
      */
     public TreeSelectionListener displayFilesInSelectedDirectory() {
