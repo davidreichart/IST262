@@ -74,4 +74,12 @@ public class SortedFileBrowserJPanel extends JPanel implements Renderable, Syste
             listModel.addElement(fileName);
         }
     }
+
+    /**
+     * Returns the JList object that displays the sorted file names.
+     * @return The JList object that displays the sorted file names.
+     */
+    public JList<String> getFileList() {
+        return fileList;
+    }
 }

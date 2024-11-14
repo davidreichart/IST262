@@ -7,7 +7,11 @@ import view.filebrowser.UserFileJTree;
 import view.filebrowser.nodes.DirectoryNode;
 import view.filebrowser.nodes.ImageNode;
 import view.filedisplay.FileDisplayJPanel;
+import view.filedisplay.ImagePanel;
 
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -33,6 +37,8 @@ public class FileDisplayJPanelController {
         this.userFileJTree = frame.getFileBrowserJPanel().getFileTree();
 
         userFileJTree.addTreeSelectionListener(displayFilesInSelectedDirectory());
+
+        this.frame.getSortedFileBrowserJPanel().getFileList().addListSelectionListener(displayIndividualFile());
     }
 
     /**
@@ -75,6 +81,31 @@ public class FileDisplayJPanelController {
                     }
                 }
             }
+        };
+    }
+
+    /**
+     * Returns a ListSelectionListener that displays the selected image in the fileDisplayJPanel.
+     * @return A ListSelectionListener that displays the selected image in the fileDisplayJPanel.
+     */
+    public ListSelectionListener displayIndividualFile() {
+        return (ListSelectionEvent e) -> {
+            // duplicate event prevention
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+
+            JList<String> list = frame.getSortedFileBrowserJPanel().getFileList();
+            int selectedIndex = list.getSelectedIndex();
+            if (selectedIndex == -1) {
+                return;
+            }
+
+            // get the absolute path of the selected image and render it alone
+            String selection = list.getModel().getElementAt(selectedIndex);
+            JPanel content = new JPanel();
+            content.add(new ImagePanel(selection, this.fileDisplayJPanel.getSize()));
+            this.fileDisplayJPanel.setViewportView(content);
         };
     }
 

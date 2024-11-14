@@ -34,7 +34,7 @@ public class SortedFileBrowserJPanelController {
     public void renderSortedFileList() {
         this.sortedFileList.findAllFileNames(this.context.getSystemFiles());
         this.sortedFileList.sortFiles();
-        this.panel.updateFileList(this.sortedFileList.getFileNames());
+        this.panel.updateFileList(this.sortedFileList.getAbsoluteFilePaths());
     }
 
     /**
