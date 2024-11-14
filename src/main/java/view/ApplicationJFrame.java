@@ -1,6 +1,7 @@
 package view;
 
 import view.filebrowser.FileBrowserJPanel;
+import view.filebrowser.SortedFileBrowserJPanel;
 import view.filedata.FileStatisticsJPanel;
 import view.filedisplay.FileDisplayJPanel;
 
@@ -14,13 +15,17 @@ import java.awt.*;
  * - A file browser - {@link FileBrowserJPanel} for browsing files <br>
  * - A file display - {@link FileDisplayJPanel} for displaying the contents of a file <br>
  * - A file statistics panel - {@link FileStatisticsJPanel} for displaying statistics about a file <br>
+ * - A sorted file browser panel - {@link SortedFileBrowserJPanel} for browsing files in a sorted manner <br>
+ * - A split pane - {@link JSplitPane} for the file browser and file display panels <br>
  */
 public class ApplicationJFrame extends JFrame implements Renderable {
 
     private ApplicationJMenuBar applicationJMenuBar;
     private FileBrowserJPanel fileBrowserJPanel;
+    private SortedFileBrowserJPanel sortedFileBrowserJPanel;
     private FileDisplayJPanel fileDisplayJPanel;
     private FileStatisticsJPanel fileStatisticsJPanel;
+    private JSplitPane topFileAndBrowserPane;
 
     public ApplicationJFrame() {
         setAttributes();
@@ -58,29 +63,7 @@ public class ApplicationJFrame extends JFrame implements Renderable {
     @Override
     public void addComponents() {
         setJMenuBar(applicationJMenuBar);
-
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        // configuration for the top panel (JSplitPane)
-        gbc.fill = GridBagConstraints.BOTH; // fill both x and y
-        gbc.weightx = 1.0; // take up available width
-        gbc.weighty = 0.7; // allocate 70% height to the top panel
-        gbc.gridx = 0; // column 0
-        gbc.gridy = 0; // row 0
-        JSplitPane topFileAndBrowserPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        topFileAndBrowserPane.setDividerLocation(300);
-        topFileAndBrowserPane.setDividerSize(2);
-        topFileAndBrowserPane.add(this.fileBrowserJPanel, JSplitPane.LEFT);
-        topFileAndBrowserPane.add(this.fileDisplayJPanel, JSplitPane.RIGHT);
-        mainPanel.add(topFileAndBrowserPane, gbc);
-
-        // Configuration for the fileStatisticsJPanel
-        gbc.weighty = 0.3; // Allocate 30% height to the statistics panel
-        gbc.gridy = 1; // Move to the next row
-        mainPanel.add(this.fileStatisticsJPanel, gbc);
-
-        add(mainPanel, BorderLayout.CENTER);
+        renderMainPanel(fileBrowserJPanel, fileDisplayJPanel); // initial state uses file tree
     }
 
     /**
@@ -93,6 +76,37 @@ public class ApplicationJFrame extends JFrame implements Renderable {
         this.fileDisplayJPanel = new FileDisplayJPanel();
         this.fileStatisticsJPanel = new FileStatisticsJPanel();
         this.applicationJMenuBar = new ApplicationJMenuBar();
+        this.sortedFileBrowserJPanel = new SortedFileBrowserJPanel();
+        sortedFileBrowserJPanel.setVisible(false); // initial state should be hidden
+    }
+
+    /**
+     * Re-renders the main panel of the application.
+     * @param left The JPanel to sit to the left of the file display panel.
+     * @param right The file display panel to display file contents.
+     */
+    public void renderMainPanel(JPanel left, FileDisplayJPanel right) {
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // configuration for the top panel (JSplitPane)
+        gbc.fill = GridBagConstraints.BOTH; // fill both x and y
+        gbc.weightx = 1.0; // take up available width
+        gbc.weighty = 0.7; // allocate 70% height to the top panel
+        gbc.gridx = 0; // column 0
+        gbc.gridy = 0; // row 0
+        this.topFileAndBrowserPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        topFileAndBrowserPane.setDividerLocation(300);
+        topFileAndBrowserPane.setDividerSize(2);
+        topFileAndBrowserPane.add(this.fileBrowserJPanel, JSplitPane.LEFT);
+        topFileAndBrowserPane.add(this.fileDisplayJPanel, JSplitPane.RIGHT);
+        mainPanel.add(topFileAndBrowserPane, gbc);
+        // Configuration for the fileStatisticsJPanel
+        gbc.weighty = 0.3; // Allocate 30% height to the statistics panel
+        gbc.gridy = 1; // Move to the next row
+        mainPanel.add(this.fileStatisticsJPanel, gbc);
+
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     /**
@@ -132,5 +146,21 @@ public class ApplicationJFrame extends JFrame implements Renderable {
      */
     public FileDisplayJPanel getFileDisplayJPanel() {
         return fileDisplayJPanel;
+    }
+
+    public JSplitPane getTopFileAndBrowserPane() {
+        return topFileAndBrowserPane;
+    }
+
+    public void setTopFileAndBrowserPane(JSplitPane topFileAndBrowserPane) {
+        this.topFileAndBrowserPane = topFileAndBrowserPane;
+    }
+
+    public SortedFileBrowserJPanel getSortedFileBrowserJPanel() {
+        return sortedFileBrowserJPanel;
+    }
+
+    public void setSortedFileBrowserJPanel(SortedFileBrowserJPanel sortedFileBrowserJPanel) {
+        this.sortedFileBrowserJPanel = sortedFileBrowserJPanel;
     }
 }

@@ -14,6 +14,7 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
     private JTextField directoryPathJTextField;
     private JMenuItem closeApplicationJMenuItem;
     private JProgressBar progressBar;
+    private JMenuItem swapFileBrowserJMenuItem;
 
     public ApplicationJMenuBar() {
         setAttributes();
@@ -34,6 +35,7 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
      */
     @Override
     public void addComponents() {
+        add(swapFileBrowserJMenuItem);
         add(addDirectoryJMenuItem);
         add(directoryPathJTextField);
         add(closeApplicationJMenuItem);
@@ -49,6 +51,7 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
         this.directoryPathJTextField = createDirectoryPathTextField();
         this.closeApplicationJMenuItem = createCloseApplicationJMenuItem();
         this.progressBar = createProgressBar();
+        this.swapFileBrowserJMenuItem = createSwapFileBrowserJMenuItem();
     }
 
     /**
@@ -127,7 +130,7 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
      * @return a JMenuItem that allows the user to close the application
      */
     private JMenuItem createCloseApplicationJMenuItem() {
-        JMenuItem menuItem = new JMenuItem("Close Application");
+        JMenuItem menuItem = new JMenuItem("Close Application Without Saving");
         addHoverEffect(menuItem);
         return menuItem;
     }
@@ -178,5 +181,23 @@ public class ApplicationJMenuBar extends JMenuBar implements Renderable {
      */
     public JProgressBar getProgressBar() {
         return progressBar;
+    }
+
+    /**
+     * Creates a JMenuItem that, when clicked, swaps the file browser view.
+     * @return a JMenuItem that allows the user to swap the file browser view
+     */
+    private JMenuItem createSwapFileBrowserJMenuItem() {
+        JMenuItem menuItem = new JMenuItem("Swap File Browser View");
+        addHoverEffect(menuItem);
+        return menuItem;
+    }
+
+    /**
+     * Gets the JMenuItem that allows the user to swap the file browser view.
+     * @return a JMenuItem that allows the user to swap the file browser view
+     */
+    public JMenuItem getSwapFileBrowserJMenuItem() {
+        return swapFileBrowserJMenuItem;
     }
 }

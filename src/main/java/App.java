@@ -35,7 +35,7 @@ public class App implements Runnable {
         try {
             applicationContext.getSystemDirectoryList().addDirectory(new SystemDirectory("src/test/resources"));
         } catch (Exception e) {
-            System.err.println("Directory already exists in the application context");
+            System.err.println("Test data src/test/resources already exists in the application context.");
         }
     }
 
