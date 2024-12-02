@@ -1,64 +1,43 @@
-# M08-A01 Implementing a LinkedList
-The following details the approaches taken to attempt to satisfy the canvas rubric for the assignment.<br>
-To motivate this assignment, a linked list backs an alternative browser to the tree-based one in place and can be accessed by clicking the following button:<br>
-![img.png](img.png)<br>
-You may <u>right click</u> a selection in the list to copy its file path and right click in the text field to paste for ease of testing since absolute file paths are required.<br>
-![img_1.png](img_1.png)
+# M08-A03: Implement a Collection I
 
-<hr>
+Class : [ApplicationContext.java](src/main/java/model/ApplicationContext.java)<br>
+Collection : ArrayList<[SystemFile](src/main/java/model/data/filetypes/SystemFile.java)>
 
-## Instantiate the class containing the LinkedList in the main method
-The class used is [SortedFileList.java](src/main/java/model/data/SortedFileList.java) and its primary linked list for this exercise is <code>private ArrayList<String> absoluteFilePaths;</code><br>
-The class has been instantiated in [SortedFileBrowserJPanelController.java](controller/filebrowser/SortedFileBrowserJPanelController.java) instead of the main method as the current structure of this project and how this list is used would necessitate the passing around of many mode/view/controller classes.
+The ArrayList "systemFiles" represents a collection of files on the user's system that are rendered in the GUI.
+An ArrayList seemed apt given that theoretically, there may be multiple instances of an identical image file located at different locations on the user's system.
+Given this, comparing the two images would cause a Set to presume that they are the same file, and thus only add one of the instances.
 
-<hr>
+## The controller creates an instance of the class encapsulating your collection.<hr>
 
-## The constructor in the LinkedList class should call a method to build a list of test data. These should be added to the LinkedList in sorted order
-[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
-<code>public void buildTestData()</code> attempts to satisfy this requirement by adding the contents of <code>serTest</code> & <code>src/test/resources</code>.<br>
-<code>public void sortFiles()</code> leverages the collections framework built in sorting method to lexically sort the file labels in these lists and is called immediately after test data is added.
+[App.java](src/main/java/App.java) loads an instance of the ApplicationContext class containing this collection upon app startup.
+The method (loadApplicationContext) attempts to locate a .ser file to load a preexisting instance of this class from.
 
-<hr>
+## The constructor for this class should populate collection with a set of test data objects<hr>
 
-## After building the test data for the LinkedList, the constructor should call a method to print the items in the list to the command line
+[App.java](src/main/java/App.java) contains code in the <i>run</i> method (which is the main app driver method) that populates this collection with test data from "src/test/resources".
 
-[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
-<code>public void printToCommandLine()</code> lists the contents of the LinkedList to the console. It is called at instantiation & can be called via a button in the GUI.
+## The view class allows the user to search for objects in the collection<hr>
 
-<hr>
+[FileBrowserJPanel](src/main/java/view/filebrowser/FileBrowserJPanel.java) provides the user with a file browser to select which individual file to view.
+[FileDisplayJPanel](src/main/java/view/filedisplay/FileDisplayJPanel.java) renders all images in the parent directory of the currently selected file in the file browser (or a singular file if in the non-default GUI view).
 
-## LinkedList class includes the method - addItem(Object newObject)
 
-[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
-<code>public void addItem(String newItem)</code> modifies the model object / linked lists containing sorted strings representing entries in the browser list. A GUI button is used to trigger this method.
+## The view class allows the user to get and display the data for a single object<hr>
 
-[SortedFileBrowserJPanelController](src/main/java/controller/filebrowser/SortedFileBrowserJPanelController.java)<br>
-<code>public ActionListener addItem()</code> defines the action listener for the GUI button allowing item addition to the list. The list is re-sorted upon addition.
+[FileDisplayJPanel](src/main/java/view/filedisplay/FileDisplayJPanel.java) displays a table of data for the currently selected file in the file browser.
 
-<hr>
+## The view class allows the user to add objects to the collection<hr>
 
-## LinkedList class includes the method - removeItem(Object objectToRemove)
+[FileBrowserJPanel](src/main/java/view/filebrowser/FileBrowserJPanel.java) creates a JButton "addNewFileButton" that allows the user to add a singular file.<br>
+[ApplicationJMenuBar](src/main/java/view/ApplicationJMenuBar.java) Contains a text field and button that allows the user to add an entire directory to be tracked by the application.
+The application scans the entire folder for all image files and creates SystemFile objects to represent each.
 
-[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
-<code>public void removeItem(String itemToRemove)</code> modifies the model object / linked lists containing sorted strings representing entries in the browser list. A GUI button is used to trigger this method.
+## The view class allows the user to remove (delete) objects in the collection<hr>
 
-[SortedFileBrowserJPanelController](src/main/java/controller/filebrowser/SortedFileBrowserJPanelController.java)<br>
-<code>public ActionListener removeItem()</code> defines the action listener for the GUI button allowing item removal from the list. The list is re-sorted upon removal.
+[FileBrowserJPanel](src/main/java/view/filebrowser/FileBrowserJPanel.java) creates a JButton "deleteSelectedFileButton" that allows the user to remove the selected file from being tracked by the application.
+This does not delete the file from the user's system.
 
-<hr>
+## The selected collection class, test data, and implemented functionality contribute to the performance of your project application<hr>
 
-## LinkedList class includes the method - getItem(String searchTerm)
-
-[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
-<code>public String getItem(String searchTerm)</code> returns a boolean flag to confirm the searched object exists within the model.
-
-[SortedFileBrowserJPanelController](src/main/java/controller/filebrowser/SortedFileBrowserJPanelController.java)<br>
-<code>public ActionListener searchItem()</code> reads the requested search term, checks with the model that it exists, then (if it does) shifts the JList selection to make the requested file the active file in the GUI.
-
-<hr>
-
-## After instantiating the LinkedList, in the main method call the three methods above to add, remove, and get an item in your LinkedList.
-
-[Main.java](src/main/java/Main.java)<br>
-Three correspondingly named methods are called in the main method to add, remove, and get an item in the LinkedList.
-The results of each action are printed to the terminal by making calls to the <code>.contains()</code> method of the LinkedList.
+The use of an ArrayList allows for quick random access to collection elements. 
+Given that the user is allowed to select objects in any order (regardless of comparator) this property of ArrayLists allows for quick lookup of the exact SystemFile object instance that must be read from to display all relevant data to the user in the GUI.

@@ -11,7 +11,6 @@ public class Main {
     public static void main(String[] args) {
         App app = new App();
         SwingUtilities.invokeLater(app);
-        m08_a01(app);
     }
 
     // resources for m08_a01 tests
