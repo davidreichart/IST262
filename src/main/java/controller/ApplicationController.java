@@ -39,4 +39,24 @@ public class ApplicationController {
     public void configureDirectoryListListeners(ApplicationJFrame frame, ApplicationContext context) {
         context.getSystemDirectoryList().addListener(frame.getFileBrowserJPanel());
     }
+
+    public ApplicationJMenuBarController getApplicationJMenuBarController() {
+        return applicationJMenuBarController;
+    }
+
+    public FileBrowserJPanelController getFileBrowserJPanelController() {
+        return fileBrowserJPanelController;
+    }
+
+    public FileStatisticsJPanelController getFileStatisticsJPanelController() {
+        return fileStatisticsJPanelController;
+    }
+
+    public FileDisplayJPanelController getFileDisplayJPanelController() {
+        return fileDisplayJPanelController;
+    }
+
+    public SortedFileBrowserJPanelController getSortedFileBrowserJPanelController() {
+        return sortedFileBrowserJPanelController;
+    }
 }

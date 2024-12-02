@@ -22,6 +22,8 @@ public class SortedFileList {
         this.absoluteFilePaths = new ArrayList<>();
         this.context = context;
         buildTestData();
+        sortFiles();
+        printToCommandLine();
     }
 
     /**

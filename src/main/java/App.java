@@ -21,6 +21,9 @@ public class App implements Runnable {
     private Serializer serializer;
 
     public App() {
+        this.applicationJFrame = new ApplicationJFrame();
+        loadApplicationContext();
+        this.applicationController = new ApplicationController(this.applicationJFrame, this.applicationContext);
     }
 
     /**
@@ -28,9 +31,6 @@ public class App implements Runnable {
      */
     @Override
     public void run() {
-        this.applicationJFrame = new ApplicationJFrame();
-        loadApplicationContext();
-        this.applicationController = new ApplicationController(this.applicationJFrame, this.applicationContext);
         this.serializer = new Serializer(this.applicationContext, this.applicationJFrame, this.applicationController);
         addExitSerializationListener();
 
@@ -91,5 +91,17 @@ public class App implements Runnable {
                 }
             }
         });
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return this.applicationContext;
+    }
+
+    public ApplicationController getApplicationController() {
+        return this.applicationController;
+    }
+
+    public ApplicationJFrame getApplicationJFrame() {
+        return this.applicationJFrame;
     }
 }

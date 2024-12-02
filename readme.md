@@ -1,36 +1,64 @@
-# M07-A02 Persistent Data Implementation<hr>
-The following details what objects are being serialized, and how that serialization is occurring.
+# M08-A01 Implementing a LinkedList
+The following details the approaches taken to attempt to satisfy the canvas rubric for the assignment.<br>
+To motivate this assignment, a linked list backs an alternative browser to the tree-based one in place and can be accessed by clicking the following button:<br>
+![img.png](img.png)<br>
+You may <u>right click</u> a selection in the list to copy its file path and right click in the text field to paste for ease of testing since absolute file paths are required.<br>
+![img_1.png](img_1.png)
 
-### A test folder of images in <code>serTest</code> can be used to test data persistence by adding its absolute file path in the menu bar text  field. Only the images found in <code>src/test/resources</code> are auto loaded by the application.<hr>
-
-
-These two classes are currently placed in the model package, but may easily be refactored to the controller package if more appropraite:
-
-- [Serializer.java](src/main/java/model/Serializer.java) - Instantiated at exit in [App.java](src/main/java/App.java) briefly so it has access to all model/view/controller objects. The following objects are the only ones written to the state.ser bytecode file:
-  - [ApplicationContext.java](src/main/java/model/ApplicationContext.java) - Holds all currently tracked directories, files, and file details.
-  - [UserFileJTree.java](src/main/java/view/filebrowser/UserFileJTree.java) - Holds the node's and their structure that makes up the file browser tree in the GUI. 
-
-- [Deserializer.java](src/main/java/model/Deserializer.java) - Static class that has individual methods for loading each serialized object whenever needed when the program launches and a new frame is being created.
-  - All serialized objects are stored in one file with the following object order:
-    - ApplicationContext.java
-    - UserFileJTree.java
-
-<code>state.ser</code> should be located @ src/main/resources
 <hr>
 
-The following is a complete list of all objects implementing <code>Serializable</code> and which directly serialized object they are found in:<br>
+## Instantiate the class containing the LinkedList in the main method
+The class used is [SortedFileList.java](src/main/java/model/data/SortedFileList.java) and its primary linked list for this exercise is <code>private ArrayList<String> absoluteFilePaths;</code><br>
+The class has been instantiated in [SortedFileBrowserJPanelController.java](controller/filebrowser/SortedFileBrowserJPanelController.java) instead of the main method as the current structure of this project and how this list is used would necessitate the passing around of many mode/view/controller classes.
 
-<code>model</code><br>
-- [ApplicationContext.java](src/main/java/model/ApplicationContext.java) <code>ApplicationContext</code>
-- [FileTag.java](src/main/java/model/data/FileTag.java) <code>ApplicationContext</code>
-- [SystemDirectoryList](src/main/java/model/data/filetypes/SystemDirectoryList.java) <code>ApplicationContext</code>
-- [SystemDirectory](src/main/java/model/data/filetypes/SystemDirectory.java) <code>ApplicationContext</code>
-- [ImageFile.java](src/main/java/model/data/filetypes/ImageFile.java) <code>ApplicationContext</code>
-- [SystemFile.java](src/main/java/model/data/filetypes/SystemFile.java) <code>ApplicationContext</code>
+<hr>
 
-<code>view</code><br>
-- [UserFileJTree.java](src/main/java/view/filebrowser/UserFileJTree.java) <code>UserFileJTree</code>
+## The constructor in the LinkedList class should call a method to build a list of test data. These should be added to the LinkedList in sorted order
+[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
+<code>public void buildTestData()</code> attempts to satisfy this requirement by adding the contents of <code>serTest</code> & <code>src/test/resources</code>.<br>
+<code>public void sortFiles()</code> leverages the collections framework built in sorting method to lexically sort the file labels in these lists and is called immediately after test data is added.
 
-<code>controller</code><br>
-- *none*
+<hr>
 
+## After building the test data for the LinkedList, the constructor should call a method to print the items in the list to the command line
+
+[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
+<code>public void printToCommandLine()</code> lists the contents of the LinkedList to the console. It is called at instantiation & can be called via a button in the GUI.
+
+<hr>
+
+## LinkedList class includes the method - addItem(Object newObject)
+
+[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
+<code>public void addItem(String newItem)</code> modifies the model object / linked lists containing sorted strings representing entries in the browser list. A GUI button is used to trigger this method.
+
+[SortedFileBrowserJPanelController](src/main/java/controller/filebrowser/SortedFileBrowserJPanelController.java)<br>
+<code>public ActionListener addItem()</code> defines the action listener for the GUI button allowing item addition to the list. The list is re-sorted upon addition.
+
+<hr>
+
+## LinkedList class includes the method - removeItem(Object objectToRemove)
+
+[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
+<code>public void removeItem(String itemToRemove)</code> modifies the model object / linked lists containing sorted strings representing entries in the browser list. A GUI button is used to trigger this method.
+
+[SortedFileBrowserJPanelController](src/main/java/controller/filebrowser/SortedFileBrowserJPanelController.java)<br>
+<code>public ActionListener removeItem()</code> defines the action listener for the GUI button allowing item removal from the list. The list is re-sorted upon removal.
+
+<hr>
+
+## LinkedList class includes the method - getItem(String searchTerm)
+
+[SortedFileList.java](src/main/java/model/data/SortedFileList.java)<br>
+<code>public String getItem(String searchTerm)</code> returns a boolean flag to confirm the searched object exists within the model.
+
+[SortedFileBrowserJPanelController](src/main/java/controller/filebrowser/SortedFileBrowserJPanelController.java)<br>
+<code>public ActionListener searchItem()</code> reads the requested search term, checks with the model that it exists, then (if it does) shifts the JList selection to make the requested file the active file in the GUI.
+
+<hr>
+
+## After instantiating the LinkedList, in the main method call the three methods above to add, remove, and get an item in your LinkedList.
+
+[Main.java](src/main/java/Main.java)<br>
+Three correspondingly named methods are called in the main method to add, remove, and get an item in the LinkedList.
+The results of each action are printed to the terminal by making calls to the <code>.contains()</code> method of the LinkedList.

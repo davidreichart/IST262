@@ -185,4 +185,8 @@ public class SortedFileBrowserJPanelController {
             }
         };
     }
+
+    public SortedFileList getSortedFileList() {
+        return sortedFileList;
+    }
 }
