@@ -18,6 +18,7 @@ public class FileStatisticsJPanel extends JPanel implements Renderable {
     private JPanel controlsPanel;
     private JPanel dataPanel;
     private JTable statisticsTable;
+    private JButton deleteDirectoryButton;
 
     public FileStatisticsJPanel() {
         setAttributes();
@@ -58,6 +59,7 @@ public class FileStatisticsJPanel extends JPanel implements Renderable {
         dataPanel = new JPanel();
         dataPanel.setLayout(new BorderLayout());
         dataPanel.add(statisticsTable);
+        this.deleteDirectoryButton = new JButton("Delete Directory");
     }
 
     /**
@@ -110,5 +112,9 @@ public class FileStatisticsJPanel extends JPanel implements Renderable {
 
     public JPanel getDataPanel() {
         return dataPanel;
+    }
+
+    public JButton getDeleteDirectoryButton() {
+        return deleteDirectoryButton;
     }
 }

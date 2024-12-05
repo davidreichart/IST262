@@ -11,10 +11,15 @@ import view.filebrowser.nodes.ImageNode;
 import view.filedata.FileStatisticsJPanel;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreePath;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class FileStatisticsTableController {
@@ -35,6 +40,7 @@ public class FileStatisticsTableController {
 
     private void attachListeners() {
         userFileJTree.addTreeSelectionListener(changeMetadataTablesOnValueChanged());
+        fileStatisticsJPanel.getDeleteDirectoryButton().addActionListener(deleteDirectoryOnButtonClick());
     }
 
     public TreeSelectionListener changeMetadataTablesOnValueChanged() {
@@ -75,6 +81,7 @@ public class FileStatisticsTableController {
         tablesPanel.add(buildImageMetadataTable(node));
         tablesPanel.add(buildDirectoryMetadataTable(node));
         fileStatisticsJPanel.add(tablesPanel, BorderLayout.CENTER);
+        fileStatisticsJPanel.add(fileStatisticsJPanel.getDeleteDirectoryButton(), BorderLayout.EAST);
         fileStatisticsJPanel.revalidate();
     }
 
@@ -153,5 +160,58 @@ public class FileStatisticsTableController {
         directoryMDTable.setValueAt(MD.folderCount(), 2, 1);
 
         return directoryMDTable;
+    }
+
+    public ActionListener deleteDirectoryOnButtonClick() {
+        return e -> {
+            // confirm deletion
+            boolean decision = JOptionPane.showConfirmDialog(null, "Remove directory?") == 0;
+            if (!decision) {
+                return;
+            }
+
+            // working variables
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) userFileJTree.getLastSelectedPathComponent();
+            SystemDirectory directory = null;
+
+            // locate the relevant SystemDirectory object to delete
+            if (node instanceof DirectoryNode) {
+                directory = ((DirectoryNode) node).getSystemDirectory();
+            } else if (node instanceof ImageNode) {
+                HashSet<SystemDirectory> contextDirectories = context.getSystemDirectoryList().getSystemDirectories();
+
+                // look for a SystemDirectory that contains this image file
+                for (SystemDirectory contextDirectory : contextDirectories) {
+                    if (contextDirectory.directoryImageFiles().contains(((ImageNode) node).getImageFile())) {
+                        directory = contextDirectory;
+                        break;
+                    }
+                }
+            }
+
+            if (Objects.isNull(directory)) {
+                return;
+            }
+
+            context.getSystemDirectoryList().getSystemDirectories().remove(directory);
+
+            // jTree cleanup
+            DefaultTreeModel model = (DefaultTreeModel) userFileJTree.getModel();
+            if (node instanceof DirectoryNode) {
+                model.removeNodeFromParent(node);
+            } else if (node instanceof ImageNode) {
+                model.removeNodeFromParent((MutableTreeNode) node.getParent());
+            }
+            model.reload();
+            // force selection to root node and de-render images from directory
+            userFileJTree.setSelectionPath(new TreePath(model.getRoot()));
+            frame.getFileDisplayJPanel().removeAll();
+            frame.getFileDisplayJPanel().repaint();
+        };
+    }
+
+    public void refreshFrameView() {
+        frame.revalidate();
+        frame.repaint();
     }
 }
