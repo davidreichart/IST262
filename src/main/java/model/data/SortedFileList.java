@@ -23,7 +23,6 @@ public class SortedFileList {
         this.context = context;
         buildTestData();
         sortFiles();
-        printToCommandLine();
     }
 
     /**

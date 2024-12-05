@@ -5,6 +5,7 @@ import model.util.FileInspector;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * The SystemDirectory class is a representation of a directory on the user's system.
@@ -14,6 +15,9 @@ public class SystemDirectory implements FileSystemResource, Serializable {
 
     private String directoryPath;
     private HashSet<ImageFile> directoryImageFiles;
+    public record Metadata(int fileCount, int imageCount, int folderCount) implements Serializable {
+    }
+    private Metadata METADATA;
 
     public SystemDirectory(String directoryPath) throws IllegalArgumentException {
         // unknown is a special case used to hold individually added images
@@ -30,6 +34,7 @@ public class SystemDirectory implements FileSystemResource, Serializable {
         this.directoryPath = directoryPath;
         this.directoryImageFiles = new HashSet<>();
         scanDirectoryForImages();
+        generateMetadata();
     }
 
     /**
@@ -61,6 +66,36 @@ public class SystemDirectory implements FileSystemResource, Serializable {
      */
     public HashSet<ImageFile> directoryImageFiles() {
         return directoryImageFiles;
+    }
+
+    private void generateMetadata() {
+        Path path = Paths.get(this.directoryPath);
+        int fileCount = 0;
+        int imageCount = 0;
+        int folderCount = 0;
+
+        // collecting data on directory
+        try (Stream<Path> files = Files.walk(path)) {
+            // for each file in the stream...
+            for (Path file : (Iterable<Path>) files::iterator) {
+                // is this a folder?
+                if (Files.isDirectory(file)) {
+                    folderCount++;
+                    continue;
+                } else {
+                    // it's not a folder, it's a file
+                    fileCount++;
+                    // is this file an image?
+                    if (FileInspector.isImageFile(file.toFile())) {
+                        imageCount++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+        this.METADATA = new Metadata(fileCount, imageCount, folderCount);
     }
 
     /**
@@ -123,5 +158,9 @@ public class SystemDirectory implements FileSystemResource, Serializable {
     @Override
     public String getContentType() {
         return "Directory";
+    }
+
+    public Metadata METADATA() {
+        return METADATA;
     }
 }

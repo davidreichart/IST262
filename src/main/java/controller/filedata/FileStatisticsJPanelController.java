@@ -43,9 +43,9 @@ public class FileStatisticsJPanelController {
         this.context = context;
         this.fileStatisticsJPanel = frame.getFileStatisticsJPanel();
         this.userFileJTree = frame.getFileBrowserJPanel().getFileTree();
-
-        // display table of metadata when a file is selected in the browser
-        userFileJTree.addTreeSelectionListener(displayFileMetadataInFileStatisticsJPanel());
+        // handle table functionality
+        FileStatisticsTableController fileStatisticsTableController =
+                new FileStatisticsTableController(frame, context, fileStatisticsJPanel, userFileJTree);
 
         // file path edit
         fileStatisticsJPanel.getEditFilePathButton()
@@ -66,48 +66,22 @@ public class FileStatisticsJPanelController {
         frame.getSortedFileBrowserJPanel()
                 .getFileList()
                 .addListSelectionListener(displaySortedFilePanelStatistics());
+
         frame.getSortedFileBrowserJPanel()
                 .getFileList()
                 .addListSelectionListener(enableButtonsWhenItemIsSelected());
+
         fileStatisticsJPanel.getEditFilePathButton()
                 .addActionListener(ALT_editFilePathButtonActionListener());
+
         fileStatisticsJPanel.getEditFileSizeButton()
                 .addActionListener(ALT_editFileSizeButtonActionListener());
+
         fileStatisticsJPanel.getEditImageHeightButton()
                 .addActionListener(ALT_editImageHeightButtonActionListener());
+
         fileStatisticsJPanel.getEditImageWidthButton()
                 .addActionListener(ALT_editImageWidthButtonActionListener());
-    }
-
-    /**
-     * Updates the JTable in the FileStatisticsJPanel with the metadata of the selected file.
-     * @return A TreeSelectionListener that updates the JTable in the FileStatisticsJPanel.
-     */
-    public TreeSelectionListener displayFileMetadataInFileStatisticsJPanel() {
-        return new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                // get currently selected node
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) userFileJTree.getLastSelectedPathComponent();
-                if (node == null) {
-                    return;
-                }
-
-                // only update the view if the selected node is for an image file
-                if (node instanceof ImageNode) {
-                    enableAllEditButtons();
-                    JTable table = imageMetadataTable((ImageNode) node);
-                    renderImageMetadataTable((ImageNode) node);
-                } else if (node instanceof DirectoryNode) {
-                    // directories shouldn't show metadata
-                    fileStatisticsJPanel.removeAll();
-                    fileStatisticsJPanel.add(fileStatisticsJPanel.getControlsPanel(), BorderLayout.WEST);
-                    disableAllEditButtons();
-                    fileStatisticsJPanel.repaint();
-                    fileStatisticsJPanel.revalidate();
-                }
-            }
-        };
     }
 
     /**
