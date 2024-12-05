@@ -209,9 +209,4 @@ public class FileStatisticsTableController {
             frame.getFileDisplayJPanel().repaint();
         };
     }
-
-    public void refreshFrameView() {
-        frame.revalidate();
-        frame.repaint();
-    }
 }
