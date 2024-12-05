@@ -1,4 +1,4 @@
-# M08-A03: Implement a Collection II
+# M08-A04: Implement a Collection II
 
 Class : [SystemDirectoryList.java](src/main/java/model/data/filetypes/SystemDirectoryList.java)<br>
 Collection : HashSet<[SystemDirectory](src/main/java/model/data/filetypes/SystemDirectory.java)>
@@ -42,3 +42,15 @@ leading to a system directory. If the given path is valid, a new SystemDirectory
 appending of a listener to a button in the lower right of the statistics panel which allows the user to request the 
 deletion of the most relevant directory. EX: an image of the test directory is selected -> the test directory would be 
 removed. EX: the test directory node is selected -> the test directory would be removed.
+
+## etc.
+
+Though it is not a "visible" implementation of a set collection, I had also leveraged the properties of sets in order 
+to create a listener system within [SystemDirectoryList.java](src/main/java/model/data/filetypes/SystemDirectoryList.java)
+which allowed me to force the implementation of a method from the
+[SystemDirectoryListListener](src/main/java/model/data/filetypes/SystemDirectoryListListener.java) interface that 
+the implementing classes call every time that there is a change (i.e. addition/deletion) within the set containing 
+all SystemDirectory objects.
+
+Since this bit of functionality doesn't hit all the marks for this assignment, I focused on the more visible set 
+implementation, but figured I would point this one out as well since it also uses the same collection type.
